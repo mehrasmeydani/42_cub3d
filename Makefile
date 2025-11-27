@@ -14,8 +14,8 @@ SRC			=	main.c
 SRCS		=	${addprefix ${PRE_SRC}, ${SRC}}
 PRE_SRC		=	srcs/
 HEAD		=	header/
-NAME		=	philo
-CFLAGS		=	-Wall -Wextra -Werror
+NAME		=	cubed
+CFLAGS		=	-Wall -Wextra -Werror -g
 OBJ			=	${SRC:.c=.o}
 PRE_OBJ		=	obj/
 OBJS		=	${addprefix ${PRE_OBJ}, ${OBJ}}
@@ -30,7 +30,7 @@ $(PRE_OBJ)%.o:$(PRE_SRC)%.c
 			mkdir -p $(PRE_OBJ)
 			${CC} ${CFLAGS} -I ${HEAD} -o $@ -c $<
 ${NAME}:	${OBJS}
-			cc ${CFLAGS} -I ${HEAD} ${SRCS} -o ${NAME} ./libft/libft.a
+			cc ${CFLAGS} -I ${HEAD} ${OBJS} -o ${NAME} ./libft/libft.a  -lX11 -lm -lXext -lmlx 
 
 clean: 
 			(cd libft && make clean)
