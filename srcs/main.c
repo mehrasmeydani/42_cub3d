@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/11/27 06:57:21 by megardes         ###   ########.fr       */
+/*   Updated: 2025/11/28 07:37:43 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,43 @@ int	mlx_exit(void *in)
 	return (1);
 }
 
+// int	player_orientaion(float	rot)
+// {
+// 	if (sin(rot) >= 0)
+// 	{
+// 		if (cos(rot) >= 0)
+// 			return (0);
+// 		else
+// 			return (1);;
+// 	}
+// 	else
+// 	{
+// 		if (cos(rot) >= 0)
+// 			return (2);
+// 		else
+// 			return (3);;
+// 	}
+// }
+
+void	move(t_cubed *cube, bool dir)
+{
+	if (dir)
+	{
+		cube->player->x_f += cos(cube->player->rad) / 15;
+		if (cube->player->x_f >= 1)
+		{
+			cube->player->x_i += cube->player->x_f;
+			cube->player->x_f = 0;
+		}
+		cube->player->y_f -= sin(cube->player->rad) / 15;
+		if (cube->player->y_f >= 1)
+		{
+			cube->player->y_i += cube->player->y_f;
+			cube->player->y_f = 0;
+		}
+	}
+}
+
 int	mlx_key(int key_code, void *in)
 {
 	t_cubed *cube;
@@ -107,6 +144,9 @@ int	mlx_key(int key_code, void *in)
 	cube = (t_cubed *)in;
 	if (key_code == XK_Escape)
 		mlx_exit(in);
+	if (key_code == XK_W || key_code == XK_w)
+		move(cube, 1);
+	set_mini_img(cube, cube->mlx);
 	return (1);
 }
 
@@ -206,8 +246,8 @@ void	mini_put_player(t_img *mini, t_player *player)
 	ssize_t i;
 	ssize_t j;
 
-	i = mini->border + player->y.i * MINISQ + roundf(player->y.f * MINISQ);
-	j = mini->border + player->x.i * MINISQ + roundf(player->x.f * MINISQ);
+	i = mini->border + player->y_i * MINISQ + roundf(player->y_f * MINISQ);
+	j = mini->border + player->x_i * MINISQ + roundf(player->x_f * MINISQ);
 	put_star(mini, j, i, get_color(0, 0, 1));
 }
 
@@ -277,6 +317,7 @@ void	set_player(t_cubed *cube)
 
 	stop = 1;
 	y = -1;
+	x = 0;
 	while (stop && cube->map[++y])
 	{
 		x = -1;
@@ -287,11 +328,11 @@ void	set_player(t_cubed *cube)
 				stop = 0;
 		}
 	}
-	cube->player->x.i = x;
-	cube->player->y.i = y;
-	cube->player->x.f = 0.5;
-	cube->player->y.f = 0.5;
-	cube->player->rad = rot * 90; 
+	cube->player->x_i = x;
+	cube->player->y_i = y;
+	cube->player->x_f = 0.5;
+	cube->player->y_f = 0.5;
+	cube->player->rad = 4; 
 }
 
 bool	execute(t_cubed *cube)
