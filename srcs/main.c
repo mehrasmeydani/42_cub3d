@@ -6,7 +6,7 @@
 /*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/11/29 02:50:29 by megardes         ###   ########.fr       */
+/*   Updated: 2025/11/29 02:53:34 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ int	parsing_map(t_cubed *cube)
 		else if (i == 1)
 		{
 			cube->map[i] = ft_strdup("1E00001");
+			if (!cube->map[i])
+				return (ft_free(cube->map), 0);
+		}
+		else if (i == j - 3)
+		{
+			cube->map[i] = ft_strdup("1E00011");
 			if (!cube->map[i])
 				return (ft_free(cube->map), 0);
 		}
