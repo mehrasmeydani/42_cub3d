@@ -22,11 +22,28 @@
 # include <math.h>
 
 
-# define RED 	0xff0000
-# define GRN 	0x00ff00
-# define BLU 	0x0000ff
+# define RED 0xff0000
+# define GRN 0x00ff00
+# define BLU 0x0000ff
 # define MINISQ 75
-# define PIE	3.141592653589793
+# define PIE 3.141592653589793
+// # define TURN	0.0348994967
+# ifndef MOVE
+#  define MOVE 10
+# endif
+# define TURN 0.17364817766
+# define RAY_ANGL 0.03
+# define RAY_NUMBER 25
+
+typedef	struct s_line
+{
+	ssize_t	x;
+	ssize_t	y;
+	ssize_t	x_end;
+	ssize_t	y_end;
+	float	len;
+	float	rot;
+}	t_line;
 
 typedef struct s_img
 {

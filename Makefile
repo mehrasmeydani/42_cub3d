@@ -20,7 +20,7 @@ OBJ			=	${SRC:.c=.o}
 PRE_OBJ		=	obj/
 OBJS		=	${addprefix ${PRE_OBJ}, ${OBJ}}
 RM			=	rm -fr
-CC			= 	gcc
+CC			= 	cc
 Lflags		= -Lmlx -lmlx -lX11 -lXext -lXfixes -lXrender -lXrandr -lm -lz
 MAKEFLAGS	+= --no-print-directory
 
@@ -40,6 +40,10 @@ clean:
 fclean: 	clean
 			(cd libft && make fclean)
 			${RM} ${NAME} $(PRE_OBJ)
+
+speed:		$(OBJS)
+			cc ${CFLAGS} -DMOVE=2 -I ${HEAD} ${SRCS} -o ${NAME} ./libft/libft.a  $(Lflags)
+
 
 re:			fclean all
 			
