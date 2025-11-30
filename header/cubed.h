@@ -26,7 +26,7 @@
 # define GRN 0x00ff00
 # define BLU 0x0000ff
 # define MINISQ 64
-# define PIE 3.141592653589793
+// # define PIE 3.141592653589793
 // # define TURN	0.0348994967
 # ifndef MOVE
 #  define MOVE 10

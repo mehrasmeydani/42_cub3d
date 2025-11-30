@@ -12,6 +12,8 @@
 
 #include "../header/cubed.h"
 
+float	PIE = 3.141592653589793; 
+
 void	ft_free(char **in)
 {
 	ssize_t	i;
@@ -42,13 +44,13 @@ int	parsing_map(t_cubed *cube)
 		}
 		else if (i == 1)
 		{
-			cube->map[i] = ft_strdup("1E00001");
+			cube->map[i] = ft_strdup("1000001");
 			if (!cube->map[i])
 				return (ft_free(cube->map), 0);
 		}
 		else if (i == j - 3)
 		{
-			cube->map[i] = ft_strdup("1000011");
+			cube->map[i] = ft_strdup("1N00011");
 			if (!cube->map[i])
 				return (ft_free(cube->map), 0);
 		}
@@ -316,8 +318,12 @@ void	put_line(t_img *img, t_line *line)
 	ssize_t y = line->y;
 
 
-	line->x_end = line->x + roundf(cos(line->rot) * line->len);
-	line->y_end = line->y - roundf(sin(line->rot) * line->len);
+	if (line->len != 0)
+	{
+		line->x_end = line->x + roundf(cos(line->rot) * line->len);
+		line->y_end = line->y - roundf(sin(line->rot) * line->len);
+		puts("yo");
+	}
 
 	ssize_t dx = line->x_end - line->x;
 	ssize_t dy = line->y_end - line->y;
@@ -329,9 +335,9 @@ void	put_line(t_img *img, t_line *line)
 
 	float xf = x;
 	float yf = y;
-
 	for (ssize_t i = 0; i <= steps; i++)
 	{
+		printf("xf:%zu yf:%zu\n", (ssize_t)roundf(xf), (ssize_t)roundf(yf));
 		put_star_small(img, (ssize_t)roundf(xf), (ssize_t)roundf(yf), get_color(1, 0, 0));
 		xf += x_inc;
 		yf += y_inc;
@@ -392,29 +398,29 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 	float	r_x;
 	float	x_offset;
 	float	y_offset;
-	float	a_tan = 1/tan(line->rot);
-	double	x_delt;
-	double	y_delt;
+	float	a_tan = -1/tan(line->rot);
+	//double	x_delt;
+	//double	y_delt;
 	ssize_t	dof = 0;
 	int	mx;
 	int	my;
 	//printf("%f", a_tan);
 	(void)a_tan;
-	if (line->rot > PIE)
+	if (line->rot < PIE)
 	{
-		r_y = ((ssize_t)(line->y>>6)<<6) - 0.0001;
-		r_x = (line->y - r_y) * a_tan + line->x;
+		r_y = ((ssize_t)(player->p_y / 64) * 64) - 0.0001;
+		r_x = (player->p_y - r_y) * a_tan + player->p_x;
 		y_offset = -MINISQ;
 		x_offset = -y_offset * a_tan;
 	}
-	if (line->rot < PIE)
+	if (line->rot > PIE)
 	{
-		r_y = ((ssize_t)(line->y>>6)<<6) + MINISQ;
-		r_x = (line->y - r_y) * a_tan + line->x;
+		r_y = ((ssize_t)(player->p_y>>6)<<6) + MINISQ;
+		r_x = (player->p_y - r_y) * a_tan + player->p_x;
 		y_offset = MINISQ;
 		x_offset = -y_offset * a_tan;
 	}
-	if (line->rot < 0.01 || (int)(line->rot * 10000)  == 31415)
+	if (line->rot == 0.00 || (line->rot  == PIE))
 	{
 		r_x = line->x;
 		r_y = line->y;
@@ -424,20 +430,28 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 	}
 	while (dof < sqrt(MINISQ))
 	{
-		mx = (ssize_t)(r_x / MINISQ);
-		my = (ssize_t)(r_y / MINISQ);
-		if (mx * my <= 0 || mx < 0 || my < 0 || cube->map[my][mx] == '1')
-			dof = sqrt(MINISQ);
+		mx = round(r_x);
+		my = floor(r_y);
+		if (cube->mini_map[my][mx] == '1')
+		{
+			dof = 8;
+		}
 		else
 		{
+			dof +=1;
 			r_x += x_offset;
 			r_y += y_offset;
-			dof += 1;
 		}
 	}
-	x_delt = fabs(line->x - r_x);
-	y_delt = fabs(line->y - r_y);
-	return (sqrt(x_delt * x_delt + y_delt * y_delt));
+	line->len = 0;
+	line->x_end = floor(r_x) + cube->mlx->mini.border;
+	line->y_end = floor(r_y) + cube->mlx->mini.border;
+	line->rot = player->rad;
+	printf("px:%zu py:%zu r_y:%f r_x:%f rot:%f\n", player->p_x, player->p_y, r_y, r_x, player->rad);
+	put_line(&(cube->mlx->mini), line);
+	//my_pixel_put(&(cube->mlx->mini), cube->mlx->mini.border + floor(r_x), cube->mlx->mini.border + floor(r_y), get_color(1, 1, 1));
+	return (50);
+	//return (sqrt(x_delt * x_delt + y_delt * y_delt));
 }
 
 void	put_rays(t_cubed *cube, t_img *img, t_line *line)
@@ -478,7 +492,8 @@ void	mini_put_player(t_cubed *cube, t_img *mini, t_player *player)
 	line.len = 50; //ray_len(cube, &line, cube->player);
 	// line.len = cast_ray(cube, player, line.rot);
 	//printf("float:%f\t***rad:%f\t***\n", line.len, line.rot /PIE);
-	put_line(mini, &line);
+	//put_line(mini, &line);
+	ray_len(cube, &line, player);
 	//put_rays(cube, mini, &line);
 }
 
@@ -567,7 +582,8 @@ void	set_player(t_cubed *cube)
 	// cube->player->x_f = 0.5;
 	cube->player->y_i = y / MINISQ;
 	cube->player->y_f = (double)(y % MINISQ) / (double)(MINISQ);
-	printf("x%zu y%zu x%f y%f\n", cube->player->x_i, cube->player->y_i, cube->player->x_f, cube->player->y_f);
+	cube->player->rad += 0.5;
+	// printf("x%zu y%zu x%f y%f\n", cube->player->x_i, cube->player->y_i, cube->player->x_f, cube->player->y_f);
 	// cube->player->y_f = 0.5;
 	//cube->player->rad = PIE / 2 * rot; 
 }
@@ -631,6 +647,19 @@ int	main(int argc, char **argv)
 	t_cubed		cube;
 	t_mlx		mlx;
 	t_player	player;
+	char *lines[] = {
+	"111111 11111",
+    "100001 10001",
+    "101111110001",
+    "100000000101",
+    "100001110101",
+    "1000111N0111",
+    "100110010111",
+    "100111000101",
+    "100000000001",
+    "111111111111",
+    NULL
+	};
 
 	(void)argv;
 	if (argc != 2)
@@ -640,8 +669,14 @@ int	main(int argc, char **argv)
 	ft_bzero(&player, sizeof(t_player));
 	cube.player = &player;
 	cube.mlx = &mlx;
-	if (!parsing_map(&cube))
+	if (!ft_strncmp("1", argv[1], 1) && !parsing_map(&cube))
 		return (1);
+	else
+	{
+		cube.map = &lines[0];
+		cube.max_x = 12;
+		cube.max_y = 10;
+	}
 	if (!mini_map(&cube))
 		return (1);
 	// for (int i = 0; cube.mini_map[i]; i++)
