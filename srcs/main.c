@@ -130,7 +130,7 @@ void	y_op(t_cubed *cube, t_player *player, float sine)
 	}
 	else
 		player->y_f -= sine;
-	player->p_y = (ssize_t)(((double)(player->x_i) + player->x_f) * 64);
+	player->p_y = (ssize_t)(((double)(player->y_i) + player->y_f) * 64);
 }
 
 void	x_op(t_cubed *cube, t_player *player, float cosine)
@@ -157,7 +157,7 @@ void	x_op(t_cubed *cube, t_player *player, float cosine)
 	}
 	else
 		player->x_f += cosine;
-	player->p_x = (ssize_t)(((double)(player->y_i) + player->y_f) * 64);
+	player->p_x = (ssize_t)round(((double)(player->x_i) + player->x_f) * 64);
 }
 
 void	move(t_cubed *cube, bool dir)
@@ -173,7 +173,7 @@ void	move(t_cubed *cube, bool dir)
 		x_op(cube, cube->player, cos(cube->player->rad) / MOVE * -1);
 	}
 
-	printf("x%zu y%zu x%f y%f py%zu px%zu\n", cube->player->x_i, cube->player->y_i, cube->player->x_f, cube->player->y_f, cube->player->p_y, cube->player->p_x);
+	printf("x%zu y%zu x%f y%f py%zu px%zu rot%f\n", cube->player->x_i, cube->player->y_i, cube->player->x_f, cube->player->y_f, cube->player->p_y, cube->player->p_x, cube->player->rad);
 }
 
 void turn(t_player *player, bool left)
@@ -470,15 +470,15 @@ void	mini_put_player(t_cubed *cube, t_img *mini, t_player *player)
 
 	i = mini->border + player->p_x;
 	j = mini->border + player->p_y;
-	put_star(mini, j, i, get_color(0, 0, 1));
-	line.x = j;
-	line.y = i;
+	put_star(mini, i, j, get_color(0, 0, 1));
+	line.x = i;
+	line.y = j;
 	line.rot = player->rad;
 	(void)cube;
-	//line.len = ray_len(cube, &line, cube->player);
+	line.len = 50; //ray_len(cube, &line, cube->player);
 	// line.len = cast_ray(cube, player, line.rot);
 	//printf("float:%f\t***rad:%f\t***\n", line.len, line.rot /PIE);
-	//put_line(mini, &line);
+	put_line(mini, &line);
 	//put_rays(cube, mini, &line);
 }
 
