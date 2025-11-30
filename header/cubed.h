@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubed.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/11/28 07:29:33 by mehras           ###   ########.fr       */
+/*   Updated: 2025/11/30 19:25:16 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define RED 0xff0000
 # define GRN 0x00ff00
 # define BLU 0x0000ff
-# define MINISQ 75
+# define MINISQ 64
 # define PIE 3.141592653589793
 // # define TURN	0.0348994967
 # ifndef MOVE
@@ -70,16 +70,19 @@ typedef struct	s_mlx
 
 typedef struct	s_player
 {
-	float	rad;
-	ssize_t	x_i;
-	float	x_f;
-	ssize_t	y_i;
-	float	y_f;
+	float		rad;
+	ssize_t		x_i;
+	float		x_f;
+	ssize_t		y_i;
+	float		y_f;
+	ssize_t		p_x;
+	ssize_t		p_y;
 }	t_player;
 
 typedef struct	s_cubed
 {
 	char		**map;
+	char		**mini_map;
 	t_player	*player;
 	t_mlx		*mlx;
 	ssize_t		max_x;
