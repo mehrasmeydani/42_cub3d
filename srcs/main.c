@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/01 08:01:07 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/01 08:17:33 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -530,7 +530,7 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 		pa += (2 * PIE);
 	else if (pa > 2 * PIE)
 		pa -= (2 * PIE);
-	for (int i = 0; i < 360; i++)
+	for (int i = 0; i < 30; i++)
 	{
 		float	a_tan = 1/tan(pa);
 		ssize_t	dof = 0;
@@ -682,11 +682,11 @@ void	mini_put_player(t_cubed *cube, t_img *mini, t_player *player)
 	j = mini->border + player->p_y;
 	line.x = i;
 	line.y = j;
-	line.rot = player->rad;
 	(void)cube;
 	// line.len = cast_ray(cube, player, line.rot);
 	//printf("float:%f\t***rad:%f\t***\n", line.len, line.rot /PIE);
 	ray_len(cube, &line, player);
+	line.rot = player->rad;
 	line.len = 20; //ray_len(cube, &line, cube->player);
 	put_line(mini, &line, get_color(1, 1, 1));
 	put_star(mini, i, j, get_color(1, 0, 1));
