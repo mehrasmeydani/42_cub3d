@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/01 06:41:38 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/01 07:13:59 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	parsing_map(t_cubed *cube)
 		}
 		else if (i == j - 3)
 		{
-			cube->map[i] = ft_strdup("1W00011");
+			cube->map[i] = ft_strdup("10W0011");
 			if (!cube->map[i])
 				return (ft_free(cube->map), 0);
 		}
@@ -175,7 +175,7 @@ void	move(t_cubed *cube, bool dir)
 		x_op(cube, cube->player, cos(cube->player->rad) / MOVE * -1);
 	}
 
-	printf("x%zu y%zu x%f y%f py%zu px%zu rot%f\n", cube->player->x_i, cube->player->y_i, cube->player->x_f, cube->player->y_f, cube->player->p_y, cube->player->p_x, cube->player->rad);
+	//printf("x%zu y%zu x%f y%f py%zu px%zu rot%f\n", cube->player->x_i, cube->player->y_i, cube->player->x_f, cube->player->y_f, cube->player->p_y, cube->player->p_x, cube->player->rad);
 }
 
 void turn(t_player *player, bool left)
@@ -513,10 +513,16 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 {
 	(void)cube;
 	(void)player;
-	float	r_y;
-	float	r_x;
-	float	x_offset;
-	float	y_offset;
+	float	r_y = 0;
+	float	r_x = 0;
+	float	x_offset = 0;
+	float	y_offset = 0;
+	float	dist_v;
+	float	dist_h;
+	float	v_x;
+	float	v_y;
+	// float	h_x;
+	// float	h_y;
 
 	float	a_tan = 1/tan(line->rot);
 	ssize_t	dof = 0;
@@ -538,7 +544,7 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 		y_offset = MINISQ;
 		x_offset = y_offset * -a_tan;
 	}
-	else //(line->rot == 0.00 || (line->rot  == PIE))
+	if (line->rot == 0.00 || (line->rot  == PIE))
 	{
 		r_x = line->x;
 		r_y = line->y;
@@ -546,12 +552,11 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 		puts("lmao2");
 		return (250);
 	}
-	printf("1:px:%zu py:%zu r_y:%f r_x:%f rot:%f\n", player->p_x, player->p_y, r_y, r_x, player->rad);
 	while (dof < sqrt(MINISQ))
 	{
 		mx = round(r_x);
 		my = floor(r_y);
-		if (cube->mini_map[my][mx] == '1')
+		if (my < 0 || mx < 0 || mx > cube->max_x * MINISQ || my > cube->max_y * MINISQ || cube->mini_map[my][mx] == '1')
 		{
 			dof = 8;
 		}
@@ -562,15 +567,18 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 			r_y += y_offset;
 		}
 	}
-	line->len = 0;
-	if (line->rot > PIE)
-		line->x_end = floorf(r_x) + cube->mlx->mini.border;
-	else
-		line->x_end = roundf(r_x) + cube->mlx->mini.border;
-	line->y_end = floor(r_y) + cube->mlx->mini.border;
-	line->rot = player->rad;
+	v_x = r_x;
+	v_y = r_y;
+	dist_v = sqrt((r_x - player->p_x) * (r_x - player->p_x) + (r_y - player->p_y) * (r_y - player->p_y));
+	// line->len = 0;
+	// if (line->rot > PIE)
+	// 	line->x_end = floorf(r_x) + cube->mlx->mini.border;
+	// else
+	// 	line->x_end = roundf(r_x) + cube->mlx->mini.border;
+	// line->y_end = floor(r_y) + cube->mlx->mini.border;
+	// line->rot = player->rad;
 	//printf("2:px:%zu py:%zu r_y:%f r_x:%f rot:%f\n", player->p_x, player->p_y, r_y, r_x, player->rad);
-	put_line(&(cube->mlx->mini), line);
+	//put_line(&(cube->mlx->mini), line);
 	dof = 0;
 	float	n_tan = tan(line->rot);
 	if (line->rot < PIE / 2 || line->rot > PIE  * 3 / 2) // right
@@ -585,7 +593,7 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 		r_x = ((ssize_t)(player->p_x>>6)<<6) - 0.00001;
 		r_y = (player->p_x - r_x) * n_tan + player->p_y;
 		x_offset = -MINISQ;
-		y_offset = x_offset * n_tan;
+		y_offset = x_offset * -n_tan;
 	}
 	else
 	{
@@ -595,12 +603,12 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 		puts("lmao2");
 		return (250);
 	}
-	//printf("1:px:%zu py:%zu r_y:%f r_x:%f rot:%f\n", player->p_x, player->p_y, r_y, r_x, player->rad);
+	printf("1:px:%zu py:%zu r_y:%f r_x:%f rot:%f\n", player->p_x, player->p_y, r_y, r_x, player->rad);
 	while (dof < sqrt(MINISQ))
 	{
 		mx = floor(r_x);
 		my = round(r_y);
-		if (cube->mini_map[my][mx] == '1')
+		if (my < 0 || mx < 0 || mx > cube->max_x * MINISQ - 1 || my > cube->max_y * MINISQ - 1 || cube->mini_map[my][mx] == '1')
 		{
 			dof = 8;
 		}
@@ -610,6 +618,12 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 			r_x += x_offset;
 			r_y += y_offset;
 		}
+	}
+	dist_h = sqrt((r_x - player->p_x) * (r_x - player->p_x) + (r_y - player->p_y) * (r_y - player->p_y));
+	if (dist_v < dist_h)
+	{
+		r_y = v_y;
+		r_x = v_x;
 	}
 	line->len = 0;
 	if (line->rot > PIE)
