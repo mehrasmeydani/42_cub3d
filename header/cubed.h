@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubed.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/11/30 19:25:16 by megardes         ###   ########.fr       */
+/*   Updated: 2025/12/01 07:58:15 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 #  define MOVE 10
 # endif
 # define TURN 0.17364817766
-# define RAY_ANGL 0.03
+# define RAY_ANGL 0.0174533
 # define RAY_NUMBER 25
 
 typedef	struct s_line
