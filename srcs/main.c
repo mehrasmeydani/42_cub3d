@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/11/30 21:35:58 by megardes         ###   ########.fr       */
+/*   Updated: 2025/12/01 01:23:34 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,7 +322,7 @@ void	put_line(t_img *img, t_line *line)
 	{
 		line->x_end = line->x + roundf(cos(line->rot) * line->len);
 		line->y_end = line->y - roundf(sin(line->rot) * line->len);
-		puts("yo");
+		//puts("yo");
 	}
 
 	ssize_t dx = line->x_end - line->x;
@@ -337,7 +337,7 @@ void	put_line(t_img *img, t_line *line)
 	float yf = y;
 	for (ssize_t i = 0; i <= steps; i++)
 	{
-		printf("xf:%zu yf:%zu\n", (ssize_t)roundf(xf), (ssize_t)roundf(yf));
+		//printf("xf:%zu yf:%zu\n", (ssize_t)roundf(xf), (ssize_t)roundf(yf));
 		put_star_small(img, (ssize_t)roundf(xf), (ssize_t)roundf(yf), get_color(1, 0, 0));
 		xf += x_inc;
 		yf += y_inc;
@@ -398,7 +398,7 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 	float	r_x;
 	float	x_offset;
 	float	y_offset;
-	float	a_tan = -1/tan(line->rot);
+	float	a_tan = 1/tan(line->rot);
 	//double	x_delt;
 	//double	y_delt;
 	ssize_t	dof = 0;
@@ -410,17 +410,17 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 	{
 		r_y = ((ssize_t)(player->p_y / 64) * 64) - 0.0001;
 		r_x = (player->p_y - r_y) * a_tan + player->p_x;
-		y_offset = -MINISQ;
-		x_offset = -y_offset * a_tan;
+		y_offset = - MINISQ;
+		x_offset = y_offset * -a_tan;
 	}
-	if (line->rot > PIE)
+	else if (line->rot > PIE)
 	{
 		r_y = ((ssize_t)(player->p_y>>6)<<6) + MINISQ;
 		r_x = (player->p_y - r_y) * a_tan + player->p_x;
 		y_offset = MINISQ;
-		x_offset = -y_offset * a_tan;
+		x_offset = y_offset * -a_tan;
 	}
-	if (line->rot == 0.00 || (line->rot  == PIE))
+	else //(line->rot == 0.00 || (line->rot  == PIE))
 	{
 		r_x = line->x;
 		r_y = line->y;
@@ -444,10 +444,13 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 		}
 	}
 	line->len = 0;
-	line->x_end = floor(r_x) + cube->mlx->mini.border;
+	if (line->rot > PIE)
+		line->x_end = floorf(r_x) + cube->mlx->mini.border;
+	else
+		line->x_end = roundf(r_x) + cube->mlx->mini.border;
 	line->y_end = floor(r_y) + cube->mlx->mini.border;
 	line->rot = player->rad;
-	printf("px:%zu py:%zu r_y:%f r_x:%f rot:%f\n", player->p_x, player->p_y, r_y, r_x, player->rad);
+	//printf("px:%zu py:%zu r_y:%f r_x:%f rot:%f\n", player->p_x, player->p_y, r_y, r_x, player->rad);
 	put_line(&(cube->mlx->mini), line);
 	//my_pixel_put(&(cube->mlx->mini), cube->mlx->mini.border + floor(r_x), cube->mlx->mini.border + floor(r_y), get_color(1, 1, 1));
 	return (50);
@@ -492,7 +495,7 @@ void	mini_put_player(t_cubed *cube, t_img *mini, t_player *player)
 	line.len = 50; //ray_len(cube, &line, cube->player);
 	// line.len = cast_ray(cube, player, line.rot);
 	//printf("float:%f\t***rad:%f\t***\n", line.len, line.rot /PIE);
-	//put_line(mini, &line);
+	put_line(mini, &line);
 	ray_len(cube, &line, player);
 	//put_rays(cube, mini, &line);
 }
@@ -582,7 +585,7 @@ void	set_player(t_cubed *cube)
 	// cube->player->x_f = 0.5;
 	cube->player->y_i = y / MINISQ;
 	cube->player->y_f = (double)(y % MINISQ) / (double)(MINISQ);
-	cube->player->rad += 0.5;
+	//cube->player->rad += 0.5;
 	// printf("x%zu y%zu x%f y%f\n", cube->player->x_i, cube->player->y_i, cube->player->x_f, cube->player->y_f);
 	// cube->player->y_f = 0.5;
 	//cube->player->rad = PIE / 2 * rot; 
@@ -669,8 +672,11 @@ int	main(int argc, char **argv)
 	ft_bzero(&player, sizeof(t_player));
 	cube.player = &player;
 	cube.mlx = &mlx;
-	if (!ft_strncmp("1", argv[1], 1) && !parsing_map(&cube))
-		return (1);
+	if (!ft_strncmp("1", argv[1], 1))
+	{
+		if (!parsing_map(&cube))
+			return (1);
+	}
 	else
 	{
 		cube.map = &lines[0];
