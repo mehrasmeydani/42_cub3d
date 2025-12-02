@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/01 08:17:33 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/02 18:09:56 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	y_op(t_cubed *cube, t_player *player, float sine)
 			player->y_f = player->y_f - 1 - sine;
 		}
 		else
-			player->y_f = 0.95;
+			player->y_f = 0.99;
 	}
 	else if (player->y_f - sine < 0)
 	{
@@ -128,7 +128,7 @@ void	y_op(t_cubed *cube, t_player *player, float sine)
 			player->y_f = player->y_f + 1 - sine;
 		}
 		else
-			player->y_f = 0.05;
+			player->y_f = 0.02;
 	}
 	else
 		player->y_f -= sine;
@@ -145,7 +145,7 @@ void	x_op(t_cubed *cube, t_player *player, float cosine)
 			player->x_f = player->x_f - 1 + cosine;
 		}
 		else
-			player->x_f = 0.95;
+			player->x_f = 0.99;
 	}
 	else if (player->x_f + cosine < 0)
 	{
@@ -155,7 +155,7 @@ void	x_op(t_cubed *cube, t_player *player, float cosine)
 			player->x_f = player->x_f + 1 + cosine;
 		}
 		else
-			player->x_f = 0.05;
+			player->x_f = 0.01;
 	}
 	else
 		player->x_f += cosine;
@@ -525,12 +525,19 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 	// float	h_x;
 	// float	h_y;
 
+	// player->p_x = 543;// - cube->mlx->mini.border;
+	// player->p_y = 360;// - cube->mlx->mini.border;
+	// line->x = player->p_x + cube->mlx->mini.border;
+	// line->y = player->p_y + cube->mlx->mini.border;
+	// player->rad = 4.065570;
+	// int j = 0;
+	// // player->rad = 3.686424;
 	pa = player->rad - (15 * RAY_ANGL);
 	if (pa < 0)
 		pa += (2 * PIE);
 	else if (pa > 2 * PIE)
 		pa -= (2 * PIE);
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 360; i++)
 	{
 		float	a_tan = 1/tan(pa);
 		ssize_t	dof = 0;
@@ -564,6 +571,17 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 		{
 			mx = round(r_x);
 			my = floor(r_y);
+			// if (i == j && !(my < 0 || mx < 0 || mx > cube->max_x * MINISQ - 1 || my > cube->max_y * MINISQ - 1))
+			// {
+			// 	put_star(&(cube->mlx->mini), mx + cube->mlx->mini.border, my + cube->mlx->mini.border, get_color(1, 1, 1));
+			// 	put_star(&(cube->mlx->mini), mx + cube->mlx->mini.border + 1, my + cube->mlx->mini.border, get_color(1, 1, 1));
+			// 	put_star(&(cube->mlx->mini), mx + cube->mlx->mini.border, my + cube->mlx->mini.border + 1, get_color(1, 1, 1));
+			// 	put_star(&(cube->mlx->mini), mx + cube->mlx->mini.border - 1, my + cube->mlx->mini.border, get_color(1, 1, 1));
+			// 	put_star(&(cube->mlx->mini), mx + cube->mlx->mini.border, my + cube->mlx->mini.border - 1, get_color(1, 1, 1));
+			// 	//put_star(&(cube->mlx->mini), mx + cube->mlx->mini.border, my + cube->mlx->mini.border, get_color(1, 1, 1));
+			// 	printf("3:px:%i py:%i r_x:%f r_y:%f rot:%f\n", mx, my, r_x, r_y, pa);
+			// 	//put_line(&(cube->mlx->mini), line, get_color(0.1, 0.3, 0.8));
+			// }
 			if (my < 0 || mx < 0 || mx > cube->max_x * MINISQ || my > cube->max_y * MINISQ || cube->mini_map[my][mx] == '1')
 			{
 				dof = 8;
@@ -592,17 +610,16 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 		if (pa < PIE / 2 || pa > PIE  * 3 / 2) // right
 		{
 			r_x = ((ssize_t)(player->p_x / 64) * 64) + MINISQ;
-			r_y = (player->p_x - r_x) * n_tan + player->p_y;
+			r_y = (player->p_x - r_x) * n_tan + player->p_y - 0.0002;
 			x_offset = MINISQ;
 			y_offset = (x_offset) * -n_tan;
 		}
 		else if (pa > PIE / 2 && pa < PIE * 3 / 2) //left
 		{
-			r_x = (double)((float)((ssize_t)(player->p_x>>6)<<6) - 0.0002f);
-			r_y = (player->p_x - r_x) * n_tan + player->p_y;
+			r_x = floor((double)((float)((ssize_t)(player->p_x>>6)<<6) - 0.0002f));
+			r_y = floor((player->p_x - r_x) * n_tan) + player->p_y - 1;
 			x_offset = -MINISQ;
 			y_offset = x_offset * -n_tan;
-			printf("3:px:%zu py:%zu r_y:%f r_x:%f rot:%f\n", player->p_x, player->p_y, r_y, r_x, player->rad);
 		}
 		else
 		{
@@ -616,7 +633,18 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 		while (dof < sqrt(MINISQ))
 		{
 			mx = floor(r_x);
-			my = round(r_y);
+			my = floor(r_y);
+			// if ( !(my < 0 || mx < 0 || mx > cube->max_x * MINISQ - 1 || my > cube->max_y * MINISQ - 1))
+			// {
+			// 	put_star(&(cube->mlx->mini), mx + cube->mlx->mini.border, my + cube->mlx->mini.border, get_color(1, 1, 1));
+			// 	put_star(&(cube->mlx->mini), mx + cube->mlx->mini.border + 1, my + cube->mlx->mini.border, get_color(1, 1, 1));
+			// 	put_star(&(cube->mlx->mini), mx + cube->mlx->mini.border, my + cube->mlx->mini.border + 1, get_color(1, 1, 1));
+			// 	put_star(&(cube->mlx->mini), mx + cube->mlx->mini.border - 1, my + cube->mlx->mini.border, get_color(1, 1, 1));
+			// 	put_star(&(cube->mlx->mini), mx + cube->mlx->mini.border, my + cube->mlx->mini.border - 1, get_color(1, 1, 1));
+			// 	//put_star(&(cube->mlx->mini), mx + cube->mlx->mini.border, my + cube->mlx->mini.border, get_color(1, 1, 1));
+			// 	printf("3:px:%i py:%i r_x:%f r_y:%f rot:%f\n", mx, my, r_x, r_y, pa);
+			// 	//put_line(&(cube->mlx->mini), line, get_color(0.1, 0.3, 0.8));
+			// }
 			if (my < 0 || mx < 0 || mx > cube->max_x * MINISQ - 1 || my > cube->max_y * MINISQ - 1 || cube->mini_map[my][mx] == '1')
 			{
 				dof = 8;
@@ -642,10 +670,21 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 		line->y_end = floor(r_y) + cube->mlx->mini.border;
 		line->rot = pa;
 		//printf("2:px:%zu py:%zu r_y:%f r_x:%f rot:%f\n", player->p_x, player->p_y, r_y, r_x, player->rad);
-		put_line(&(cube->mlx->mini), line, get_color(0.1, 0.3, 0.8));
+		// if (i == j)
+		// {
+			//put_star(&(cube->mlx->mini), player->p_x, player->p_y, get_color(0, 0, 0));
+			printf("3:%i:px:%zu py:%zu r_x:%f r_y:%f rot:%f\n",i, player->p_x, player->p_y, r_x, r_y, player->rad);
+			//printf("3:%i:px:%zu py:%zu r_x:%f r_y:%f rot:%f\n",i, player->p_x, player->p_y, r_x, r_y, pa);
+			put_line(&(cube->mlx->mini), line, get_color(0.1, 0.3, 0.8));
+		 //}
 		pa += RAY_ANGL;
 		if (pa > 2 * PIE)
 			pa -= (2 * PIE);
+		// put_star(&(cube->mlx->mini), 543, 306, get_color(0, 0, 0));
+		// put_star(&(cube->mlx->mini), 543 + 1, 306 + 1, get_color(0, 0, 0));
+		// put_star(&(cube->mlx->mini), 543 - 1, 306 + 1, get_color(0, 0, 0));
+		// put_star(&(cube->mlx->mini), 543 + 1, 306 - 1, get_color(0, 0, 0));
+		// put_star(&(cube->mlx->mini), 543 - 1, 306 - 1, get_color(0, 0, 0));
 	}
 	return (50);
 }
