@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/02 18:35:00 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/02 18:50:36 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,23 +110,27 @@ int	mlx_exit(void *in)
 
 void	y_op(t_cubed *cube, t_player *player, float sine)
 {
-	if (player->y_f - sine > 1)
+	if (player->y_f - sine > 0.95)
 	{
-		if (cube->map[player->y_i + 1][player->x_i] != '1')
+		if (cube->map[player->y_i + 1][player->x_i] != '1' && player->y_f - sine > 1)
 		{
 			player->y_i++;
 			player->y_f = player->y_f - 1 - sine;
 		}
+		else if (cube->map[player->y_i + 1][player->x_i] != '1')
+			player->y_f -= sine;
 		else
 			player->y_f = 0.95;
 	}
-	else if (player->y_f - sine < 0)
+	else if (player->y_f - sine < 0.05)
 	{
-		if (cube->map[player->y_i - 1][player->x_i] != '1')
+		if (cube->map[player->y_i - 1][player->x_i] != '1' && player->y_f - sine < 0)
 		{
 			player->y_i--;
 			player->y_f = player->y_f + 1 - sine;
 		}
+		else if (cube->map[player->y_i - 1][player->x_i] != '1')
+			player->y_f -= sine;
 		else
 			player->y_f = 0.05;
 	}
@@ -137,23 +141,27 @@ void	y_op(t_cubed *cube, t_player *player, float sine)
 
 void	x_op(t_cubed *cube, t_player *player, float cosine)
 {
-	if (player->x_f + cosine > 1)
+	if (player->x_f + cosine > 0.95)
 	{
-		if (cube->map[player->y_i][player->x_i + 1] != '1')
+		if (cube->map[player->y_i][player->x_i + 1] != '1' && player->x_f + cosine > 1)
 		{
 			player->x_i++;
 			player->x_f = player->x_f - 1 + cosine;
 		}
+		else if (cube->map[player->y_i][player->x_i + 1] != '1')
+			player->x_f += cosine;
 		else
 			player->x_f = 0.95;
 	}
-	else if (player->x_f + cosine < 0)
+	else if (player->x_f + cosine < 0.05)
 	{
-		if (cube->map[player->y_i][player->x_i - 1] != '1')
+		if (cube->map[player->y_i][player->x_i - 1] != '1' && player->x_f + cosine < 0)
 		{
 			player->x_i--;
 			player->x_f = player->x_f + 1 + cosine;
 		}
+		else if (cube->map[player->y_i][player->x_i - 1] != '1')
+			player->x_f += cosine;
 		else
 			player->x_f = 0.05;
 	}
