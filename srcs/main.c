@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/02 18:09:56 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/02 18:35:00 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	y_op(t_cubed *cube, t_player *player, float sine)
 			player->y_f = player->y_f - 1 - sine;
 		}
 		else
-			player->y_f = 0.99;
+			player->y_f = 0.95;
 	}
 	else if (player->y_f - sine < 0)
 	{
@@ -128,7 +128,7 @@ void	y_op(t_cubed *cube, t_player *player, float sine)
 			player->y_f = player->y_f + 1 - sine;
 		}
 		else
-			player->y_f = 0.02;
+			player->y_f = 0.05;
 	}
 	else
 		player->y_f -= sine;
@@ -145,7 +145,7 @@ void	x_op(t_cubed *cube, t_player *player, float cosine)
 			player->x_f = player->x_f - 1 + cosine;
 		}
 		else
-			player->x_f = 0.99;
+			player->x_f = 0.95;
 	}
 	else if (player->x_f + cosine < 0)
 	{
@@ -155,7 +155,7 @@ void	x_op(t_cubed *cube, t_player *player, float cosine)
 			player->x_f = player->x_f + 1 + cosine;
 		}
 		else
-			player->x_f = 0.01;
+			player->x_f = 0.05;
 	}
 	else
 		player->x_f += cosine;
@@ -610,14 +610,14 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 		if (pa < PIE / 2 || pa > PIE  * 3 / 2) // right
 		{
 			r_x = ((ssize_t)(player->p_x / 64) * 64) + MINISQ;
-			r_y = (player->p_x - r_x) * n_tan + player->p_y - 0.0002;
+			r_y = (player->p_x - r_x) * n_tan + player->p_y;
 			x_offset = MINISQ;
 			y_offset = (x_offset) * -n_tan;
 		}
 		else if (pa > PIE / 2 && pa < PIE * 3 / 2) //left
 		{
-			r_x = floor((double)((float)((ssize_t)(player->p_x>>6)<<6) - 0.0002f));
-			r_y = floor((player->p_x - r_x) * n_tan) + player->p_y - 1;
+			r_x = floor((double)((float)((ssize_t)(player->p_x>>6)<<6) - 0.0001f));
+			r_y = floor((player->p_x - r_x) * n_tan) + player->p_y;
 			x_offset = -MINISQ;
 			y_offset = x_offset * -n_tan;
 		}
