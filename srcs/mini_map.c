@@ -25,12 +25,24 @@ static char	char_set(t_cubed *cube, char c, ssize_t k, ssize_t l)
 	return (c);
 }
 
+void	mini_map_helper(t_cubed *cube, ssize_t i, ssize_t k)
+{
+	ssize_t	l;
+	ssize_t	j;
+
+	j = -1;
+	while (cube->map[i][++j])
+	{
+		l = -1;
+		while (++l < MINISQ)
+			cube->mini_map[i * MINISQ + k][j * MINISQ + l] = char_set(cube, cube->map[i][j], k, l);
+	}
+}
+
 bool	mini_map(t_cubed *cube)
 {
 	ssize_t	i;
-	ssize_t	j;
 	ssize_t	k;
-	ssize_t	l;
 
 	cube->mini_map = (char **)ft_calloc(cube->max_y * MINISQ + 1, sizeof(char *));
 	if (!cube->mini_map)
@@ -41,16 +53,11 @@ bool	mini_map(t_cubed *cube)
 		k = -1;
 		while (++k < MINISQ)
 		{
-			j = -1;
-			cube->mini_map[i * MINISQ + k] = (char *)ft_calloc(ft_strlen(cube->map[i]) * MINISQ + 1, sizeof(char));
+			cube->mini_map[i * MINISQ + k] = ft_calloc(ft_strlen(cube->map[i])
+				* MINISQ + 1 , sizeof(char));
 			if (!cube->mini_map[i * MINISQ + k])
 				return (ft_free(cube->mini_map), ft_free(cube->map), 0);
-			while (cube->map[i][++j])
-			{
-				l = -1;
-				while (++l < MINISQ)
-					cube->mini_map[i * MINISQ + k][j * MINISQ + l] = char_set(cube, cube->map[i][j], k, l);
-			}
+			mini_map_helper(cube, i, k);
 		}
 	}
 	return (1);
