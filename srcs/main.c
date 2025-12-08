@@ -6,23 +6,11 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/08 21:14:47 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/08 21:33:25 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/cubed.h"
-
-float	PIE = 3.141592653589793;
-
-void	ft_free(char **in)
-{
-	ssize_t	i;
-
-	i = -1;
-	while (in && in[++i])
-		free(in[i]);
-	free(in);
-}
 
 int	parsing_map(t_cubed *cube)
 {
@@ -138,7 +126,7 @@ void	y_op(t_cubed *cube, t_player *player, float sine)
 	}
 	else
 		player->y_f -= sine;
-	player->p_y = (ssize_t)(((double)(player->y_i) + player->y_f) * 64);
+	player->p_y = (ssize_t)(((float)(player->y_i) + player->y_f) * 64);
 }
 
 void	x_op(t_cubed *cube, t_player *player, float cosine)
@@ -169,7 +157,7 @@ void	x_op(t_cubed *cube, t_player *player, float cosine)
 	}
 	else
 		player->x_f += cosine;
-	player->p_x = (ssize_t)round(((double)(player->x_i) + player->x_f) * 64);
+	player->p_x = (ssize_t)round(((float)(player->x_i) + player->x_f) * 64);
 }
 
 void	move(t_cubed *cube, bool dir)
@@ -188,19 +176,19 @@ void	move(t_cubed *cube, bool dir)
 	//printf("x%zu y%zu x%f y%f py%zu px%zu rot%f\n", cube->player->x_i, cube->player->y_i, cube->player->x_f, cube->player->y_f, cube->player->p_y, cube->player->p_x, cube->player->rad);
 }
 
-void turn(t_player *player, bool left)
+void turn(t_cubed *cube, t_player *player, bool left)
 {
 	if (left)
 	{
-		if (player->rad + TURN > PIE * 2)
-			player->rad = TURN + player->rad - PIE * 2;
+		if (player->rad + TURN > cube->pie * 2)
+			player->rad = TURN + player->rad - cube->pie * 2;
 		else
 			player->rad += TURN;
 	}
 	else
 	{
 		if (player->rad - TURN < 0)
-			player->rad = -TURN + player->rad + PIE * 2;
+			player->rad = -TURN + player->rad + cube->pie * 2;
 		else
 			player->rad -= TURN;
 	}
@@ -218,23 +206,13 @@ int	mlx_key(int key_code, void *in)
 	if (key_code == XK_S || key_code == XK_s)
 		move(cube, 0);
 	if (key_code == XK_A || key_code == XK_a)
-		turn(cube->player, 1);
+		turn(cube, cube->player, 1);
 	if (key_code == XK_d || key_code == XK_D)
-		turn(cube->player, 0);
+		turn(cube, cube->player, 0);
 	set_mini_img(cube, cube->mlx);
 	return (1);
 }
 
-ssize_t is_in(char c, char *str)
-{
-	ssize_t i;
-
-	i = -1;
-	while (str[++i])
-		if (str[i] == c)
-			return (i);
-	return (-1);
-}
 void	my_pixel_put(t_img *img, ssize_t x, ssize_t y, uint32_t color)
 {
 	char	*dst;
@@ -355,20 +333,20 @@ void	put_line(t_img *img, t_line *line, uint32_t color)
 
 void	ray_vert(t_ray *ray, t_player *player, t_cubed *cube)
 {
-	double	a_tan = 1/tan(ray->pa);
+	float	a_tan = 1/tan(ray->pa);
 	bool	hit = 0;
 	bool	down;
 
 	down = 0;
 	(void)down;
-	if (ray->pa < PIE) //up
+	if (ray->pa < cube->pie) //up
 	{
 		ray->r_y = ((ssize_t)(player->p_y / 64) * 64) - 0.0001;
 		ray->r_x = (player->p_y - ray->r_y) * a_tan + player->p_x;
 		ray->y_offset = - MINISQ;
 		ray->x_offset = ray->y_offset * -a_tan;
 	}
-	else if (ray->pa > PIE) //down
+	else if (ray->pa > cube->pie) //down
 	{
 		ray->r_y = ((ssize_t)(player->p_y>>6)<<6) + MINISQ;
 		ray->r_x = (player->p_y - ray->r_y - 0.01) * a_tan + player->p_x;
@@ -376,7 +354,7 @@ void	ray_vert(t_ray *ray, t_player *player, t_cubed *cube)
 		ray->x_offset = ray->y_offset * -a_tan - 0.5;
 		down = 1;
 	}
-	if (ray->pa == 0.00 || (ray->pa  == PIE))
+	if (ray->pa == 0.00 || (ray->pa  == cube->pie))
 	{
 		ray->r_x = player->p_x;
 		ray->r_y = player->p_x;
@@ -424,16 +402,16 @@ void	ray_hor(t_ray *ray, t_player *player, t_cubed *cube)
 	hit = 0;
 	left = 0;
 	(void)left;
-	if (ray->pa < PIE / 2 || ray->pa > PIE  * 3 / 2) // right
+	if (ray->pa < cube->pie / 2 || ray->pa > cube->pie  * 3 / 2) // right
 	{
 		ray->r_x = ((ssize_t)(player->p_x / 64) * 64) + MINISQ;
 		ray->r_y = (player->p_x - ray->r_x) * n_tan + player->p_y;
 		ray->x_offset = MINISQ;
 		ray->y_offset = (ray->x_offset) * -n_tan;
 	}
-	else if (ray->pa > PIE / 2 && ray->pa < PIE * 3 / 2) //left
+	else if (ray->pa > cube->pie / 2 && ray->pa < cube->pie * 3 / 2) //left
 	{
-		ray->r_x = (double)((float)((ssize_t)(player->p_x>>6)<<6) - 0.0001f);
+		ray->r_x = (float)((float)((ssize_t)(player->p_x>>6)<<6) - 0.0001f);
 		ray->r_y = floor((player->p_x - ray->r_x) * n_tan - 0.01) + player->p_y;
 		ray->x_offset = -MINISQ;
 		ray->y_offset = ray->x_offset * -n_tan + 0.5;
@@ -477,9 +455,9 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 	//player->rad = 3.590874; player->p_x = 555; player->p_y = 368;
 	ray.pa = player->rad - (120 * RAY_ANGL / 4);
 	if (ray.pa < 0)
-		ray.pa += (2 * PIE);
-	else if (ray.pa > 2 * PIE)
-		ray.pa -= (2 * PIE);
+		ray.pa += (2 * cube->pie);
+	else if (ray.pa > 2 * cube->pie)
+		ray.pa -= (2 * cube->pie);
 	for (int i = 0; i < 240; i++)
 	{
 		int k = 51;
@@ -498,7 +476,7 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 			line->x = player->p_x + cube->mlx->mini.border;
 			line->y = player->p_y + cube->mlx->mini.border;
 			line->len = 0;
-			if (ray.pa > PIE)
+			if (ray.pa > cube->pie)
 				line->x_end = floorf(ray.r_x) + cube->mlx->mini.border;
 			else
 				line->x_end = roundf(ray.r_x) + cube->mlx->mini.border;
@@ -508,8 +486,8 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 			//printf("l: ray: %f player->rad = %f; player->p_x = %zu; player->p_y = %zu;\n", ray.pa, player->rad, player->p_x, player->p_y);
 		}
 		ray.pa += (RAY_ANGL / 4);
-		if (ray.pa > 2 * PIE)
-			ray.pa -= (2 * PIE);
+		if (ray.pa > 2 * cube->pie)
+			ray.pa -= (2 * cube->pie);
 	}
 	return (50);
 }
@@ -589,41 +567,6 @@ bool	init_mlx(t_cubed *cube, t_mlx *mlx)
 	return (1);
 }
 
-
-void	set_player(t_cubed *cube)
-{
-	ssize_t	y;
-	ssize_t	x;
-	ssize_t	rot;
-	bool	stop;
-
-	stop = 1;
-	y = -1;
-	x = 0;
-	while (stop && cube->mini_map[++y])
-	{
-		x = -1;
-		while (stop && cube->mini_map[y][++x])
-		{
-			rot = is_in(cube->mini_map[y][x], "ENWS");
-			if (rot != -1)
-				stop = 0;
-		}
-	}
-	cube->player->p_x = x;
-	cube->player->p_y = y;
-	printf("%zu %zu\n", x, y);
-	cube->player->x_i = x / MINISQ;
-	cube->player->x_f = (double)(x % MINISQ) / (double)(MINISQ);
-	// cube->player->x_f = 0.5;
-	cube->player->y_i = y / MINISQ;
-	cube->player->y_f = (double)(y % MINISQ) / (double)(MINISQ);
-	//cube->player->rad += 0.5;
-	// printf("x%zu y%zu x%f y%f\n", cube->player->x_i, cube->player->y_i, cube->player->x_f, cube->player->y_f);
-	// cube->player->y_f = 0.5;
-	//cube->player->rad = PIE / 2 * rot;
-}
-
 bool	execute(t_cubed *cube)
 {
 	t_mlx	*mlx;
@@ -632,49 +575,6 @@ bool	execute(t_cubed *cube)
 	set_player(cube);
 	init_mlx(cube, mlx); // add check
 	mlx_loop(mlx->mlx);
-	return (1);
-}
-
-char	char_set(t_player *player, char c, ssize_t k, ssize_t l)
-{
-	float	rot;
-
-	rot = is_in(c, "ENWS");
-	if (rot != -1 && l == MINISQ / 2 && k == MINISQ / 2)
-		return (player->rad = PIE / 2 * rot, c);
-	else if (rot != -1)
-		return ('0');
-	return (c);
-}
-
-bool	mini_map(t_cubed *cube)
-{
-	ssize_t	i;
-	ssize_t	j;
-	ssize_t	k;
-	ssize_t	l;
-
-	cube->mini_map = (char **)ft_calloc(cube->max_y * MINISQ + 1, sizeof(char *));
-	if (!cube->mini_map)
-		return (ft_free(cube->map), 0);
-	i = -1;
-	while (++i < cube->max_y)
-	{
-		k = -1;
-		while (++k < MINISQ)
-		{
-			j = -1;
-			cube->mini_map[i * MINISQ + k] = (char *)ft_calloc(ft_strlen(cube->map[i]) * MINISQ + 1, sizeof(char));
-			if (!cube->mini_map[i * MINISQ + k])
-				return (ft_free(cube->mini_map), ft_free(cube->map), 0);
-			while (cube->map[i][++j])
-			{
-				l = -1;
-				while (++l < MINISQ)
-					cube->mini_map[i * MINISQ + k][j * MINISQ + l] = char_set(cube->player, cube->map[i][j], k, l);
-			}
-		}
-	}
 	return (1);
 }
 
@@ -705,6 +605,7 @@ int	main(int argc, char **argv)
 	ft_bzero(&player, sizeof(t_player));
 	cube.player = &player;
 	cube.mlx = &mlx;
+	cube.pie = 3.141592653589793;
 	if (!ft_strncmp("1", argv[1], 1))
 	{
 		if (!parsing_map(&cube))
@@ -718,10 +619,6 @@ int	main(int argc, char **argv)
 	}
 	if (!mini_map(&cube))
 		return (1);
-	// for (int i = 0; cube.mini_map[i]; i++)
-	// {
-	// 	ft_putendl_fd(cube.mini_map[i], 1);
-	// }
 	puts("lmao");
 	if (!execute(&cube))
 		return (1);
