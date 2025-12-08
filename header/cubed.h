@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/08 21:34:14 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/08 22:30:44 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # endif
 # define TURN 0.17364817766
 # define RAY_ANGL 0.0174533
-# define RAY_NUMBER 25
 
 typedef struct s_ray
 {

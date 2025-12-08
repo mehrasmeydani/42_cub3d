@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/08 21:33:25 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/08 22:29:53 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	parsing_map(t_cubed *cube)
 	ssize_t	i;
 	ssize_t	j;
 
-	j = 10;
+	j = 15;
 	cube->map = ft_calloc(j, sizeof(char *));
 	if (!cube->map)
 		return (0);
@@ -26,30 +26,30 @@ int	parsing_map(t_cubed *cube)
 	{
 		if (i == 0 || i == j - 2)
 		{
-			cube->map[i] = ft_strdup("1111111");
+			cube->map[i] = ft_strdup("11111111111111111111111111111111111111");
 			if (!cube->map[i])
 				return (ft_free(cube->map), 0);
 		}
 		else if (i == 1)
 		{
-			cube->map[i] = ft_strdup("1000001");
+			cube->map[i] = ft_strdup("10000000000000000000000000000000000001");
 			if (!cube->map[i])
 				return (ft_free(cube->map), 0);
 		}
 		else if (i == j - 3)
 		{
-			cube->map[i] = ft_strdup("10W0011");
+			cube->map[i] = ft_strdup("10W00000000000000000000000000000000011");
 			if (!cube->map[i])
 				return (ft_free(cube->map), 0);
 		}
 		else
 		{
-			cube->map[i] = ft_strdup("1000001");
+			cube->map[i] = ft_strdup("10000000000000000000000000000000000001");
 			if (!cube->map[i])
 				return (ft_free(cube->map), 0);
 		}
 	}
-	cube->max_y = 9;
+	cube->max_y = 14;
 	cube->max_x = ft_strlen(cube->map[0]);
 	return (1);
 }
@@ -126,7 +126,7 @@ void	y_op(t_cubed *cube, t_player *player, float sine)
 	}
 	else
 		player->y_f -= sine;
-	player->p_y = (ssize_t)(((float)(player->y_i) + player->y_f) * 64);
+	player->p_y = (ssize_t)(((float)(player->y_i) + player->y_f) * MINISQ);
 }
 
 void	x_op(t_cubed *cube, t_player *player, float cosine)
@@ -157,7 +157,7 @@ void	x_op(t_cubed *cube, t_player *player, float cosine)
 	}
 	else
 		player->x_f += cosine;
-	player->p_x = (ssize_t)round(((float)(player->x_i) + player->x_f) * 64);
+	player->p_x = (ssize_t)round(((float)(player->x_i) + player->x_f) * MINISQ);
 }
 
 void	move(t_cubed *cube, bool dir)
@@ -239,6 +239,7 @@ void	fill_map(t_img *img)
 	ssize_t	y;
 
 	y = -1;
+	x = -1;
 	while (++y < img->height)
 	{
 		x = -1;
@@ -254,6 +255,7 @@ void	fill_map(t_img *img)
 				my_pixel_put(img, x, y, get_color(1, 1, 1));
 		}
 	}
+	printf("%zu %zu\n", x, y);
 }
 
 void	mini_put_sq(t_img *mini, ssize_t x, ssize_t y, char c)
@@ -331,6 +333,18 @@ void	put_line(t_img *img, t_line *line, uint32_t color)
 	}
 }
 
+		// if (!(ray->my < 0 || ray->mx < 0 || ray->mx > cube->max_x * MINISQ - 1 || ray->my > cube->max_y * MINISQ - 1))
+		// {
+		// 	put_star(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border + 1, ray->my + cube->mlx->mini.border, get_color(1, 1, 1));
+		// 	put_star(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border, ray->my + cube->mlx->mini.border + 1, get_color(1, 1, 1));
+		// 	put_star(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border - 1, ray->my + cube->mlx->mini.border, get_color(1, 1, 1));
+		// 	put_star(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border, ray->my + cube->mlx->mini.border - 1, get_color(1, 1, 1));
+		// 	my_pixel_put(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border, ray->my + cube->mlx->mini.border, get_color(0, 0, 0));
+		// 	//put_star(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border, ray->my + cube->mlx->mini.border, get_color(1, 1, 1));
+		// 	printf("3:px:%zu py:%zu ray->r_x:%f ray->r_y:%f rot:%f char:%c \n", ray->mx, ray->my, ray->r_x, ray->r_y, ray->pa, cube->mini_map[ray->my][ray->mx]);
+		// 	//put_line(&(cube->mlx->mini), line, get_color(0.1, 0.3, 0.8));
+		// }
+
 void	ray_vert(t_ray *ray, t_player *player, t_cubed *cube)
 {
 	float	a_tan = 1/tan(ray->pa);
@@ -341,17 +355,17 @@ void	ray_vert(t_ray *ray, t_player *player, t_cubed *cube)
 	(void)down;
 	if (ray->pa < cube->pie) //up
 	{
-		ray->r_y = ((ssize_t)(player->p_y / 64) * 64) - 0.0001;
+		ray->r_y = ((ssize_t)(player->p_y / MINISQ) * MINISQ) - 0.0001;
 		ray->r_x = (player->p_y - ray->r_y) * a_tan + player->p_x;
 		ray->y_offset = - MINISQ;
 		ray->x_offset = ray->y_offset * -a_tan;
 	}
 	else if (ray->pa > cube->pie) //down
 	{
-		ray->r_y = ((ssize_t)(player->p_y>>6)<<6) + MINISQ;
+		ray->r_y = ((ssize_t)((ssize_t)(player->p_y / MINISQ) * MINISQ)) + MINISQ;
 		ray->r_x = (player->p_y - ray->r_y - 0.01) * a_tan + player->p_x;
 		ray->y_offset = MINISQ;
-		ray->x_offset = ray->y_offset * -a_tan - 0.5;
+		ray->x_offset = ray->y_offset * -a_tan;
 		down = 1;
 	}
 	if (ray->pa == 0.00 || (ray->pa  == cube->pie))
@@ -364,19 +378,6 @@ void	ray_vert(t_ray *ray, t_player *player, t_cubed *cube)
 	{
 		ray->mx = ray->r_x;
 		ray->my = ray->r_y;
-		// if (!(ray->my < 0 || ray->mx < 0 || ray->mx > cube->max_x * MINISQ - 1 || ray->my > cube->max_y * MINISQ - 1))
-		// {
-		// 	put_star(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border + 1, ray->my + cube->mlx->mini.border, get_color(1, 1, 1));
-		// 	put_star(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border, ray->my + cube->mlx->mini.border + 1, get_color(1, 1, 1));
-		// 	put_star(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border - 1, ray->my + cube->mlx->mini.border, get_color(1, 1, 1));
-		// 	put_star(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border, ray->my + cube->mlx->mini.border - 1, get_color(1, 1, 1));
-		// 	my_pixel_put(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border, ray->my + cube->mlx->mini.border, get_color(0, 0, 0));
-		// 	//put_star(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border, ray->my + cube->mlx->mini.border, get_color(1, 1, 1));
-		// 	printf("3:px:%zu py:%zu ray->r_x:%f ray->r_y:%f rot:%f char:%c \n", ray->mx, ray->my, ray->r_x, ray->r_y, ray->pa, cube->mini_map[ray->my][ray->mx]);
-		// 	//put_line(&(cube->mlx->mini), line, get_color(0.1, 0.3, 0.8));
-		// }
-		// if (down && ray->mx > 0 && ray->mx % MINISQ == 0)
-		// 	ray->mx--;
 		if (ray->my < 1 || ray->mx < 1 || ray->mx > cube->max_x * MINISQ + 1 || ray->my > cube->max_y * MINISQ - 1
 			|| !cube->mini_map[ray->my + 1] || cube->mini_map[ray->my + 1][ray->mx] == '1' || cube->mini_map[ray->my - 1][ray->mx] == '1'
 			|| cube->mini_map[ray->my][ray->mx + 1] == '1' || cube->mini_map[ray->my][ray->mx - 1] == '1'
@@ -404,17 +405,17 @@ void	ray_hor(t_ray *ray, t_player *player, t_cubed *cube)
 	(void)left;
 	if (ray->pa < cube->pie / 2 || ray->pa > cube->pie  * 3 / 2) // right
 	{
-		ray->r_x = ((ssize_t)(player->p_x / 64) * 64) + MINISQ;
+		ray->r_x = ((ssize_t)(player->p_x / MINISQ) * MINISQ) + MINISQ;
 		ray->r_y = (player->p_x - ray->r_x) * n_tan + player->p_y;
 		ray->x_offset = MINISQ;
 		ray->y_offset = (ray->x_offset) * -n_tan;
 	}
 	else if (ray->pa > cube->pie / 2 && ray->pa < cube->pie * 3 / 2) //left
 	{
-		ray->r_x = (float)((float)((ssize_t)(player->p_x>>6)<<6) - 0.0001f);
+		ray->r_x = (float)((float)((ssize_t)(player->p_x / MINISQ) * MINISQ) - 0.0001f);
 		ray->r_y = floor((player->p_x - ray->r_x) * n_tan - 0.01) + player->p_y;
 		ray->x_offset = -MINISQ;
-		ray->y_offset = ray->x_offset * -n_tan + 0.5;
+		ray->y_offset = ray->x_offset * -n_tan;
 		left = 1;
 	}
 	else
@@ -427,9 +428,6 @@ void	ray_hor(t_ray *ray, t_player *player, t_cubed *cube)
 	{
 		ray->mx = floor(ray->r_x);
 		ray->my = floor(ray->r_y);
-		// if (left && ray->my > 0 && ray->my % MINISQ == MINISQ - 1)
-		// 	ray->my++;
-		//printf("%zu %zu", ray->mx, ray->my);
 		if (ray->my < 1 || ray->mx < 1 || ray->mx >= cube->max_x * MINISQ - 1 || ray->my >= cube->max_y * MINISQ - 1
 			|| !cube->mini_map[ray->my + 1] || cube->mini_map[ray->my + 1][ray->mx] == '1' || cube->mini_map[ray->my - 1][ray->mx] == '1'
 			|| cube->mini_map[ray->my][ray->mx + 1] == '1' || cube->mini_map[ray->my][ray->mx - 1] == '1'
@@ -449,43 +447,31 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 	t_ray	ray;
 
 	ft_bzero(&ray, sizeof(ray));
-	// player->rad = 4.381017; player->p_x = 519; player->p_y = 377;
-	//player->rad = 4.175519; player->p_x = 582; player->p_y = 153;
-	//player->rad = 4.207368; player->p_x = 594; player->p_y = 171;
-	//player->rad = 3.590874; player->p_x = 555; player->p_y = 368;
-	ray.pa = player->rad - (120 * RAY_ANGL / 4);
+	ray.pa = player->rad - 45 * RAY_ANGL;
 	if (ray.pa < 0)
 		ray.pa += (2 * cube->pie);
 	else if (ray.pa > 2 * cube->pie)
 		ray.pa -= (2 * cube->pie);
-	for (int i = 0; i < 240; i++)
+	for (int i = 0; i < 900; i++)
 	{
-		int k = 51;
-		int	j = 51;
-		k = 0;
-		j = 239;
-		if (k <= i && i <= j)
+		ray_vert(&ray, player, cube);
+		ray_hor(&ray, player, cube);
+		if (ray.dist_v < ray.dist_h && ray.dist_v != 0)
 		{
-			ray_vert(&ray, player, cube);
-			ray_hor(&ray, player, cube);
-			if (ray.dist_v < ray.dist_h && ray.dist_v != 0)
-			{
-				ray.r_y = ray.v_y;
-				ray.r_x = ray.v_x;
-			}
-			line->x = player->p_x + cube->mlx->mini.border;
-			line->y = player->p_y + cube->mlx->mini.border;
-			line->len = 0;
-			if (ray.pa > cube->pie)
-				line->x_end = floorf(ray.r_x) + cube->mlx->mini.border;
-			else
-				line->x_end = roundf(ray.r_x) + cube->mlx->mini.border;
-			line->y_end = round(ray.r_y) + cube->mlx->mini.border;
-			line->rot = ray.pa;
-			put_line(&(cube->mlx->mini), line, get_color(0.1, 0.3, 0.8));
-			//printf("l: ray: %f player->rad = %f; player->p_x = %zu; player->p_y = %zu;\n", ray.pa, player->rad, player->p_x, player->p_y);
+			ray.r_y = ray.v_y;
+			ray.r_x = ray.v_x;
 		}
-		ray.pa += (RAY_ANGL / 4);
+		line->x = player->p_x + cube->mlx->mini.border;
+		line->y = player->p_y + cube->mlx->mini.border;
+		line->len = 0;
+		if (ray.pa > cube->pie)
+			line->x_end = floorf(ray.r_x) + cube->mlx->mini.border;
+		else
+			line->x_end = roundf(ray.r_x) + cube->mlx->mini.border;
+		line->y_end = round(ray.r_y) + cube->mlx->mini.border;
+		line->rot = ray.pa;
+		put_line(&(cube->mlx->mini), line, get_color(0.1, 0.3, 0.8));
+		ray.pa += (RAY_ANGL / 10);
 		if (ray.pa > 2 * cube->pie)
 			ray.pa -= (2 * cube->pie);
 	}
@@ -527,6 +513,7 @@ void	set_mini_img(t_cubed *cube, t_mlx *mlx)
 		{
 			mini_put_sq(mini, j, i, cube->mini_map[i][j]);
 		}
+		//printf("%zu %zu\n", j, i);
 	}
 	mini_put_player(cube, mini, cube->player);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mini->img, 0, 0);
@@ -552,16 +539,15 @@ bool	init_mini_map(t_cubed *cube, t_mlx *mlx)
 
 bool	init_mlx(t_cubed *cube, t_mlx *mlx)
 {
-	mlx->mlx = NULL;
 	mlx->mlx = mlx_init();
 	if (!mlx->mlx)
 		return (0);
 	mlx_get_screen_size(mlx->mlx, &mlx->x_win, &mlx->y_win);
 	mlx->win = mlx_new_window(mlx->mlx, mlx->x_win, mlx->y_win, "cub3d");
-	if (!init_mini_map(cube, mlx))
-		return (ft_putendl_fd("fail mini", 2), 0);
 	mlx_hook(mlx->win, 2, (1L<<0), &mlx_key, cube);
 	mlx_hook(mlx->win, 17, 0L, &mlx_exit, cube);
+	if (!init_mini_map(cube, mlx))
+		return (ft_putendl_fd("fail mini", 2), 0);
 	if (!mlx->win)
 		return (free_mlx(mlx), 0);
 	return (1);
