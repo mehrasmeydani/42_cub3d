@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/01 07:58:15 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/08 19:13:38 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,21 @@
 # define TURN 0.17364817766
 # define RAY_ANGL 0.0174533
 # define RAY_NUMBER 25
+
+typedef struct s_ray
+{
+	float	r_y;
+	float	r_x;
+	float	x_offset;
+	float	y_offset;
+	float	dist_v;
+	float	dist_h;
+	float	v_x;
+	float	v_y;
+	float	pa;
+	ssize_t	mx;
+	ssize_t	my;
+}	t_ray;
 
 typedef	struct s_line
 {
@@ -66,7 +81,6 @@ typedef struct	s_mlx
 	int			x_win;
 	int			y_win;
 }	t_mlx;
-
 
 typedef struct	s_player
 {
