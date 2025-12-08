@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/08 22:30:44 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/08 22:44:20 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define RED 0xff0000
 # define GRN 0x00ff00
 # define BLU 0x0000ff
-# define MINISQ 64
+# define MINISQ 49
 // # define cube->pie 3.141592653589793
 // # define TURN	0.0348994967
 # ifndef MOVE
@@ -101,6 +101,8 @@ typedef struct	s_cubed
 	ssize_t		max_x;
 	ssize_t		max_y;
 	float		pie;
+	bool		mini;
+	bool		ray;
 }	t_cubed;
 
 void	set_mini_img(t_cubed *cube, t_mlx *mlx);

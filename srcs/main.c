@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/08 22:29:53 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/08 23:00:28 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,8 +172,6 @@ void	move(t_cubed *cube, bool dir)
 		y_op(cube, cube->player, sin(cube->player->rad) / MOVE * -1);
 		x_op(cube, cube->player, cos(cube->player->rad) / MOVE * -1);
 	}
-
-	//printf("x%zu y%zu x%f y%f py%zu px%zu rot%f\n", cube->player->x_i, cube->player->y_i, cube->player->x_f, cube->player->y_f, cube->player->p_y, cube->player->p_x, cube->player->rad);
 }
 
 void turn(t_cubed *cube, t_player *player, bool left)
@@ -209,6 +207,10 @@ int	mlx_key(int key_code, void *in)
 		turn(cube, cube->player, 1);
 	if (key_code == XK_d || key_code == XK_D)
 		turn(cube, cube->player, 0);
+	if (key_code == XK_R || key_code == XK_r)
+		cube->ray = !cube->ray;
+	if (key_code == XK_q || key_code == XK_q)
+		cube->mini = !cube->mini;
 	set_mini_img(cube, cube->mlx);
 	return (1);
 }
@@ -255,7 +257,6 @@ void	fill_map(t_img *img)
 				my_pixel_put(img, x, y, get_color(1, 1, 1));
 		}
 	}
-	printf("%zu %zu\n", x, y);
 }
 
 void	mini_put_sq(t_img *mini, ssize_t x, ssize_t y, char c)
@@ -327,7 +328,7 @@ void	put_line(t_img *img, t_line *line, uint32_t color)
 	float yf = y;
 	for (ssize_t i = 0; i <= steps; i++)
 	{
-		put_star_small(img, (ssize_t)roundf(xf), (ssize_t)roundf(yf), color);
+		my_pixel_put(img, (ssize_t)roundf(xf), (ssize_t)roundf(yf), color);
 		xf += x_inc;
 		yf += y_inc;
 	}
@@ -442,12 +443,15 @@ void	ray_hor(t_ray *ray, t_player *player, t_cubed *cube)
 	ray->dist_h = sqrt((ray->r_x - player->p_x) * (ray->r_x - player->p_x) + (ray->r_y - player->p_y) * (ray->r_y - player->p_y));
 }
 
-float	ray_len (t_cubed *cube, t_line *line, t_player *player)
+void	ray_cal(t_cubed *cube, t_line *line, t_player *player)
 {
 	t_ray	ray;
 
 	ft_bzero(&ray, sizeof(ray));
 	ray.pa = player->rad - 45 * RAY_ANGL;
+	line->x = player->p_x + cube->mlx->mini.border;
+	line->y = player->p_y + cube->mlx->mini.border;
+	line->len = 0;
 	if (ray.pa < 0)
 		ray.pa += (2 * cube->pie);
 	else if (ray.pa > 2 * cube->pie)
@@ -461,39 +465,31 @@ float	ray_len (t_cubed *cube, t_line *line, t_player *player)
 			ray.r_y = ray.v_y;
 			ray.r_x = ray.v_x;
 		}
-		line->x = player->p_x + cube->mlx->mini.border;
-		line->y = player->p_y + cube->mlx->mini.border;
-		line->len = 0;
 		if (ray.pa > cube->pie)
 			line->x_end = floorf(ray.r_x) + cube->mlx->mini.border;
 		else
 			line->x_end = roundf(ray.r_x) + cube->mlx->mini.border;
 		line->y_end = round(ray.r_y) + cube->mlx->mini.border;
 		line->rot = ray.pa;
-		put_line(&(cube->mlx->mini), line, get_color(0.1, 0.3, 0.8));
 		ray.pa += (RAY_ANGL / 10);
 		if (ray.pa > 2 * cube->pie)
 			ray.pa -= (2 * cube->pie);
+		//put_ray();
+		if (cube->ray)
+			put_line(&(cube->mlx->mini), line, get_color(0.1, 0.3, 0.8));
 	}
-	return (50);
 }
 
-void	mini_put_player(t_cubed *cube, t_img *mini, t_player *player)
+void	mini_put_player(t_img *mini, t_player *player)
 {
-	ssize_t i;
-	ssize_t j;
 	t_line	line;
 
-	i = mini->border + player->p_x;
-	j = mini->border + player->p_y;
-	line.x = i;
-	line.y = j;
-	(void)cube;
-	ray_len(cube, &line, player);
+	line.x = player->p_x + mini->border;
+	line.y = player->p_y + mini->border;
+	line.len = 50;
 	line.rot = player->rad;
-	line.len = 20;
-	//put_line(mini, &line, get_color(1, 1, 1));
-	put_star(mini, i, j, get_color(1, 0, 1));
+	put_line(mini, &line, get_color(1, 1, 1));
+	put_star(mini, player->p_x + mini->border, player->p_y + mini->border, get_color(1, 0, 1));
 }
 
 void	set_mini_img(t_cubed *cube, t_mlx *mlx)
@@ -501,6 +497,7 @@ void	set_mini_img(t_cubed *cube, t_mlx *mlx)
 	ssize_t	i;
 	ssize_t j;
 	t_img	*mini;
+	t_line	line;
 
 	i = -1;
 	(void)cube;
@@ -513,9 +510,9 @@ void	set_mini_img(t_cubed *cube, t_mlx *mlx)
 		{
 			mini_put_sq(mini, j, i, cube->mini_map[i][j]);
 		}
-		//printf("%zu %zu\n", j, i);
 	}
-	mini_put_player(cube, mini, cube->player);
+	mini_put_player(mini, cube->player);
+	ray_cal(cube, &line, cube->player);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mini->img, 0, 0);
 }
 
