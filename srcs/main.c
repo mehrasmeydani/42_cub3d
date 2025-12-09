@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/08 23:00:28 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/09 01:10:20 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ int	mlx_key(int key_code, void *in)
 	t_cubed *cube;
 
 	cube = (t_cubed *)in;
+	mlx_clear_window(cube->mlx->mlx, cube->mlx->win);
 	if (key_code == XK_Escape)
 		mlx_exit(in);
 	if (key_code == XK_W || key_code == XK_w)
@@ -211,7 +212,9 @@ int	mlx_key(int key_code, void *in)
 		cube->ray = !cube->ray;
 	if (key_code == XK_q || key_code == XK_q)
 		cube->mini = !cube->mini;
-	set_mini_img(cube, cube->mlx);
+	if (cube->mini)
+		set_mini_img(cube, cube->mlx);
+	put_image(cube, cube->mlx);
 	return (1);
 }
 
@@ -313,7 +316,6 @@ void	put_line(t_img *img, t_line *line, uint32_t color)
 	{
 		line->x_end = line->x + roundf(cos(line->rot) * line->len);
 		line->y_end = line->y - roundf(sin(line->rot) * line->len);
-		//puts("yo");
 	}
 
 	ssize_t dx = line->x_end - line->x;
@@ -379,7 +381,7 @@ void	ray_vert(t_ray *ray, t_player *player, t_cubed *cube)
 	{
 		ray->mx = ray->r_x;
 		ray->my = ray->r_y;
-		if (ray->my < 1 || ray->mx < 1 || ray->mx > cube->max_x * MINISQ + 1 || ray->my > cube->max_y * MINISQ - 1
+		if (ray->my < 1 || ray->mx < 1 || ray->mx > cube->max_x * MINISQ - 1 || ray->my > cube->max_y * MINISQ - 1
 			|| !cube->mini_map[ray->my + 1] || cube->mini_map[ray->my + 1][ray->mx] == '1' || cube->mini_map[ray->my - 1][ray->mx] == '1'
 			|| cube->mini_map[ray->my][ray->mx + 1] == '1' || cube->mini_map[ray->my][ray->mx - 1] == '1'
 			|| cube->mini_map[ray->my][ray->mx] == '1')
@@ -439,24 +441,42 @@ void	ray_hor(t_ray *ray, t_player *player, t_cubed *cube)
 			ray->r_x += ray->x_offset;
 			ray->r_y += ray->y_offset;
 		}
+		// ray->dist_h = sqrt((ray->r_x - player->p_x) * (ray->r_x - player->p_x) + (ray->r_y - player->p_y) * (ray->r_y - player->p_y));
+		// if (ray->dist_h >= ray->dist_v)
+		// 	return ;
 	}
 	ray->dist_h = sqrt((ray->r_x - player->p_x) * (ray->r_x - player->p_x) + (ray->r_y - player->p_y) * (ray->r_y - player->p_y));
+}
+
+void	init_ray(t_cubed *cube, t_img *mini, t_ray *ray, t_line *line)
+{
+	ft_bzero(ray, sizeof(*ray));
+	ray->pa = cube->player->rad - 45 * RAY_ANGL;
+	line->x = cube->player->p_x + mini->border;
+	line->y = cube->player->p_y + mini->border;
+	line->len = 0;
+	if (ray->pa < 0)
+		ray->pa += (2 * cube->pie);
+	else if (ray->pa > 2 * cube->pie)
+		ray->pa -= (2 * cube->pie);
+}
+
+void	put_ray(t_img *game, t_ray *ray)
+{
+	(void)ray;
+	(void)game;
 }
 
 void	ray_cal(t_cubed *cube, t_line *line, t_player *player)
 {
 	t_ray	ray;
+	t_img	*mini;
+	t_img	*game;
 
-	ft_bzero(&ray, sizeof(ray));
-	ray.pa = player->rad - 45 * RAY_ANGL;
-	line->x = player->p_x + cube->mlx->mini.border;
-	line->y = player->p_y + cube->mlx->mini.border;
-	line->len = 0;
-	if (ray.pa < 0)
-		ray.pa += (2 * cube->pie);
-	else if (ray.pa > 2 * cube->pie)
-		ray.pa -= (2 * cube->pie);
-	for (int i = 0; i < 900; i++)
+	mini = &cube->mlx->mini;
+	init_ray(cube, mini, &ray, line);
+	game = &cube->mlx->game;
+	for (int i = 0; i < game->width / 2; i++)
 	{
 		ray_vert(&ray, player, cube);
 		ray_hor(&ray, player, cube);
@@ -464,19 +484,22 @@ void	ray_cal(t_cubed *cube, t_line *line, t_player *player)
 		{
 			ray.r_y = ray.v_y;
 			ray.r_x = ray.v_x;
+			ray.dist_opt = ray.dist_v;
 		}
-		if (ray.pa > cube->pie)
-			line->x_end = floorf(ray.r_x) + cube->mlx->mini.border;
 		else
-			line->x_end = roundf(ray.r_x) + cube->mlx->mini.border;
-		line->y_end = round(ray.r_y) + cube->mlx->mini.border;
+			ray.dist_opt = ray.dist_h;
+		if (ray.pa > cube->pie)
+			line->x_end = floorf(ray.r_x) + mini->border;
+		else
+			line->x_end = roundf(ray.r_x) + mini->border;
+		line->y_end = round(ray.r_y) + mini->border;
 		line->rot = ray.pa;
-		ray.pa += (RAY_ANGL / 10);
+		ray.pa += (RAY_ANGL / (((float)(game->width) / 2.0f) / 90.0f));
 		if (ray.pa > 2 * cube->pie)
 			ray.pa -= (2 * cube->pie);
 		//put_ray();
-		if (cube->ray)
-			put_line(&(cube->mlx->mini), line, get_color(0.1, 0.3, 0.8));
+		if (cube->mini && cube->ray)
+			put_line(mini, line, get_color(0.1, 0.3, 0.8));
 	}
 }
 
@@ -497,7 +520,6 @@ void	set_mini_img(t_cubed *cube, t_mlx *mlx)
 	ssize_t	i;
 	ssize_t j;
 	t_img	*mini;
-	t_line	line;
 
 	i = -1;
 	(void)cube;
@@ -512,8 +534,6 @@ void	set_mini_img(t_cubed *cube, t_mlx *mlx)
 		}
 	}
 	mini_put_player(mini, cube->player);
-	ray_cal(cube, &line, cube->player);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mini->img, 0, 0);
 }
 
 bool	init_mini_map(t_cubed *cube, t_mlx *mlx)
@@ -534,17 +554,48 @@ bool	init_mini_map(t_cubed *cube, t_mlx *mlx)
 	return (1);
 }
 
+void	put_image(t_cubed *cube, t_mlx *mlx)
+{
+	t_line	line;
+	ray_cal(cube, &line, cube->player);
+	if (cube->mini)
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->mini.img, 0, 0);
+}
+
+bool	init_game(t_cubed *cube, t_mlx *mlx)
+{
+	t_img	*game;
+	t_line	line;
+	
+	game = &mlx->game;
+	game->border = 0;
+	game->height = mlx->y_win;
+	game->width = mlx->x_win;
+	game->img = mlx_new_image(mlx->mlx, game->width, game->height);
+	if (!game->img)
+		return (0);
+	game->addr = mlx_get_data_addr(game->img, &game->bits_per_pixel, &game->line_length, &game->endian);
+	if (!game->addr)
+		return (0);
+	ray_cal(cube, &line, cube->player);
+	return (1);
+}
+
 bool	init_mlx(t_cubed *cube, t_mlx *mlx)
 {
 	mlx->mlx = mlx_init();
 	if (!mlx->mlx)
 		return (0);
 	mlx_get_screen_size(mlx->mlx, &mlx->x_win, &mlx->y_win);
+	if ((float)(mlx->x_win) / (float)(mlx->y_win) > 16.0f / 9.0f)
+		mlx->x_win = (float)(mlx->y_win) * 16.0f / 9.0f;
 	mlx->win = mlx_new_window(mlx->mlx, mlx->x_win, mlx->y_win, "cub3d");
 	mlx_hook(mlx->win, 2, (1L<<0), &mlx_key, cube);
 	mlx_hook(mlx->win, 17, 0L, &mlx_exit, cube);
 	if (!init_mini_map(cube, mlx))
-		return (ft_putendl_fd("fail mini", 2), 0);
+		return (free_mlx(mlx), ft_putendl_fd("fail mini", 2), 0);
+	if (!init_game(cube, mlx))
+		return (free_mlx(mlx), ft_putendl_fd("game failed", 2), 0);
 	if (!mlx->win)
 		return (free_mlx(mlx), 0);
 	return (1);

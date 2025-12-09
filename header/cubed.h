@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/08 22:44:20 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/09 00:55:35 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_ray
 	float	v_x;
 	float	v_y;
 	float	pa;
+	float_t	dist_opt;
 	ssize_t	mx;
 	ssize_t	my;
 }	t_ray;
@@ -73,12 +74,13 @@ typedef struct s_img
 
 typedef struct	s_mlx
 {
-	void		*mlx;
-	void		*win;
-	void		*ptr;
-	t_img		mini;
-	int			x_win;
-	int			y_win;
+	void	*mlx;
+	void	*win;
+	void	*ptr;
+	t_img	mini;
+	t_img	game;
+	int		x_win;
+	int		y_win;
 }	t_mlx;
 
 typedef struct	s_player
@@ -110,6 +112,7 @@ void	ft_free(char **in);
 ssize_t is_in(char c, char *str);
 bool	mini_map(t_cubed *cube);
 void	set_player(t_cubed *cube);
+void	put_image(t_cubed *cube, t_mlx *mlx);
 
 #endif
 
