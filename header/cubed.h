@@ -6,7 +6,7 @@
 /*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/09 21:49:35 by megardes         ###   ########.fr       */
+/*   Updated: 2025/12/09 23:35:37 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define RED 0xff0000
 # define GRN 0x00ff00
 # define BLU 0x0000ff
-# define MINISQ 49
+# define MINISQ 32
 // # define cube->pie 3.141592653589793
 // # define TURN	0.0348994967
 # ifndef MOVE

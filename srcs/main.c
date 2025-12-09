@@ -6,7 +6,7 @@
 /*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/09 21:57:12 by megardes         ###   ########.fr       */
+/*   Updated: 2025/12/09 23:34:37 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -450,23 +450,30 @@ void	ray_hor(t_ray *ray, t_player *player, t_cubed *cube)
 void	init_ray(t_cubed *cube, t_img *mini, t_ray *ray, t_line *line)
 {
 	ft_bzero(ray, sizeof(*ray));
-	ray->pa = cube->player->rad - 30 * RAY_ANGL;
 	line->x = cube->player->p_x + mini->border;
 	line->y = cube->player->p_y + mini->border;
 	line->len = 0;
+	ray->pa = cube->player->rad - 30 * RAY_ANGL;
 	if (ray->pa < 0)
 		ray->pa += (2 * cube->pie);
 	else if (ray->pa > 2 * cube->pie)
 		ray->pa -= (2 * cube->pie);
 }
 
-void	put_ray(t_img *game, t_ray *ray, int i)
+void	put_ray(t_cubed *cube, t_img *game, t_ray *ray, int i, float rot)
 {
 	t_line	line;
 	ssize_t	j;
 	ssize_t	offset;
+	float	ray_offset = rot - ray->pa;
+	if (ray_offset < 0)
+		ray_offset += (2 * cube->pie);
+	else if (ray_offset > 2 * cube->pie)
+		ray_offset -= (2 * cube->pie);
 
-	line.len = round((float)MINISQ * (float)game->height / ray->dist_opt);
+	float dist_opt = ray->dist_opt * cos(ray_offset);
+
+	line.len = round((float)MINISQ * (float)game->height / dist_opt);
 	if (line.len > game->height)
 		line.len = game->height;
 	j = game->height / 2;
@@ -479,7 +486,7 @@ void	put_ray(t_img *game, t_ray *ray, int i)
 			my_pixel_put(game, i , j - offset, get_color(1, 0, 0));
 
 		}
-		else if (i % 4 != 0)
+		else
 		{
 			my_pixel_put(game, i , j + offset, get_color(0, 0.3921568, 0));
 			my_pixel_put(game, i , j - offset, get_color(0, 0.3921568, 1));
@@ -515,12 +522,12 @@ void	ray_cal(t_cubed *cube, t_line *line, t_player *player)
 			line->x_end = roundf(ray.r_x) + mini->border;
 		line->y_end = round(ray.r_y) + mini->border;
 		line->rot = ray.pa;
-		ray.pa += (RAY_STEP / 2);
-		if (ray.pa > 2 * cube->pie)
-			ray.pa -= (2 * cube->pie);
-		put_ray(game, &ray, i);
+		put_ray(cube, game, &ray, i, player->rad);
 		if (cube->mini && cube->ray)
 			put_line(mini, line, get_color(0.1, 0.3, 0.8));
+		ray.pa += (float)((RAY_ANGL * 60.0f) / (float)game->width);
+		if (ray.pa > 2 * cube->pie)
+			ray.pa -= (2 * cube->pie);
 	}
 }
 
