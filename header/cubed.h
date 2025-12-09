@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubed.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/09 00:55:35 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/09 21:49:35 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # endif
 # define TURN 0.17364817766
 # define RAY_ANGL 0.0174533
+# define RAY_STEP 0.0010908313
 
 typedef struct s_ray
 {
@@ -40,12 +41,12 @@ typedef struct s_ray
 	float	r_x;
 	float	x_offset;
 	float	y_offset;
-	float	dist_v;
-	float	dist_h;
+	long double	dist_v;
+	long double	dist_h;
 	float	v_x;
 	float	v_y;
 	float	pa;
-	float_t	dist_opt;
+	float	dist_opt;
 	ssize_t	mx;
 	ssize_t	my;
 }	t_ray;
@@ -113,6 +114,7 @@ ssize_t is_in(char c, char *str);
 bool	mini_map(t_cubed *cube);
 void	set_player(t_cubed *cube);
 void	put_image(t_cubed *cube, t_mlx *mlx);
+void	fill_map(t_img *img);
 
 #endif
 
