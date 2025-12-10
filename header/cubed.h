@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubed.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/09 23:35:37 by megardes         ###   ########.fr       */
+/*   Updated: 2025/12/10 01:32:24 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,18 @@
 # define GRN 0x00ff00
 # define BLU 0x0000ff
 # define MINISQ 32
-// # define cube->pie 3.141592653589793
-// # define TURN	0.0348994967
 # ifndef MOVE
 #  define MOVE 10
 # endif
 # define TURN 0.17364817766
 # define RAY_ANGL 0.0174533
-# define RAY_STEP 0.0010908313
+# define ANGLE 30.0f
+# define RAY_STEP (float)((0.0174533f * ANGLE * 2.0f) / (float)game->width) 
+# define W 0
+# define E 1
+# define N 2
+# define S 3
+# define TEXT_SIZE 2048
 
 typedef struct s_ray
 {
@@ -46,6 +50,9 @@ typedef struct s_ray
 	float	v_x;
 	float	v_y;
 	float	pa;
+	int		h_face;
+	int		v_face;
+	int		opt_face;
 	float	dist_opt;
 	ssize_t	mx;
 	ssize_t	my;
@@ -80,6 +87,7 @@ typedef struct	s_mlx
 	void	*ptr;
 	t_img	mini;
 	t_img	game;
+	t_img	text[4];
 	int		x_win;
 	int		y_win;
 }	t_mlx;
@@ -99,6 +107,7 @@ typedef struct	s_cubed
 {
 	char		**map;
 	char		**mini_map;
+	char		*xpm[4];
 	t_player	*player;
 	t_mlx		*mlx;
 	ssize_t		max_x;
