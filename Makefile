@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mehras <mehras@student.42.fr>              +#+  +:+       +#+         #
+#    By: megardes <megardes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 14:44:18 by codespace         #+#    #+#              #
-#    Updated: 2025/12/08 21:34:31 by mehras           ###   ########.fr        #
+#    Updated: 2025/12/11 14:47:44 by megardes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ PRE_OBJ		=	obj/
 OBJS		=	${addprefix ${PRE_OBJ}, ${OBJ}}
 RM			=	rm -fr
 CC			= 	cc
-Lflags		= -Lmlx -lmlx -lX11 -lXext -lXfixes -lXrender -lXrandr -lm -lz
+Lflags		=	-Lmlx -lmlx -lX11 -lXext -lXfixes -lXrender -lXrandr -lm -lz
 MAKEFLAGS	+= --no-print-directory
 
 all:		${NAME}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubed.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/10 01:32:24 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/11 14:23:39 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,30 @@
 # ifndef MOVE
 #  define MOVE 10
 # endif
-# define TURN 0.17364817766
+# define TURN 0.085
 # define RAY_ANGL 0.0174533
+# define TURN_2 0.035
 # define ANGLE 30.0f
-# define RAY_STEP (float)((0.0174533f * ANGLE * 2.0f) / (float)game->width) 
+# define RAY_STEP (float)((0.0174533f * ANGLE * 2.0f) / (float)game->width)
 # define W 0
 # define E 1
 # define N 2
 # define S 3
 # define TEXT_SIZE 2048
+# define FORWARD 1
+# define BACKWARD -1
+# define STOP 0
+# define LEFT -1
+# define RIGHT 1
+# define FPS 16
+
+typedef struct s_move
+{
+	int		straight;
+	int		side;
+	int		turn;
+	int		y;
+}	t_move;
 
 typedef struct s_ray
 {
@@ -115,6 +130,8 @@ typedef struct	s_cubed
 	float		pie;
 	bool		mini;
 	bool		ray;
+	bool		mouse;
+	t_move		moving;
 }	t_cubed;
 
 void	set_mini_img(t_cubed *cube, t_mlx *mlx);
