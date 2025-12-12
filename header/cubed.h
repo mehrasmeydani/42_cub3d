@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubed.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/11 14:23:39 by megardes         ###   ########.fr       */
+/*   Updated: 2025/12/12 02:36:55 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ typedef struct	s_mlx
 	void	*ptr;
 	t_img	mini;
 	t_img	game;
-	t_img	text[4];
+	t_img	text[4][4];
 	int		x_win;
 	int		y_win;
 }	t_mlx;
@@ -122,7 +122,7 @@ typedef struct	s_cubed
 {
 	char		**map;
 	char		**mini_map;
-	char		*xpm[4];
+	char		*xpm[4][4];
 	t_player	*player;
 	t_mlx		*mlx;
 	ssize_t		max_x;
@@ -132,6 +132,7 @@ typedef struct	s_cubed
 	bool		ray;
 	bool		mouse;
 	t_move		moving;
+	int			frame;
 }	t_cubed;
 
 void	set_mini_img(t_cubed *cube, t_mlx *mlx);

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/11 14:54:30 by megardes         ###   ########.fr       */
+/*   Updated: 2025/12/12 02:51:11 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/cubed.h"
 #include <sys/time.h>
+#include <time.h>
 
 ssize_t	my_time()
 {
@@ -575,13 +576,13 @@ void	put_ray(t_cubed *cube, t_mlx *mlx, t_ray *ray, int i, float rot)
 				float	frac_x = ray->r_x;
 				ssize_t x;
 				if (ray->opt_face == N)
-					x = (float)mlx->text[ray->opt_face].width - round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face].width);
+					x = (float)mlx->text[ray->opt_face][0].width - round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face][0].width);
 				else
-					x = round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face].width);
-				ssize_t	frac_y_up = mlx->text[ray->opt_face].height / line.len * -offset + ((float)(mlx->text[ray->opt_face].height) / 2);
-				ssize_t	frac_y_down = mlx->text[ray->opt_face].height / line.len * offset + ((float)(mlx->text[ray->opt_face].height) / 2);
-				my_pixel_put(game, game->width - i - 1 , j - offset, get_color_xpm(&mlx->text[ray->opt_face], x, frac_y_up));
-				my_pixel_put(game, game->width - i - 1 , j + offset, get_color_xpm(&mlx->text[ray->opt_face], x, frac_y_down));
+					x = round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face][0].width);
+				ssize_t	frac_y_up = mlx->text[ray->opt_face][0].height / line.len * -offset + ((float)(mlx->text[ray->opt_face][0].height) / 2);
+				ssize_t	frac_y_down = mlx->text[ray->opt_face][0].height / line.len * offset + ((float)(mlx->text[ray->opt_face][0].height) / 2);
+				my_pixel_put(game, game->width - i - 1 , j - offset, get_color_xpm(&mlx->text[ray->opt_face][0], x, frac_y_up));
+				my_pixel_put(game, game->width - i - 1 , j + offset, get_color_xpm(&mlx->text[ray->opt_face][0], x, frac_y_down));
 			}
 			else
 			{
@@ -590,13 +591,21 @@ void	put_ray(t_cubed *cube, t_mlx *mlx, t_ray *ray, int i, float rot)
 				float	frac_x = ray->r_y;
 				ssize_t x;
 				if (ray->opt_face == E)
-					x = (float)mlx->text[ray->opt_face].width - round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face].width);
+				{
+					x = (float)mlx->text[ray->opt_face][0].width - round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face][0].width);
+					ssize_t	frac_y_up = mlx->text[ray->opt_face][0].height / line.len * -offset + ((float)(mlx->text[ray->opt_face][0].height) / 2);
+					ssize_t	frac_y_down = mlx->text[ray->opt_face][0].height / line.len * offset + ((float)(mlx->text[ray->opt_face][0].height) / 2);
+					my_pixel_put(game, game->width - i - 1 , j - offset, get_color_xpm(&mlx->text[ray->opt_face][0], x, frac_y_up));
+					my_pixel_put(game, game->width - i - 1 , j + offset, get_color_xpm(&mlx->text[ray->opt_face][0], x, frac_y_down));
+				}
 				else
-					x = round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face].width);
-				ssize_t	frac_y_up = mlx->text[ray->opt_face].height / line.len * -offset + ((float)(mlx->text[ray->opt_face].height) / 2);
-				ssize_t	frac_y_down = mlx->text[ray->opt_face].height / line.len * offset + ((float)(mlx->text[ray->opt_face].height) / 2);
-				my_pixel_put(game, game->width - i - 1 , j - offset, get_color_xpm(&mlx->text[ray->opt_face], x, frac_y_up));
-				my_pixel_put(game, game->width - i - 1 , j + offset, get_color_xpm(&mlx->text[ray->opt_face], x, frac_y_down));
+				{
+					x = round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face][(int)((float)cube->frame / 5)].width);
+					ssize_t	frac_y_up = mlx->text[ray->opt_face][(int)((float)cube->frame / 5)].height / line.len * -offset + ((float)(mlx->text[ray->opt_face][(int)((float)cube->frame / 5)].height) / 2);
+					ssize_t	frac_y_down = mlx->text[ray->opt_face][(int)((float)cube->frame / 5)].height / line.len * offset + ((float)(mlx->text[ray->opt_face][(int)((float)cube->frame / 5)].height) / 2);
+					my_pixel_put(game, game->width - i - 1 , j - offset, get_color_xpm(&mlx->text[ray->opt_face][(int)((float)cube->frame / 5)], x, frac_y_up));
+					my_pixel_put(game, game->width - i - 1 , j + offset, get_color_xpm(&mlx->text[ray->opt_face][(int)((float)cube->frame / 5)], x, frac_y_down));
+				}
 			}
 		}
 		else
@@ -734,15 +743,15 @@ void	put_image(t_cubed *cube, t_mlx *mlx)
 		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->mini.img, 0, 0);
 }
 
-bool	init_text_2(t_cubed *cube, t_mlx *mlx, int i)
+bool	init_text_2(t_cubed *cube, t_mlx *mlx, int i, int j)
 {
 	t_img	*text;
 
-	text = &mlx->text[i];
+	text = &mlx->text[i][j];
 	text->border = 0;
 	text->height = 0;
 	text->width = 0;
-	text->img = mlx_xpm_file_to_image(mlx->mlx, cube->xpm[i],
+	text->img = mlx_xpm_file_to_image(mlx->mlx, cube->xpm[i][j],
 		&text->width, &text->height);
 	if (!text->img)
 		return (0);
@@ -755,13 +764,19 @@ bool	init_text_2(t_cubed *cube, t_mlx *mlx, int i)
 
 bool	init_text(t_cubed *cube, t_mlx *mlx)
 {
-	if (!init_text_2(cube, mlx, W))
+	if (!init_text_2(cube, mlx, W, 0))
 		return (0);
-	if (!init_text_2(cube, mlx, N))
+	if (!init_text_2(cube, mlx, W, 1))
 		return (0);
-	if (!init_text_2(cube, mlx, E))
+	if (!init_text_2(cube, mlx, W, 2))
 		return (0);
-	if (!init_text_2(cube, mlx, S))
+	if (!init_text_2(cube, mlx, W, 3))
+		return (0);
+	if (!init_text_2(cube, mlx, N, 0))
+		return (0);
+	if (!init_text_2(cube, mlx, E, 0))
+		return (0);
+	if (!init_text_2(cube, mlx, S, 0))
 		return (0);
 	return (1);
 }
@@ -770,9 +785,13 @@ bool	next_frame()
 {
 	static struct timeval	time;
 	struct timeval	time_now;
+	ssize_t	j;
+	ssize_t	i;
 
 	gettimeofday(&time_now, NULL);
-	if (((unsigned int)time.tv_usec / 1000) + (time.tv_sec * 1000) + FPS < ((unsigned int)time_now.tv_usec / 1000) + (time_now.tv_sec * 1000))
+	j = ((unsigned int)time_now.tv_usec / 1000) + (time_now.tv_sec * 1000);
+	i = ((unsigned int)time.tv_usec / 1000) + (time.tv_sec * 1000);
+	if (j < i|| i + FPS < j)
 	{
 		time = time_now;
 		return (0);
@@ -788,6 +807,9 @@ int	game_loop(void *in)
 	cube = (t_cubed *)in;
 	if (next_frame())
 		return (0);
+	cube->frame++;
+	if (cube->frame >= 20)
+		cube->frame = 0;
 	move(cube, &cube->moving);
 	put_image(cube, cube->mlx);
 	mlx = cube->mlx;
@@ -810,7 +832,6 @@ int mouse(int x, int y, void *in)
 	else if (x < cube->moving.y)
 		turn_mouse(cube, cube->player, 1);
 	cube->moving.y = x;
-	//printf("x:%d y:%d\n", x, y);
 	return (1);
 }
 
@@ -832,8 +853,8 @@ bool	init_mlx(t_cubed *cube, t_mlx *mlx)
 	mlx_hook(mlx->win, 3, (1L<<1), &mlx_key_release, cube);
 	mlx_hook(mlx->win, 17, 0L, &mlx_exit, cube);
 	mlx_loop_hook(mlx->mlx, game_loop, cube);
-	mlx_hook(mlx->win, 6, (1L<<6), mouse, cube);
-	mlx_mouse_move(mlx->mlx, mlx->win, mlx->game.height / 2, mlx->game.width / 2);
+	// mlx_hook(mlx->win, 6, (1L<<6), mouse, cube);
+	// mlx_mouse_move(mlx->mlx, mlx->win, mlx->game.height / 2, mlx->game.width / 2);
 	//mlx_mouse_hook(mlx->win, mouse, cube);
 	if (!mlx->win)
 		return (free_mlx(mlx), 0);
@@ -856,6 +877,7 @@ bool	execute(t_cubed *cube)
 	mlx = cube->mlx;
 	set_player(cube);
 	init_mlx(cube, mlx); // add check
+	game_loop(cube);
 	mlx_loop(mlx->mlx);
 	return (1);
 }
@@ -888,10 +910,13 @@ int	main(int argc, char **argv)
 	cube.player = &player;
 	cube.mlx = &mlx;
 	cube.pie = 3.141592653589793;
-	cube.xpm[W] = "/home/megardes/cubed/text/w.xpm";
-	cube.xpm[S] = "/home/megardes/cubed/text/s.xpm";
-	cube.xpm[E] = "/home/megardes/cubed/text/e.xpm";
-	cube.xpm[N] = "/home/megardes/cubed/text/n.xpm";
+	cube.xpm[W][0] = "./text/frame_0.xpm";
+	cube.xpm[W][1] = "./text/frame_1.xpm";
+	cube.xpm[W][2] = "./text/frame_2.xpm";
+	cube.xpm[W][3] = "./text/frame_3.xpm";
+	cube.xpm[S][0] = "./text/s.xpm";
+	cube.xpm[E][0] = "./text/e.xpm";
+	cube.xpm[N][0] = "./text/n.xpm";
 	cube.moving.y = -1;
 	if (!ft_strncmp("1", argv[1], 1))
 	{
