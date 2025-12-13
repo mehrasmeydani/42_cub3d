@@ -21,7 +21,7 @@ PRE_OBJ		=	obj/
 OBJS		=	${addprefix ${PRE_OBJ}, ${OBJ}}
 RM			=	rm -fr
 CC			= 	cc
-Lflags		=	-Lmlx -lmlx -lX11 -lXext -lXfixes -lXrender -lXrandr -lm -lz
+Lflags		=	-Lmlx -lmlx -lX11 -lXext  -lm 
 MAKEFLAGS	+= --no-print-directory
 
 all:		${NAME}
