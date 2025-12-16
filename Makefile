@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: megardes <megardes@student.42.fr>          +#+  +:+       +#+         #
+#    By: mehras <mehras@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 14:44:18 by codespace         #+#    #+#              #
-#    Updated: 2025/12/11 14:47:44 by megardes         ###   ########.fr        #
+#    Updated: 2025/12/15 23:14:27 by mehras           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC			=	main.c mini_map.c ft_free.c set_player.c
+SRC			=	main.c mini_map.c ft_free.c set_player.c put_ray.c
 SRCS		=	${addprefix ${PRE_SRC}, ${SRC}}
 PRE_SRC		=	srcs/
 HEAD		=	header/ -I/usr/include -O3 -I/home/mehras/mlx

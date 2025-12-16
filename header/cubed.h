@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/12 02:36:55 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/16 01:18:41 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define RED 0xff0000
 # define GRN 0x00ff00
 # define BLU 0x0000ff
-# define MINISQ 32
+# define MINISQ 64
 # ifndef MOVE
 #  define MOVE 10
 # endif
@@ -45,6 +45,8 @@
 # define LEFT -1
 # define RIGHT 1
 # define FPS 16
+
+
 
 typedef struct s_move
 {
@@ -142,6 +144,10 @@ bool	mini_map(t_cubed *cube);
 void	set_player(t_cubed *cube);
 void	put_image(t_cubed *cube, t_mlx *mlx);
 void	fill_map(t_img *img);
+void	my_pixel_put(t_img *img, ssize_t x, ssize_t y, uint32_t color);
+uint32_t	get_color_xpm(t_img *img, ssize_t x, ssize_t y);
+void	put_ray(t_cubed *cube, t_mlx *mlx, t_ray *ray, int i, float rot);
+uint32_t get_color(float r, float g, float b);
 
 #endif
 

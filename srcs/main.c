@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/12 02:51:11 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/16 01:20:09 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,30 +235,6 @@ void	move(t_cubed *cube, t_move *moving)
 		turn(cube, cube->player, 1);
 }
 
-// void	move(t_cubed *cube, int dir)
-// {
-// 	if (dir == 1)
-// 	{
-// 		y_op(cube, cube->player, sin(cube->player->rad) / MOVE);
-// 		x_op(cube, cube->player, cos(cube->player->rad) / MOVE);
-// 	}
-// 	else if (dir == 0)
-// 	{
-// 		y_op(cube, cube->player, sin(cube->player->rad) / MOVE * -1);
-// 		x_op(cube, cube->player, cos(cube->player->rad) / MOVE * -1);
-// 	}
-// 	else if (dir == 2)
-// 	{
-// 		y_op(cube, cube->player, cos(cube->player->rad) / MOVE);
-// 		x_op(cube, cube->player, sin(cube->player->rad) / MOVE * -1);
-// 	}
-// 	else
-// 	{
-// 		y_op(cube, cube->player, cos(cube->player->rad) / MOVE * -1);
-// 		x_op(cube, cube->player, sin(cube->player->rad) / MOVE);
-// 	}
-// }
-
 
 
 int	mlx_key_press(int key_code, void *in)
@@ -445,7 +421,7 @@ void	ray_vert(t_ray *ray, t_player *player, t_cubed *cube)
 
 	if (ray->pa < cube->pie) //up
 	{
-		ray->r_y = ((ssize_t)(player->p_y / MINISQ) * MINISQ) - 0.0001;
+		ray->r_y = ((ssize_t)(player->p_y / MINISQ) * MINISQ) - 0.0005;
 		ray->r_x = (player->p_y - ray->r_y) * a_tan + player->p_x;
 		ray->y_offset = -MINISQ;
 		ray->x_offset = ray->y_offset * -a_tan;
@@ -498,7 +474,7 @@ void	ray_hor(t_ray *ray, t_player *player, t_cubed *cube)
 	}
 	else if (ray->pa > cube->pie / 2 && ray->pa < cube->pie * 3 / 2) //left
 	{
-		ray->r_x = (ssize_t)(player->p_x / MINISQ) * MINISQ - 0.0001;
+		ray->r_x = ((ssize_t)(player->p_x / MINISQ) * MINISQ) - 0.0005;
 		ray->r_y = (player->p_x - ray->r_x) * n_tan + player->p_y;
 		ray->x_offset = -MINISQ;
 		ray->y_offset = ray->x_offset * -n_tan;
@@ -546,76 +522,17 @@ uint32_t	get_color_xpm(t_img *img, ssize_t x, ssize_t y)
 	return (*(uint32_t*)dst);
 }
 
-void	put_ray(t_cubed *cube, t_mlx *mlx, t_ray *ray, int i, float rot)
-{
-	t_line	line;
-	ssize_t	j;
-	ssize_t	offset;
-	t_img	*game;
-	float	dist_opt;
-	float	ray_offset;
-	
-	ray_offset = rot - ray->pa;
-	if (ray_offset < 0)
-		ray_offset += (2 * cube->pie);
-	else if (ray_offset > 2 * cube->pie)
-		ray_offset -= (2 * cube->pie);
-	dist_opt = ray->dist_opt * cos(ray_offset);
-	game = &mlx->game;
-	line.len = round((float)MINISQ * (float)game->height / dist_opt);
-	j = game->height / 2;
-	offset = 0;
-	while ((offset + j) < game->height && (j - offset) >= 0)
-	{
-		if (offset < line.len / 2)
-		{
-			if (ray->opt_face == N || ray->opt_face == S)
-			{
-				while (ray->r_x && ray->r_x >= MINISQ)
-					ray->r_x = ray->r_x - (float)MINISQ;
-				float	frac_x = ray->r_x;
-				ssize_t x;
-				if (ray->opt_face == N)
-					x = (float)mlx->text[ray->opt_face][0].width - round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face][0].width);
-				else
-					x = round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face][0].width);
-				ssize_t	frac_y_up = mlx->text[ray->opt_face][0].height / line.len * -offset + ((float)(mlx->text[ray->opt_face][0].height) / 2);
-				ssize_t	frac_y_down = mlx->text[ray->opt_face][0].height / line.len * offset + ((float)(mlx->text[ray->opt_face][0].height) / 2);
-				my_pixel_put(game, game->width - i - 1 , j - offset, get_color_xpm(&mlx->text[ray->opt_face][0], x, frac_y_up));
-				my_pixel_put(game, game->width - i - 1 , j + offset, get_color_xpm(&mlx->text[ray->opt_face][0], x, frac_y_down));
-			}
-			else
-			{
-				while (ray->r_y && ray->r_y >= MINISQ)
-					ray->r_y = ray->r_y - (float)MINISQ;
-				float	frac_x = ray->r_y;
-				ssize_t x;
-				if (ray->opt_face == E)
-				{
-					x = (float)mlx->text[ray->opt_face][0].width - round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face][0].width);
-					ssize_t	frac_y_up = mlx->text[ray->opt_face][0].height / line.len * -offset + ((float)(mlx->text[ray->opt_face][0].height) / 2);
-					ssize_t	frac_y_down = mlx->text[ray->opt_face][0].height / line.len * offset + ((float)(mlx->text[ray->opt_face][0].height) / 2);
-					my_pixel_put(game, game->width - i - 1 , j - offset, get_color_xpm(&mlx->text[ray->opt_face][0], x, frac_y_up));
-					my_pixel_put(game, game->width - i - 1 , j + offset, get_color_xpm(&mlx->text[ray->opt_face][0], x, frac_y_down));
-				}
-				else
-				{
-					x = round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face][(int)((float)cube->frame / 5)].width);
-					ssize_t	frac_y_up = mlx->text[ray->opt_face][(int)((float)cube->frame / 5)].height / line.len * -offset + ((float)(mlx->text[ray->opt_face][(int)((float)cube->frame / 5)].height) / 2);
-					ssize_t	frac_y_down = mlx->text[ray->opt_face][(int)((float)cube->frame / 5)].height / line.len * offset + ((float)(mlx->text[ray->opt_face][(int)((float)cube->frame / 5)].height) / 2);
-					my_pixel_put(game, game->width - i - 1 , j - offset, get_color_xpm(&mlx->text[ray->opt_face][(int)((float)cube->frame / 5)], x, frac_y_up));
-					my_pixel_put(game, game->width - i - 1 , j + offset, get_color_xpm(&mlx->text[ray->opt_face][(int)((float)cube->frame / 5)], x, frac_y_down));
-				}
-			}
-		}
-		else
-		{
-			my_pixel_put(game, game->width - i - 1 , j + offset, get_color(0, 0.3921568, 0));
-			my_pixel_put(game, game->width - i - 1 , j - offset, get_color(0, 0.3921568, 1));
-		}
-		offset++;
-	}
-}
+// if (!(ray->my < 0 || ray->mx < 0 || ray->mx > cube->max_x * MINISQ - 1 || ray->my > cube->max_y * MINISQ - 1))
+// 		{
+// 			put_star(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border + 1, ray->my + cube->mlx->mini.border, get_color(1, 1, 1));
+// 			put_star(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border, ray->my + cube->mlx->mini.border + 1, get_color(1, 1, 1));
+// 			put_star(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border - 1, ray->my + cube->mlx->mini.border, get_color(1, 1, 1));
+// 			put_star(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border, ray->my + cube->mlx->mini.border - 1, get_color(1, 1, 1));
+// 			my_pixel_put(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border, ray->my + cube->mlx->mini.border, get_color(0, 0, 0));
+// 			//put_star(&(cube->mlx->mini), ray->mx + cube->mlx->mini.border, ray->my + cube->mlx->mini.border, get_color(1, 1, 1));
+// 			printf("3:px:%zu py:%zu ray->r_x:%f ray->r_y:%f rot:%f char:%c \n", ray->mx, ray->my, ray->r_x, ray->r_y, ray->pa, cube->mini_map[ray->my][ray->mx]);
+// 			//put_line(&(cube->mlx->mini), line, get_color(0.1, 0.3, 0.8));
+// 		}
 
 void	ray_cal(t_cubed *cube, t_line *line, t_player *player)
 {
