@@ -6,11 +6,11 @@
 #    By: mehras <mehras@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 14:44:18 by codespace         #+#    #+#              #
-#    Updated: 2025/12/15 23:14:27 by mehras           ###   ########.fr        #
+#    Updated: 2025/12/18 19:36:42 by mehras           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC			=	main.c mini_map.c ft_free.c set_player.c put_ray.c
+SRC			=	main.c mini_map.c ft_free.c set_player.c put_ray.c get_file.c get_info.c get_map.c parser.c utils.c
 SRCS		=	${addprefix ${PRE_SRC}, ${SRC}}
 PRE_SRC		=	srcs/
 HEAD		=	header/ -I/usr/include -O3 -I/home/mehras/mlx

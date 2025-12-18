@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/16 01:20:09 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/18 20:12:39 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -660,15 +660,15 @@ void	put_image(t_cubed *cube, t_mlx *mlx)
 		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->mini.img, 0, 0);
 }
 
-bool	init_text_2(t_cubed *cube, t_mlx *mlx, int i, int j)
+bool	init_text_2(t_cubed *cube, t_mlx *mlx, int i)
 {
 	t_img	*text;
 
-	text = &mlx->text[i][j];
+	text = &mlx->text[i];
 	text->border = 0;
 	text->height = 0;
 	text->width = 0;
-	text->img = mlx_xpm_file_to_image(mlx->mlx, cube->xpm[i][j],
+	text->img = mlx_xpm_file_to_image(mlx->mlx, cube->xpm[i],
 		&text->width, &text->height);
 	if (!text->img)
 		return (0);
@@ -681,19 +681,13 @@ bool	init_text_2(t_cubed *cube, t_mlx *mlx, int i, int j)
 
 bool	init_text(t_cubed *cube, t_mlx *mlx)
 {
-	if (!init_text_2(cube, mlx, W, 0))
+	if (!init_text_2(cube, mlx, W))
 		return (0);
-	if (!init_text_2(cube, mlx, W, 1))
+	if (!init_text_2(cube, mlx, N))
 		return (0);
-	if (!init_text_2(cube, mlx, W, 2))
+	if (!init_text_2(cube, mlx, E))
 		return (0);
-	if (!init_text_2(cube, mlx, W, 3))
-		return (0);
-	if (!init_text_2(cube, mlx, N, 0))
-		return (0);
-	if (!init_text_2(cube, mlx, E, 0))
-		return (0);
-	if (!init_text_2(cube, mlx, S, 0))
+	if (!init_text_2(cube, mlx, S))
 		return (0);
 	return (1);
 }
@@ -761,8 +755,6 @@ bool	init_mlx(t_cubed *cube, t_mlx *mlx)
 	if (!mlx->mlx)
 		return (0);
 	mlx_get_screen_size(mlx->mlx, &mlx->x_win, &mlx->y_win);
-	// mlx->x_win = 1080;
-	// mlx->y_win = 720;
 	if ((float)(mlx->x_win) / (float)(mlx->y_win) > 16.0f / 9.0f)
 		mlx->x_win = (float)(mlx->y_win) * 16.0f / 9.0f;
 	mlx->win = mlx_new_window(mlx->mlx, mlx->x_win, mlx->y_win, "cub3d");
@@ -772,7 +764,6 @@ bool	init_mlx(t_cubed *cube, t_mlx *mlx)
 	mlx_loop_hook(mlx->mlx, game_loop, cube);
 	// mlx_hook(mlx->win, 6, (1L<<6), mouse, cube);
 	// mlx_mouse_move(mlx->mlx, mlx->win, mlx->game.height / 2, mlx->game.width / 2);
-	//mlx_mouse_hook(mlx->win, mouse, cube);
 	if (!mlx->win)
 		return (free_mlx(mlx), 0);
 	if (!init_mini_map(cube, mlx))
@@ -782,7 +773,6 @@ bool	init_mlx(t_cubed *cube, t_mlx *mlx)
 	if (!init_text(cube, mlx))
 		return (free_mlx(mlx), ft_putendl_fd("tuxtures failed", 2), 0);
 	ray_cal(cube, &line, cube->player);
-	//puts("lol");
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->game.img, 0, 0);
 	return (1);
 }
@@ -799,58 +789,56 @@ bool	execute(t_cubed *cube)
 	return (1);
 }
 
+void	init_main(t_cubed *cube, t_parser *parser, t_player *player, t_mlx *mlx)
+{
+	ft_bzero(parser, sizeof(t_parser));
+	ft_bzero(cube, sizeof(t_cubed));
+	ft_bzero(mlx, sizeof(t_mlx));
+	ft_bzero(player, sizeof(t_player));
+	cube->player = player;
+	cube->mlx = mlx;
+	cube->pie = 3.141592653589793;
+	cube->moving.y = -1;
+}
+
+void	set_parser_to_cube(t_cubed *cube, t_parser *pars)
+{
+	cube->map = pars->map;
+	pars->map = NULL;
+	cube->max_x = pars->max_x;
+	cube->max_y = pars->max_y;
+	cube->floor = get_color((float)pars->floor[0] / 255.0f, (float)pars->floor[1] / 255.0f, (float)pars->floor[2] / 255.0f);
+	cube->head = get_color((float)pars->ceiling[0] / 255.0f, (float)pars->ceiling[1] / 255.0f, (float)pars->ceiling[2] / 255.0f);
+	cube->xpm[W] = pars->textures[W];
+	cube->xpm[S] = pars->textures[S];
+	cube->xpm[N] = pars->textures[N];
+	cube->xpm[E] = pars->textures[E];
+	pars->textures[W] = NULL;
+	pars->textures[S] = NULL;
+	pars->textures[N] = NULL;
+	pars->textures[E] = NULL;
+}
+
 int	main(int argc, char **argv)
 {
 	t_cubed		cube;
 	t_mlx		mlx;
 	t_player	player;
-	char *lines[] = {
-	"111111 11111",
-    "100001 10001",
-    "101111110001",
-    "100000000101",
-    "100001110101",
-    "1000011N0111",
-    "100110010111",
-    "100111000101",
-    "100000000001",
-    "111111111111",
-    NULL
-	};
+	t_parser	parsers;
 
-	(void)argv;
 	if (argc != 2)
 		return (1);
-	ft_bzero(&cube, sizeof(t_cubed));
-	ft_bzero(&mlx, sizeof(t_mlx));
-	ft_bzero(&player, sizeof(t_player));
-	cube.player = &player;
-	cube.mlx = &mlx;
-	cube.pie = 3.141592653589793;
-	cube.xpm[W][0] = "./text/frame_0.xpm";
-	cube.xpm[W][1] = "./text/frame_1.xpm";
-	cube.xpm[W][2] = "./text/frame_2.xpm";
-	cube.xpm[W][3] = "./text/frame_3.xpm";
-	cube.xpm[S][0] = "./text/s.xpm";
-	cube.xpm[E][0] = "./text/e.xpm";
-	cube.xpm[N][0] = "./text/n.xpm";
-	cube.moving.y = -1;
-	if (!ft_strncmp("1", argv[1], 1))
-	{
-		if (!parsing_map(&cube))
-			return (1);
-	}
-	else
-	{
-		cube.map = &lines[0];
-		cube.max_x = 12;
-		cube.max_y = 10;
-	}
+	init_main(&cube, &parsers, &player, &mlx);
+	if (parser(argv[1], &parsers) == -1)
+		return (1);
+	set_parser_to_cube(&cube, &parsers);
 	if (!mini_map(&cube))
 		return (1);
-	puts("lmao");
+	free_map(&parsers);
+	puts("done with parser");
 	if (!execute(&cube))
 		return (1);
+	//exit(1);
 }
 
 

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:38:56 by eprottun          #+#    #+#             */
-/*   Updated: 2025/12/17 15:15:39 by eprottun         ###   ########.fr       */
+/*   Updated: 2025/12/18 19:32:42 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "../header/parser.h"
 
 int	extract_path(char *line, int dir, t_parser *data)
 {
@@ -20,15 +20,15 @@ int	extract_path(char *line, int dir, t_parser *data)
 	i = 2;
 	i += count_spaces(&line[i]);
 	if (!line[i])
-		return (write(2, "Error\nElement format wrong\n", 28), -1);
+		return (ft_putendl_fd("Error\nElement format wrong", 2), -1);
 	start = i;
 	while (line[i] && !count_spaces(&line[i]))
 		i++;
 	if (line[i + count_spaces(&line[i])])
-		return (write(2, "Error\nElement format wrong\n", 28), -1);
+		return (ft_putendl_fd("Error\nElement format wrong", 2), -1);
 	data->textures[dir] = ft_strdup(&line[start]);
 	if (!data->textures[dir])
-		return (write(2, "Error\nMalloc failed\n", 21), -1);
+		return (ft_putendl_fd("Error\nMalloc failed", 2), -1);
 	return (0);
 }
 
@@ -78,7 +78,7 @@ int	get_info(int info, t_parser *data)
 		if (info >= 4 && !ft_strncmp(data->file[iter], arr[info], 2))
 		{
 			if (extract_color(data->file[iter], info % 4, data) == -1)
-				return (write(2, "Error\nElement format wrong\n", 28), -1);
+				return (ft_putendl_fd("Error\nElement format wrong", 2), -1);
 			return (0);
 		}
 		iter++;

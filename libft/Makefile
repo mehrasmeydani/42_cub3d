@@ -6,7 +6,7 @@
 #    By: megardes <megardes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/16 17:28:13 by mehras            #+#    #+#              #
-#    Updated: 2025/05/08 05:45:00 by megardes         ###   ########.fr        #
+#    Updated: 2025/10/28 23:47:46 by megardes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC			= ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c\
 			ft_strncmp.c ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c ft_calloc.c\
 			ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c\
 			ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c\
-			ft_putnbr_fd.c
+			ft_putnbr_fd.c ft_strcmp.c ft_sort_string_tab.c ft_iswhitespace.c ft_atol.c
 
 SRC_B		=  ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c\
 			ft_lstlast_bonus.c ft_lstadd_back_bonus.c ft_lstdelone_bonus.c\
@@ -27,7 +27,7 @@ SRCS_B		= ${addprefix ${PRE}, ${SRC_B}}
 OBJS		= ${SRCS:.c=.o}
 OBJS_B		= ${SRCS_B:.c=.o}
 PRE			= ./
-HEAD		= ./
+HEAD		= ../header/
 NAME		= libft.a
 LIBC		= ar rc
 LIBR		= ranlib

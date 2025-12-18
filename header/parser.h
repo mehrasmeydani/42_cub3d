@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:14:09 by eprottun          #+#    #+#             */
-/*   Updated: 2025/12/17 15:26:13 by eprottun         ###   ########.fr       */
+/*   Updated: 2025/12/18 19:42:56 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include <unistd.h>
 # include <stdint.h>
 # include <stdio.h>
+# include <stddef.h>
 # include "libft.h"
 
 typedef struct s_parser
@@ -52,7 +53,7 @@ int		get_map(t_parser *data);
 int		get_info(int info, t_parser *data);
 int		get_file(const char *filename, t_parser *data);
 int		parser(const char *filename, t_parser *data);
-void	frees(t_parser *data);
+void	free_map(t_parser *data);
 void	init_data(t_parser *data);
 int		is_valid_line(char *str, int i, int bitmap);
 

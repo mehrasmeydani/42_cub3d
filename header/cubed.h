@@ -6,14 +6,15 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/16 01:18:41 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/18 20:15:15 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef	CUBED_H
 # define CUBED_H
 
-# include "../libft/libft.h"
+# include "libft.h"
+# include "parser.h"
 # include <mlx.h>
 # include <stdbool.h>
 # include <X11/keysym.h>
@@ -34,10 +35,10 @@
 # define TURN_2 0.035
 # define ANGLE 30.0f
 # define RAY_STEP (float)((0.0174533f * ANGLE * 2.0f) / (float)game->width)
-# define W 0
-# define E 1
-# define N 2
-# define S 3
+# define N 0
+# define S 1
+# define W 2
+# define E 3
 # define TEXT_SIZE 2048
 # define FORWARD 1
 # define BACKWARD -1
@@ -58,21 +59,21 @@ typedef struct s_move
 
 typedef struct s_ray
 {
-	float	r_y;
-	float	r_x;
-	float	x_offset;
-	float	y_offset;
+	float		r_y;
+	float		r_x;
+	float		x_offset;
+	float		y_offset;
 	long double	dist_v;
 	long double	dist_h;
-	float	v_x;
-	float	v_y;
-	float	pa;
-	int		h_face;
-	int		v_face;
-	int		opt_face;
-	float	dist_opt;
-	ssize_t	mx;
-	ssize_t	my;
+	float		v_x;
+	float		v_y;
+	float		pa;
+	int			h_face;
+	int			v_face;
+	int			opt_face;
+	float		dist_opt;
+	ssize_t		mx;
+	ssize_t		my;
 }	t_ray;
 
 typedef	struct s_line
@@ -104,7 +105,7 @@ typedef struct	s_mlx
 	void	*ptr;
 	t_img	mini;
 	t_img	game;
-	t_img	text[4][4];
+	t_img	text[4];
 	int		x_win;
 	int		y_win;
 }	t_mlx;
@@ -124,30 +125,33 @@ typedef struct	s_cubed
 {
 	char		**map;
 	char		**mini_map;
-	char		*xpm[4][4];
+	char		*xpm[4];
 	t_player	*player;
 	t_mlx		*mlx;
+	t_move		moving;
 	ssize_t		max_x;
 	ssize_t		max_y;
+	uint32_t	floor;
+	uint32_t	head;
 	float		pie;
 	bool		mini;
 	bool		ray;
 	bool		mouse;
-	t_move		moving;
 	int			frame;
 }	t_cubed;
 
-void	set_mini_img(t_cubed *cube, t_mlx *mlx);
-void	ft_free(char **in);
-ssize_t is_in(char c, char *str);
-bool	mini_map(t_cubed *cube);
-void	set_player(t_cubed *cube);
-void	put_image(t_cubed *cube, t_mlx *mlx);
-void	fill_map(t_img *img);
-void	my_pixel_put(t_img *img, ssize_t x, ssize_t y, uint32_t color);
+void		set_mini_img(t_cubed *cube, t_mlx *mlx);
+void		ft_free(char **in);
+ssize_t 	is_in(char c, char *str);
+bool		mini_map(t_cubed *cube);
+void		set_player(t_cubed *cube);
+void		put_image(t_cubed *cube, t_mlx *mlx);
+void		fill_map(t_img *img);
+void		my_pixel_put(t_img *img, ssize_t x, ssize_t y, uint32_t color);
 uint32_t	get_color_xpm(t_img *img, ssize_t x, ssize_t y);
-void	put_ray(t_cubed *cube, t_mlx *mlx, t_ray *ray, int i, float rot);
-uint32_t get_color(float r, float g, float b);
+void		put_ray(t_cubed *cube, t_mlx *mlx, t_ray *ray, int i, float rot);
+uint32_t	get_color(float r, float g, float b);
+int			parser(const char *filename, t_parser *data);
 
 #endif
 

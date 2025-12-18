@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:18:59 by eprottun          #+#    #+#             */
-/*   Updated: 2025/12/17 15:19:47 by eprottun         ###   ########.fr       */
+/*   Updated: 2025/12/18 19:47:43 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include <fcntl.h>
+#include "../header/parser.h"
 
 static int	element_found(char *str, int *bitmap)
 {
@@ -34,13 +33,6 @@ static int	element_found(char *str, int *bitmap)
 	return (1);
 }
 
-static int	is_valid_line(char *str, int i, int bitmap)
-{
-	if (bitmap & MAP)
-		return (str[i] == '\n' && (str[i + 1] == '\n' || !str[i + 1]));
-	return (str[i] == '\n' || !str[i]);
-}
-
 int	find_elements(t_parser *data)
 {
 	int	iter;
@@ -54,10 +46,10 @@ int	find_elements(t_parser *data)
 			continue ;
 		if (!element_found(&data->full[iter], &bitmap)
 			&& !is_valid_line(data->full, iter, bitmap))
-			return (write(2, "Error\nInvalid elements\n", 24), -1);
+			return (ft_putendl_fd("Error\nInvalid elements", 2), -1);
 	}
 	if ((bitmap & 127) != (NO | EA | SO | WE | F | C | MAP))
-		return (write(2, "Error\nElements missing\n", 24), -1);
+		return (ft_putendl_fd("Error\nElements missing", 2), -1);
 	return (0);
 }
 
@@ -68,18 +60,18 @@ int	parser(const char *filename, t_parser *data)
 	init_data(data);
 	if (ft_strlen(filename) < 4
 		|| ft_strncmp(".cub", &filename[ft_strlen(filename) - 4], 4))
-		return (write(2, "Error\nWrong filename\n", 22), -1);
+		return (ft_putendl_fd("Error\nWrong filename", 2), -1);
 	if (get_file(filename, data) == -1)
-		return (frees(data), -1);
+		return (free_map(data), -1);
 	if (find_elements(data) == -1)
-		return (frees(data), -1);
+		return (free_map(data), -1);
 	if (get_map(data) == -1)
-		return (frees(data), -1);
+		return (free_map(data), -1);
 	info = 0;
 	while (info < 6)
 	{
 		if (get_info(info, data) == -1)
-			return (frees(data), -1);
+			return (free_map(data), -1);
 		info++;
 	}
 	return (0);

@@ -30,13 +30,13 @@ void	put_ray(t_cubed *cube, t_mlx *mlx, t_ray *ray, int i, float rot)
 				float	frac_x = ray->r_x;
 				ssize_t x;
 				if (ray->opt_face == N)
-					x = (float)mlx->text[ray->opt_face][0].width - round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face][0].width);
+					x = (float)mlx->text[ray->opt_face].width - round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face].width);
 				else
-					x = round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face][0].width);
-				ssize_t	frac_y_up = mlx->text[ray->opt_face][0].height / line.len * -offset + ((float)(mlx->text[ray->opt_face][0].height) / 2);
-				ssize_t	frac_y_down = mlx->text[ray->opt_face][0].height / line.len * offset + ((float)(mlx->text[ray->opt_face][0].height) / 2);
-				my_pixel_put(game, game->width - i - 1 , j - offset, get_color_xpm(&mlx->text[ray->opt_face][0], x, frac_y_up));
-				my_pixel_put(game, game->width - i - 1 , j + offset, get_color_xpm(&mlx->text[ray->opt_face][0], x, frac_y_down));
+					x = round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face].width);
+				ssize_t	frac_y_up = mlx->text[ray->opt_face].height / line.len * -offset + ((float)(mlx->text[ray->opt_face].height) / 2);
+				ssize_t	frac_y_down = mlx->text[ray->opt_face].height / line.len * offset + ((float)(mlx->text[ray->opt_face].height) / 2);
+				my_pixel_put(game, game->width - i - 1 , j - offset, get_color_xpm(&mlx->text[ray->opt_face], x, frac_y_up));
+				my_pixel_put(game, game->width - i - 1 , j + offset, get_color_xpm(&mlx->text[ray->opt_face], x, frac_y_down));
 			}
 			else
 			{
@@ -46,19 +46,19 @@ void	put_ray(t_cubed *cube, t_mlx *mlx, t_ray *ray, int i, float rot)
 				ssize_t x;
 				if (ray->opt_face == E)
 				{
-					x = (float)mlx->text[ray->opt_face][0].width - round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face][0].width);
-					ssize_t	frac_y_up = mlx->text[ray->opt_face][0].height / line.len * -offset + ((float)(mlx->text[ray->opt_face][0].height) / 2);
-					ssize_t	frac_y_down = mlx->text[ray->opt_face][0].height / line.len * offset + ((float)(mlx->text[ray->opt_face][0].height) / 2);
-					my_pixel_put(game, game->width - i - 1 , j - offset, get_color_xpm(&mlx->text[ray->opt_face][0], x, frac_y_up));
-					my_pixel_put(game, game->width - i - 1 , j + offset, get_color_xpm(&mlx->text[ray->opt_face][0], x, frac_y_down));
+					x = (float)mlx->text[ray->opt_face].width - round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face].width);
+					ssize_t	frac_y_up = mlx->text[ray->opt_face].height / line.len * -offset + ((float)(mlx->text[ray->opt_face].height) / 2);
+					ssize_t	frac_y_down = mlx->text[ray->opt_face].height / line.len * offset + ((float)(mlx->text[ray->opt_face].height) / 2);
+					my_pixel_put(game, game->width - i - 1 , j - offset, get_color_xpm(&mlx->text[ray->opt_face], x, frac_y_up));
+					my_pixel_put(game, game->width - i - 1 , j + offset, get_color_xpm(&mlx->text[ray->opt_face], x, frac_y_down));
 				}
 				else
 				{
-					x = round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face][(int)((float)cube->frame / 5)].width);
-					ssize_t	frac_y_up = mlx->text[ray->opt_face][(int)((float)cube->frame / 5)].height / line.len * -offset + ((float)(mlx->text[ray->opt_face][(int)((float)cube->frame / 5)].height) / 2);
-					ssize_t	frac_y_down = mlx->text[ray->opt_face][(int)((float)cube->frame / 5)].height / line.len * offset + ((float)(mlx->text[ray->opt_face][(int)((float)cube->frame / 5)].height) / 2);
-					my_pixel_put(game, game->width - i - 1 , j - offset, get_color_xpm(&mlx->text[ray->opt_face][(int)((float)cube->frame / 5)], x, frac_y_up));
-					my_pixel_put(game, game->width - i - 1 , j + offset, get_color_xpm(&mlx->text[ray->opt_face][(int)((float)cube->frame / 5)], x, frac_y_down));
+					x = round((float)(frac_x / (float)MINISQ) * (float)mlx->text[ray->opt_face].width);
+					ssize_t	frac_y_up = mlx->text[ray->opt_face].height / line.len * -offset + ((float)(mlx->text[ray->opt_face].height) / 2);
+					ssize_t	frac_y_down = mlx->text[ray->opt_face].height / line.len * offset + ((float)(mlx->text[ray->opt_face].height) / 2);
+					my_pixel_put(game, game->width - i - 1 , j - offset, get_color_xpm(&mlx->text[ray->opt_face], x, frac_y_up));
+					my_pixel_put(game, game->width - i - 1 , j + offset, get_color_xpm(&mlx->text[ray->opt_face], x, frac_y_down));
 				}
 			}
 		}

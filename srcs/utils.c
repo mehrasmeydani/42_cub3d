@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:41:10 by eprottun          #+#    #+#             */
-/*   Updated: 2025/12/17 15:14:10 by eprottun         ###   ########.fr       */
+/*   Updated: 2025/12/18 20:04:06 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "../header/parser.h"
 
 size_t	count_spaces(char *str)
 {
@@ -37,7 +37,7 @@ void	init_data(t_parser *data)
 	}
 }
 
-void	frees(t_parser *data)
+void	free_map(t_parser *data)
 {
 	int	iter;
 
