@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:41:10 by eprottun          #+#    #+#             */
-/*   Updated: 2025/12/18 20:04:06 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/18 21:11:46 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ void	free_map(t_parser *data)
 		free(data->map);
 	}
 	iter = -1;
-	while (++iter < 4 && data->textures[iter])
-		free(data->textures[iter]);
+	while (++iter < 4)
+		if (data->textures[iter])
+			free(data->textures[iter]);
 }
 
 int	is_valid_line(char *str, int i, int bitmap)

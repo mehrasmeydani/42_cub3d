@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/18 23:40:25 by mehras            #+#    #+#             */
+/*   Updated: 2025/12/18 23:44:34 by mehras           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/cubed.h"
 
-ssize_t is_in(char c, char *str)
+ssize_t	is_in(char c, char *str)
 {
-	ssize_t i;
+	ssize_t	i;
 
 	i = -1;
 	while (str[++i])
@@ -13,8 +25,8 @@ ssize_t is_in(char c, char *str)
 
 static char	char_set(t_cubed *cube, char c, ssize_t k, ssize_t l)
 {
-	t_player *player;
-	float	rot;
+	t_player	*player;
+	float		rot;
 
 	player = cube->player;
 	rot = is_in(c, "ENWS");
@@ -36,7 +48,8 @@ void	mini_map_helper(t_cubed *cube, ssize_t i, ssize_t k)
 		l = -1;
 		while (++l < MINISQ)
 		{
-			cube->mini_map[i * MINISQ + k][j * MINISQ + l] = char_set(cube, cube->map[i][j], k, l);
+			cube->mini_map[i * MINISQ + k][j * MINISQ + l] = char_set(cube,
+					cube->map[i][j], k, l);
 			if (i * MINISQ + k > 0
 				&& j * MINISQ + l > 0
 				&& i * MINISQ + k < cube->max_y * MINISQ - 2
@@ -50,25 +63,11 @@ void	mini_map_helper(t_cubed *cube, ssize_t i, ssize_t k)
 	}
 }
 
-bool	mini_map(t_cubed *cube)
+void	set_mini_map(t_cubed *cube)
 {
 	ssize_t	i;
 	ssize_t	k;
 
-	cube->mini_map = (char **)ft_calloc(cube->max_y * MINISQ + 1, sizeof(char *));
-	if (!cube->mini_map)
-		return (ft_free(cube->map), 0);
-	i = -1;
-	while (++i < cube->max_y)
-	{
-		k = -1;
-		while (++k < MINISQ)
-		{
-			cube->mini_map[i * MINISQ + k] = ft_calloc(cube->max_x * MINISQ + 1 , sizeof(char));
-			if (!cube->mini_map[i * MINISQ + k])
-				return (ft_free(cube->mini_map), ft_free(cube->map), 0);
-		}
-	}
 	i = -1;
 	while (++i < cube->max_y)
 	{
@@ -76,5 +75,29 @@ bool	mini_map(t_cubed *cube)
 		while (++k < MINISQ)
 			mini_map_helper(cube, i, k);
 	}
+}
+
+bool	mini_map(t_cubed *cube)
+{
+	ssize_t	i;
+	ssize_t	k;
+
+	cube->mini_map = (char **)ft_calloc(cube->max_y * MINISQ + 1,
+			sizeof(char *));
+	if (!cube->mini_map)
+		return (free_and_exit(cube, 2, "malloc fail"), 0);
+	i = -1;
+	while (++i < cube->max_y)
+	{
+		k = -1;
+		while (++k < MINISQ)
+		{
+			cube->mini_map[i * MINISQ + k] = ft_calloc(cube->max_x
+					* MINISQ + 1, sizeof(char));
+			if (!cube->mini_map[i * MINISQ + k])
+				return (free_and_exit(cube, 2, "malloc fail"), 0);
+		}
+	}
+	set_mini_map(cube);
 	return (1);
 }
