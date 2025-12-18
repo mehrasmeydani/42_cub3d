@@ -1,4 +1,4 @@
-#include "../header/cubed.h"
+#include "../b_header/cubed.h"
 
 void	set_player(t_cubed *cube)
 {

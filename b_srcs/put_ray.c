@@ -1,4 +1,4 @@
-#include "../header/cubed.h"
+#include "../b_header/cubed.h"
 
 void	put_ray(t_cubed *cube, t_mlx *mlx, t_ray *ray, int i, float rot)
 {

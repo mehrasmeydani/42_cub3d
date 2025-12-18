@@ -6,11 +6,11 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:41:10 by eprottun          #+#    #+#             */
-/*   Updated: 2025/12/18 19:47:43 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/18 21:38:59 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/parser.h"
+#include "../b_header/parser.h"
 
 size_t	count_spaces(char *str)
 {

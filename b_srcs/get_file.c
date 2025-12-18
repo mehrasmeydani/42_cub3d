@@ -6,11 +6,11 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 14:45:29 by eprottun          #+#    #+#             */
-/*   Updated: 2025/12/18 19:31:58 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/18 21:38:59 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/parser.h"
+#include "../b_header/parser.h"
 
 int	read_loop(int fd, t_parser *data)
 {

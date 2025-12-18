@@ -6,11 +6,11 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:38:56 by eprottun          #+#    #+#             */
-/*   Updated: 2025/12/18 19:32:42 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/18 21:38:59 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/parser.h"
+#include "../b_header/parser.h"
 
 int	extract_path(char *line, int dir, t_parser *data)
 {

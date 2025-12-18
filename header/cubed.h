@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/18 20:15:15 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/18 23:37:53 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,16 @@
 # include <stdio.h> // testing
 # include <stdint.h>
 # include <math.h>
+# include <sys/time.h>
 
 
 # define RED 0xff0000
 # define GRN 0x00ff00
 # define BLU 0x0000ff
 # define MINISQ 64
+# define scale 4
 # ifndef MOVE
-#  define MOVE 10
+#  define MOVE 5
 # endif
 # define TURN 0.085
 # define RAY_ANGL 0.0174533
@@ -74,6 +76,7 @@ typedef struct s_ray
 	float		dist_opt;
 	ssize_t		mx;
 	ssize_t		my;
+	ssize_t		i;
 }	t_ray;
 
 typedef	struct s_line
@@ -149,9 +152,20 @@ void		put_image(t_cubed *cube, t_mlx *mlx);
 void		fill_map(t_img *img);
 void		my_pixel_put(t_img *img, ssize_t x, ssize_t y, uint32_t color);
 uint32_t	get_color_xpm(t_img *img, ssize_t x, ssize_t y);
-void		put_ray(t_cubed *cube, t_mlx *mlx, t_ray *ray, int i, float rot);
+void		put_ray(t_cubed *cube, t_mlx *mlx, t_ray *ray, float rot);
 uint32_t	get_color(float r, float g, float b);
 int			parser(const char *filename, t_parser *data);
+void		free_and_exit(t_cubed *cube, int fd, char *str);
+int			mouse(int x, int y, void *in);
+int			mlx_exit(void *in);
+void		free_and_exit(t_cubed *cube, int fd, char *str);
+int			mlx_key_press(int key_code, void *in);
+int			mlx_key_release(int key_code, void *in);
+void		init_mlx(t_cubed *cube, t_mlx *mlx);
+void		init_imgs(t_cubed *cube, t_mlx *mlx);
+void		ray_cal(t_cubed *cube, t_line *line, t_player *player);
+bool		init_game(t_cubed *cube, t_mlx *mlx);
+void		move(t_cubed *cube, t_move *moving);
+void		put_line(t_img *img, t_line *line, uint32_t color);
 
 #endif
-

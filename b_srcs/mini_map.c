@@ -1,4 +1,4 @@
-#include "../header/cubed.h"
+#include "../b_header/cubed.h"
 
 ssize_t is_in(char c, char *str)
 {
