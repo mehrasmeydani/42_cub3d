@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:20 by mehras            #+#    #+#             */
-/*   Updated: 2025/12/18 23:40:21 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/19 01:53:11 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,29 @@
 
 void	put_line(t_img *img, t_line *line, uint32_t color)
 {
-	ssize_t x = line->x;
-	ssize_t y = line->y;
-
+	t_putline	putline;
+	ssize_t		i;
 
 	if (line->len != 0)
 	{
 		line->x_end = line->x + roundf(cos(line->rot) * line->len);
 		line->y_end = line->y - roundf(sin(line->rot) * line->len);
 	}
-
-	ssize_t dx = line->x_end - line->x;
-	ssize_t dy = line->y_end - line->y;
-
-	ssize_t steps = llabs(dx) > llabs(dy) ? llabs(dx) : llabs(dy);
-
-	float x_inc = dx / (float)steps;
-	float y_inc = dy / (float)steps;
-
-	float xf = x;
-	float yf = y;
-	for (ssize_t i = 0; i <= steps; i++)
+	putline.dx = line->x_end - line->x;
+	putline.dy = line->y_end - line->y;
+	if (llabs(putline.dx) > llabs(putline.dy))
+		putline.steps = llabs(putline.dx);
+	else
+		putline.steps = llabs(putline.dy);
+	putline.x_inc = putline.dx / (float)putline.steps;
+	putline.y_inc = putline.dy / (float)putline.steps;
+	putline.xf = line->x;
+	putline.yf = line->y;
+	i = -1;
+	while (++i <= putline.steps)
 	{
-		my_pixel_put(img, (ssize_t)roundf(xf), (ssize_t)roundf(yf), color);
-		xf += x_inc;
-		yf += y_inc;
+		my_pixel_put(img, roundf(putline.xf), roundf(putline.yf), color);
+		putline.xf += putline.x_inc;
+		putline.yf += putline.y_inc;
 	}
 }

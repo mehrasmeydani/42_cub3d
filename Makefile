@@ -6,14 +6,14 @@
 #    By: mehras <mehras@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 14:44:18 by codespace         #+#    #+#              #
-#    Updated: 2025/12/19 01:00:50 by mehras           ###   ########.fr        #
+#    Updated: 2025/12/19 02:12:45 by mehras           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC			=	main.c mini_map.c ft_free.c set_player.c put_ray.c get_file.c\
 				get_info.c get_map.c parser.c utils.c ray_caster.c move.c\
 				mouse_keys.c line.c init_mlx.c init_imgs.c frees_exit.c move_util.c\
-				ray_caster_utils.c
+				ray_caster_utils.c get_color.c my_pixel_put.c put_img.c put_mini_imgs.c
 SRCS		=	${addprefix ${PRE_SRC}, ${SRC}}
 PRE_SRC		=	srcs/
 HEAD		=	header/ -I/usr/include -O3 -I/home/mehras/mlx

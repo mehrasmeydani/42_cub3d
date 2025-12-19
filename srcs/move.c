@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:29 by mehras            #+#    #+#             */
-/*   Updated: 2025/12/19 00:24:24 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/19 01:43:52 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	y_op(t_cubed *cube, t_player *player, float sine)
 		y_op_util(cube, player, sine, 0);
 	else
 		player->y_f -= sine;
-	player->p_y = round(((float)(player->y_i) + player->y_f) * (float)MINISQ);
+	player->p_y = roundf(((float)(player->y_i) + player->y_f) * (float)MINISQ);
 }
 
 void	x_op(t_cubed *cube, t_player *player, float cosine)
@@ -31,7 +31,7 @@ void	x_op(t_cubed *cube, t_player *player, float cosine)
 		x_op_util(cube, player, cosine, 0);
 	else
 		player->x_f += cosine;
-	player->p_x = round(((float)(player->x_i) + player->x_f) * (float)MINISQ);
+	player->p_x = roundf(((float)(player->x_i) + player->x_f) * (float)MINISQ);
 }
 
 void	turn(t_cubed *cube, t_player *player, bool left)

@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:33 by mehras            #+#    #+#             */
-/*   Updated: 2025/12/19 01:33:44 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/19 01:43:38 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 ssize_t	offset_cal(t_mlx *mlx, t_ray *ray, ssize_t offset, float line_len)
 {
-	return (round((float)mlx->text[ray->opt_face].height
+	return (roundf((float)mlx->text[ray->opt_face].height
 			* (float)offset / line_len
 			+ ((float)(mlx->text[ray->opt_face].height) / 2.0f)));
 }

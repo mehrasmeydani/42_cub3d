@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:11:17 by mehras            #+#    #+#             */
-/*   Updated: 2025/12/19 01:23:25 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/19 01:53:49 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,10 @@ void	ray_hor(t_ray *ray, t_player *player, t_cubed *cube)
 			ray->r_y - (float)player->p_y);
 }
 
-void	set_line(t_line *line, t_ray *ray, t_cubed *cube, t_img *mini)
+void	set_line(t_line *line, t_ray *ray, t_img *mini)
 {
-	if (ray->pa > cube->pie)
-		line->x_end = (ray->r_x) / SCALE + mini->border;
-	else
-		line->x_end = roundf(ray->r_x) / SCALE + mini->border;
-	line->y_end = round(ray->r_y) / SCALE + mini->border;
+	line->x_end = roundf(ray->r_x) / SCALE + mini->border;
+	line->y_end = roundf(ray->r_y) / SCALE + mini->border;
 	line->rot = ray->pa;
 }
 
@@ -98,7 +95,7 @@ void	ray_cal(t_cubed *cube, t_line *line, t_player *player)
 		ray_vert(&ray, player, cube);
 		ray_hor(&ray, player, cube);
 		set_opt(&ray);
-		set_line(line, &ray, cube, mini);
+		set_line(line, &ray, mini);
 		put_ray(cube, cube->mlx, &ray);
 		if (cube->mini && cube->ray)
 			put_line(mini, line, get_color(0.1, 0.3, 0.8));
