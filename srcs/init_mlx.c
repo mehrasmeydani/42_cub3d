@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:17 by mehras            #+#    #+#             */
-/*   Updated: 2025/12/18 23:47:56 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/19 00:17:51 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ void	hooks(t_cubed *cube, t_mlx *mlx)
 	mlx_hook(mlx->win, 3, (1L << 1), &mlx_key_release, cube);
 	mlx_hook(mlx->win, 17, 0L, &mlx_exit, cube);
 	mlx_loop_hook(mlx->mlx, game_loop, cube);
-	// mlx_hook(mlx->win, 6, (1L << 6), mouse, cube);
-	// mlx_mouse_move(mlx->mlx, mlx->win, mlx->game.height / 2,
-	// 	mlx->game.width / 2);
+	mlx_hook(mlx->win, 6, (1L << 6), mouse, cube);
+	mlx_mouse_move(mlx->mlx, mlx->win, mlx->game.height / 2,
+		mlx->game.width / 2);
 }
 
 void	init_mlx(t_cubed *cube, t_mlx *mlx)

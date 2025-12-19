@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:29 by mehras            #+#    #+#             */
-/*   Updated: 2025/12/18 23:40:30 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/19 00:24:24 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,9 @@
 void	y_op(t_cubed *cube, t_player *player, float sine)
 {
 	if (player->y_f - sine > 0.95)
-	{
-		if (cube->map[player->y_i + 1][player->x_i] != '1' && player->y_f - sine > 1)
-		{
-			player->y_i++;
-			player->y_f = player->y_f - 1 - sine;
-		}
-		else if (cube->map[player->y_i + 1][player->x_i] != '1')
-			player->y_f -= sine;
-		else
-			player->y_f = 0.95;
-	}
+		y_op_util(cube, player, sine, 1);
 	else if (player->y_f - sine < 0.05)
-	{
-		if (player->y_f - sine < 0 && cube->map[player->y_i - 1][player->x_i] != '1')
-		{
-			player->y_i--;
-			player->y_f = player->y_f + 1 - sine;
-		}
-		else if (cube->map[player->y_i - 1][player->x_i] != '1')
-			player->y_f -= sine;
-		else
-			player->y_f = 0.05;
-	}
+		y_op_util(cube, player, sine, 0);
 	else
 		player->y_f -= sine;
 	player->p_y = round(((float)(player->y_i) + player->y_f) * (float)MINISQ);
@@ -46,35 +26,15 @@ void	y_op(t_cubed *cube, t_player *player, float sine)
 void	x_op(t_cubed *cube, t_player *player, float cosine)
 {
 	if (player->x_f + cosine > 0.95)
-	{
-		if (cube->map[player->y_i][player->x_i + 1] != '1' && player->x_f + cosine > 1)
-		{
-			player->x_i++;
-			player->x_f = player->x_f - 1 + cosine;
-		}
-		else if (cube->map[player->y_i][player->x_i + 1] != '1')
-			player->x_f += cosine;
-		else
-			player->x_f = 0.95;
-	}
+		x_op_util(cube, player, cosine, 1);
 	else if (player->x_f + cosine < 0.05)
-	{
-		if (cube->map[player->y_i][player->x_i - 1] != '1' && player->x_f + cosine < 0)
-		{
-			player->x_i--;
-			player->x_f = player->x_f + 1 + cosine;
-		}
-		else if (cube->map[player->y_i][player->x_i - 1] != '1')
-			player->x_f += cosine;
-		else
-			player->x_f = 0.05;
-	}
+		x_op_util(cube, player, cosine, 0);
 	else
 		player->x_f += cosine;
 	player->p_x = round(((float)(player->x_i) + player->x_f) * (float)MINISQ);
 }
 
-void turn(t_cubed *cube, t_player *player, bool left)
+void	turn(t_cubed *cube, t_player *player, bool left)
 {
 	if (left)
 	{

@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:13 by mehras            #+#    #+#             */
-/*   Updated: 2025/12/18 23:45:14 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/19 01:23:25 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ bool	init_mini_map(t_cubed *cube, t_mlx *mlx)
 	t_img	*mini;
 
 	mini = &mlx->mini;
-	mini->border = (MINISQ / scale) / 4;
-	mini->height = cube->max_y * MINISQ / scale + 2 * mini->border;
-	mini->width = cube->max_x * MINISQ / scale + 2 * mini->border;
+	mini->border = (MINISQ / SCALE) / 4;
+	mini->height = cube->max_y * MINISQ / SCALE + 2 * mini->border;
+	mini->width = cube->max_x * MINISQ / SCALE + 2 * mini->border;
 	mini->img = mlx_new_image(mlx->mlx, mini->width, mini->height);
 	if (!mini->img)
 		return (0);

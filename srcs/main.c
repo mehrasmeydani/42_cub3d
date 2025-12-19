@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/18 23:07:11 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/19 01:23:25 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	mini_put_sq(t_img *mini, ssize_t x, ssize_t y, char c)
 
 	i = y + mini->border;
 	j = x + mini->border;
-	if (x % (MINISQ / scale) && y % (MINISQ / scale))
+	if (x % (MINISQ / SCALE) && y % (MINISQ / SCALE))
 	{
 		if (is_in(c, "ENWS0") != -1)
 			my_pixel_put(mini, j, i, get_color(0, 1, 0));
@@ -170,12 +170,12 @@ void	mini_put_player(t_img *mini, t_player *player)
 {
 	t_line	line;
 
-	line.x = player->p_x / scale + mini->border;
-	line.y = player->p_y / scale + mini->border;
+	line.x = player->p_x / SCALE + mini->border;
+	line.y = player->p_y / SCALE + mini->border;
 	line.len = 25;
 	line.rot = player->rad;
 	put_line(mini, &line, get_color(1, 1, 1));
-	put_star(mini, player->p_x / scale + mini->border, player->p_y / scale + mini->border, get_color(1, 0, 1));
+	put_star(mini, player->p_x / SCALE + mini->border, player->p_y / SCALE + mini->border, get_color(1, 0, 1));
 }
 
 void	set_mini_img(t_cubed *cube, t_mlx *mlx)
@@ -190,12 +190,12 @@ void	set_mini_img(t_cubed *cube, t_mlx *mlx)
 	fill_map(mini);
 	while (cube->mini_map[++i])
 	{
-		if (i % scale == 0)
+		if (i % SCALE == 0)
 		{
 			j = -1;
 			while (cube->mini_map[i][++j])
-				if (j % scale == 0)
-					mini_put_sq(mini, j / scale, i / scale, cube->mini_map[i][j]);
+				if (j % SCALE == 0)
+					mini_put_sq(mini, j / SCALE, i / SCALE, cube->mini_map[i][j]);
 		}
 	}
 	mini_put_player(mini, cube->player);
