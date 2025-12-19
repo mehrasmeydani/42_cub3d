@@ -6,11 +6,11 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/19 02:09:40 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/19 02:18:14 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	CUBED_H
+#ifndef CUBED_H
 # define CUBED_H
 
 # include "libft.h"
@@ -22,7 +22,6 @@
 # include <stdint.h>
 # include <math.h>
 # include <sys/time.h>
-
 
 # define RED 0xff0000
 # define GRN 0x00ff00
@@ -36,7 +35,6 @@
 # define RAY_ANGL 0.0174533
 # define TURN_2 0.035
 # define ANGLE 30.0f
-# define RAY_STEP (float)((0.0174533f * ANGLE * 2.0f) / (float)game->width)
 # define N 0
 # define S 1
 # define W 2
@@ -51,13 +49,13 @@
 
 typedef struct s_putline
 {
-	ssize_t dx;
-	ssize_t dy;
-	ssize_t steps;
-	float x_inc;
-	float y_inc;
-	float xf;
-	float yf;
+	ssize_t	dx;
+	ssize_t	dy;
+	ssize_t	steps;
+	float	x_inc;
+	float	y_inc;
+	float	xf;
+	float	yf;
 }	t_putline;
 
 typedef struct s_move
@@ -89,7 +87,7 @@ typedef struct s_ray
 	float		rot;
 }	t_ray;
 
-typedef	struct s_line
+typedef struct s_line
 {
 	ssize_t	x;
 	ssize_t	y;
@@ -109,7 +107,7 @@ typedef struct s_img
 	int		width;
 	int		height;
 	int		border;
-} t_img;
+}	t_img;
 
 typedef struct s_putray
 {
@@ -119,7 +117,7 @@ typedef struct s_putray
 	ssize_t	x;
 }	t_putray;
 
-typedef struct	s_mlx
+typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
@@ -131,7 +129,7 @@ typedef struct	s_mlx
 	int		y_win;
 }	t_mlx;
 
-typedef struct	s_player
+typedef struct s_player
 {
 	float		rad;
 	ssize_t		x_i;
@@ -142,7 +140,7 @@ typedef struct	s_player
 	ssize_t		p_y;
 }	t_player;
 
-typedef struct	s_cubed
+typedef struct s_cubed
 {
 	char		**map;
 	char		**mini_map;
@@ -163,7 +161,7 @@ typedef struct	s_cubed
 
 void		set_mini_img(t_cubed *cube, t_mlx *mlx);
 void		ft_free(char **in);
-ssize_t 	is_in(char c, char *str);
+ssize_t		is_in(char c, char *str);
 bool		mini_map(t_cubed *cube);
 void		set_player(t_cubed *cube);
 void		put_image(t_cubed *cube, t_mlx *mlx);
