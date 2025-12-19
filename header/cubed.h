@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2025/12/18 23:37:53 by mehras           ###   ########.fr       */
+/*   Updated: 2025/12/19 01:26:47 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@
 # define GRN 0x00ff00
 # define BLU 0x0000ff
 # define MINISQ 64
-# define scale 4
+# define SCALE 4
 # ifndef MOVE
 #  define MOVE 5
 # endif
-# define TURN 0.085
+# define TURN 0.1
 # define RAY_ANGL 0.0174533
 # define TURN_2 0.035
 # define ANGLE 30.0f
@@ -77,6 +77,7 @@ typedef struct s_ray
 	ssize_t		mx;
 	ssize_t		my;
 	ssize_t		i;
+	float		rot;
 }	t_ray;
 
 typedef	struct s_line
@@ -100,6 +101,14 @@ typedef struct s_img
 	int		height;
 	int		border;
 } t_img;
+
+typedef struct s_putray
+{
+	ssize_t	j;
+	ssize_t	offset;
+	float	line_len;
+	ssize_t	x;
+}	t_putray;
 
 typedef struct	s_mlx
 {
@@ -152,7 +161,7 @@ void		put_image(t_cubed *cube, t_mlx *mlx);
 void		fill_map(t_img *img);
 void		my_pixel_put(t_img *img, ssize_t x, ssize_t y, uint32_t color);
 uint32_t	get_color_xpm(t_img *img, ssize_t x, ssize_t y);
-void		put_ray(t_cubed *cube, t_mlx *mlx, t_ray *ray, float rot);
+void		put_ray(t_cubed *cube, t_mlx *mlx, t_ray *ray);
 uint32_t	get_color(float r, float g, float b);
 int			parser(const char *filename, t_parser *data);
 void		free_and_exit(t_cubed *cube, int fd, char *str);
@@ -167,5 +176,11 @@ void		ray_cal(t_cubed *cube, t_line *line, t_player *player);
 bool		init_game(t_cubed *cube, t_mlx *mlx);
 void		move(t_cubed *cube, t_move *moving);
 void		put_line(t_img *img, t_line *line, uint32_t color);
+void		set_opt(t_ray *ray);
+void		init_ray(t_cubed *cube, t_img *mini, t_ray *ray, t_line *line);
+void		set_dir_vert(t_ray *ray, t_cubed *cube, t_player *player);
+bool		check_ray(t_ray *ray, t_cubed *cube);
+void		x_op_util(t_cubed *cube, t_player *player, float cosine, bool i);
+void		y_op_util(t_cubed *cube, t_player *player, float sine, bool i);
 
 #endif
