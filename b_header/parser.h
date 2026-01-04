@@ -6,7 +6,7 @@
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:14:09 by eprottun          #+#    #+#             */
-/*   Updated: 2026/01/04 16:25:42 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/04 16:25:59 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_parser
 	int			map_pos;
 	int			max_x;
 	int			max_y;
-	char		*textures[4];
+	char		*textures[4][4];
 	int			floor[3];
 	int			ceiling[3];
 	char		**map;

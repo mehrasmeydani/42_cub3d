@@ -6,7 +6,7 @@
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2026/01/04 16:46:27 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/04 16:50:34 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ typedef struct s_mlx
 	void	*ptr;
 	t_img	mini;
 	t_img	game;
-	t_img	text[4];
+	t_img	text[4][4];
 	int		x_win;
 	int		y_win;
 }	t_mlx;
@@ -144,7 +144,7 @@ typedef struct s_cubed
 {
 	char		**map;
 	char		**mini_map;
-	char		*xpm[4];
+	char		*xpm[4][4];
 	t_player	*player;
 	t_mlx		*mlx;
 	t_move		moving;
