@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:18:59 by eprottun          #+#    #+#             */
-/*   Updated: 2026/01/04 16:28:42 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/04 17:12:42 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../b_header/parser.h"
+#include "../b_header/parser_bonus.h"
 
 static int	element_found(char *str, int *bitmap)
 {

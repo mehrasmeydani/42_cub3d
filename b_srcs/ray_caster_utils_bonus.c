@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_caster_utils.c                                 :+:      :+:    :+:   */
+/*   ray_caster_utils_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 00:17:15 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/04 16:28:58 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/04 17:13:14 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../b_header/cubed.h"
+#include "../b_header/cubed_bonus.h"
 
 bool	check_ray(t_ray *ray, t_cubed *cube)
 {

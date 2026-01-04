@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_ray.c                                          :+:      :+:    :+:   */
+/*   put_ray_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:33 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/04 16:51:05 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/04 17:13:14 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../b_header/cubed.h"
+#include "../b_header/cubed_bonus.h"
 
 ssize_t	offset_cal(t_mlx *mlx, t_ray *ray, ssize_t offset, float line_len)
 {

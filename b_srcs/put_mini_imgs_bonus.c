@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_mini_imgs.c                                    :+:      :+:    :+:   */
+/*   put_mini_imgs_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 01:56:25 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/04 16:29:03 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/04 17:13:14 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../b_header/cubed.h"
+#include "../b_header/cubed_bonus.h"
 
 void	put_star(t_img *img, ssize_t x, ssize_t y, uint32_t color)
 {

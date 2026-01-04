@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   parser_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:14:09 by eprottun          #+#    #+#             */
-/*   Updated: 2026/01/04 16:25:59 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/04 17:13:44 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef PARSER_BONUS_H
+# define PARSER_BONUS_H
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
@@ -34,7 +34,7 @@
 # include <stdio.h>
 # include <stddef.h>
 # include <limits.h>
-# include "libft.h"
+# include "libft_bonus.h"
 
 typedef struct s_parser
 {

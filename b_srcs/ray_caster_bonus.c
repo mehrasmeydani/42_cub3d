@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_caster.c                                       :+:      :+:    :+:   */
+/*   ray_caster_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:11:17 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/04 16:28:54 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/04 17:13:14 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../b_header/cubed.h"
+#include "../b_header/cubed_bonus.h"
 
 void	ray_loop(t_cubed *cube, t_ray *ray)
 {

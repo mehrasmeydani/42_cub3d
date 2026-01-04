@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_pixel_put.c                                     :+:      :+:    :+:   */
+/*   get_color_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 02:00:06 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/04 16:29:10 by eprottun         ###   ########.fr       */
+/*   Created: 2025/12/19 02:06:36 by mehras            #+#    #+#             */
+/*   Updated: 2026/01/04 17:13:14 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../b_header/cubed.h"
+#include "../b_header/cubed_bonus.h"
 
-void	my_pixel_put(t_img *img, ssize_t x, ssize_t y, uint32_t color)
+uint32_t	get_color(float r, float g, float b)
+{
+	uint8_t	red;
+	uint8_t	green;
+	uint8_t	blue;
+
+	red = (uint8_t)roundf(((RED >> 16) & 0xFF) * r);
+	green = (uint8_t)roundf(((GRN >> 8) & 0xFF) * g);
+	blue = (uint8_t)roundf((BLU & 0xFF) * b);
+	return ((red << 16) | (green << 8) | blue);
+}
+
+uint32_t	get_color_xpm(t_img *img, ssize_t x, ssize_t y)
 {
 	char	*dst;
 
 	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	*(uint32_t *)dst = color;
+	return (*(uint32_t *)dst);
 }

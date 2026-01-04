@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   libft_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/16 17:29:12 by mehras            #+#    #+#             */
-/*   Updated: 2025/11/01 17:07:34 by megardes         ###   ########.fr       */
+/*   Created: 2026/01/04 17:14:17 by eprottun          #+#    #+#             */
+/*   Updated: 2026/01/04 17:14:24 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#ifndef LIBFT_BONUS_H
+# define LIBFT_BONUS_H
 
 # include <stdlib.h>
 # include <unistd.h>

@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cubed.h                                            :+:      :+:    :+:   */
+/*   cubed_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2026/01/04 16:50:34 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/04 17:14:38 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBED_H
-# define CUBED_H
+#ifndef CUBED_BONUS_H
+# define CUBED_BONUS_H
 
-# include "libft.h"
-# include "parser.h"
+# include "libft_bonus.h"
+# include "parser_bonus.h"
 # include <mlx.h>
 # include <stdbool.h>
 # include <X11/keysym.h>

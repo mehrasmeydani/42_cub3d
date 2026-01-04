@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_info.c                                         :+:      :+:    :+:   */
+/*   get_info_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:38:56 by eprottun          #+#    #+#             */
-/*   Updated: 2026/01/04 16:38:17 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/04 17:12:42 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../b_header/parser.h"
+#include "../b_header/parser_bonus.h"
 #include <stddef.h>
 
 int	extract_path(char *line, int dir, t_parser *data)
