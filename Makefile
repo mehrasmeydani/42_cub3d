@@ -6,7 +6,7 @@
 #    By: megardes <megardes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 14:44:18 by codespace         #+#    #+#              #
-#    Updated: 2026/01/04 17:05:59 by megardes         ###   ########.fr        #
+#    Updated: 2026/01/04 17:19:11 by megardes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,8 +60,10 @@ $(PRE_OBJ_BONUS)%.o:$(PRE_SRC_BONUS)%.c
 			mkdir -p $(PRE_OBJ_BONUS)
 			$(CC) $(CFLAGS) -I $(HEAD) -o $@ -c $<
 
-bonus:		$(NAME_BONUS) $(OBJS_BONUS)
+$(NAME_BONUS): $(OBJS_BONUS)
 			cc $(CFLAGS) -I $(HEAD) $(OBJS_BONUS) -o $(NAME_BONUS) ./libft/libft.a  $(Lflags)
+
+bonus:		$(NAME_BONUS)
 
 re:			fclean all
 			
