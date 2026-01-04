@@ -22,6 +22,27 @@ size_t	count_spaces(char *str)
 	return (i);
 }
 
+int	valid_number(const char *str)
+{
+	int		i;
+	long	number;
+
+	i = 0;
+	number = 0;
+	while (str[i] == '0')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9' && number / 1000 == 0)
+	{
+		number *= 10;
+		number += str[i] - 48;
+		i++;
+	}
+	if (number > 255)
+		return (0);
+	else
+		return (1);
+}
+
 void	init_data(t_parser *data)
 {
 	size_t	iter;

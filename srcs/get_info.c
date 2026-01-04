@@ -48,16 +48,15 @@ int	extract_color(char *line, int spec, t_parser *data)
 		iter += count_spaces(&line[iter]);
 		if (!ft_isdigit(line[iter]))
 			return (-1);
+		if (!valid_number(&line[iter]))
+			return (-1);
 		array[rounds] = ft_atoi(&line[iter]);
 		while (ft_isdigit(line[iter]))
 			iter++;
 		iter += count_spaces(&line[iter]);
-		if (rounds != 2 && line[iter++] != ',')
+		if (rounds++ != 2 && line[iter++] != ',')
 			return (-1);
-		rounds++;
 	}
-	if (line[iter])
-		return (-1);
 	return ((line[iter] != 0) * -1);
 }
 

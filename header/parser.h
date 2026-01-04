@@ -33,6 +33,7 @@
 # include <stdint.h>
 # include <stdio.h>
 # include <stddef.h>
+# include <limits.h>
 # include "libft.h"
 
 typedef struct s_parser
@@ -48,6 +49,7 @@ typedef struct s_parser
 	char		**map;
 }	t_parser;
 
+int		valid_number(const char *str);
 size_t	count_spaces(char *str);
 int		get_map(t_parser *data);
 int		get_info(int info, t_parser *data);
