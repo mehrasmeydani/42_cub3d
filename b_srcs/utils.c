@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:41:10 by eprottun          #+#    #+#             */
-/*   Updated: 2025/12/18 19:47:43 by mehras           ###   ########.fr       */
+/*   Updated: 2026/01/04 15:50:59 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,27 @@ size_t	count_spaces(char *str)
 	while (str[i] == 32)
 		i++;
 	return (i);
+}
+
+int	valid_number(const char *str)
+{
+	int		i;
+	long	number;
+
+	i = 0;
+	number = 0;
+	while (str[i] == '0')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9' && number / 1000 == 0)
+	{
+		number *= 10;
+		number += str[i] - 48;
+		i++;
+	}
+	if (number > 255)
+		return (0);
+	else
+		return (1);
 }
 
 void	init_data(t_parser *data)

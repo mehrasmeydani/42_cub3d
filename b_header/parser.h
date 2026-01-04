@@ -3,19 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:14:09 by eprottun          #+#    #+#             */
-/*   Updated: 2025/12/18 19:47:43 by mehras           ###   ########.fr       */
+/*   Updated: 2026/01/04 15:50:41 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
 
 # define NO 64
 # define EA 32
@@ -34,6 +30,7 @@
 # include <stdio.h>
 # include <stddef.h>
 # include "libft.h"
+# include <limits.h>
 
 typedef struct s_parser
 {
@@ -48,6 +45,7 @@ typedef struct s_parser
 	char		**map;
 }	t_parser;
 
+int		valid_number(const char *str);
 size_t	count_spaces(char *str);
 int		get_map(t_parser *data);
 int		get_info(int info, t_parser *data);
@@ -58,3 +56,4 @@ void	init_data(t_parser *data);
 int		is_valid_line(char *str, int i, int bitmap);
 
 #endif
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:38:56 by eprottun          #+#    #+#             */
-/*   Updated: 2025/12/18 19:32:42 by mehras           ###   ########.fr       */
+/*   Updated: 2026/01/04 14:37:06 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,15 @@ int	extract_color(char *line, int spec, t_parser *data)
 		iter += count_spaces(&line[iter]);
 		if (!ft_isdigit(line[iter]))
 			return (-1);
+		if (!valid_number(&line[iter]))
+			return (-1);
 		array[rounds] = ft_atoi(&line[iter]);
 		while (ft_isdigit(line[iter]))
 			iter++;
 		iter += count_spaces(&line[iter]);
-		if (rounds != 2 && line[iter++] != ',')
+		if (rounds++ != 2 && line[iter++] != ',')
 			return (-1);
-		rounds++;
 	}
-	if (line[iter])
-		return (-1);
 	return ((line[iter] != 0) * -1);
 }
 
