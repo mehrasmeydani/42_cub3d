@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   frees_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:39:31 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/04 16:26:53 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/04 20:29:46 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,21 @@
 void	free_imgs(t_mlx *mlx)
 {
 	ssize_t	i;
+	ssize_t	j;
 
 	i = -1;
+	j = -1;
 	if (mlx->mini.img)
 		mlx_destroy_image(mlx->mlx, mlx->mini.img);
 	if (mlx->game.img)
 		mlx_destroy_image(mlx->mlx, mlx->game.img);
 	while (++i < 4)
-		if (mlx->text[i].img)
-			mlx_destroy_image(mlx->mlx, mlx->text[i].img);
+	{
+		j = -1;
+		while (++j < 4)
+			if (mlx->text[i][j].img)
+				mlx_destroy_image(mlx->mlx, mlx->text[i][j].img);
+	}
 }
 
 void	free_mlx(t_mlx *mlx)
@@ -46,6 +52,7 @@ void	free_mlx(t_mlx *mlx)
 void	free_cube(t_cubed *cube)
 {
 	ssize_t	i;
+	ssize_t	j;
 
 	i = -1;
 	if (cube->map)
@@ -53,8 +60,12 @@ void	free_cube(t_cubed *cube)
 	if (cube->mini_map)
 		ft_free(cube->mini_map);
 	while (++i < 4)
-		if (cube->xpm[i])
-			free(cube->xpm[i]);
+	{
+		j = -1;
+		while (++j < 4)		
+			if (cube->xpm[i][j])
+				free(cube->xpm[i][j]);
+	}
 	free_mlx(cube->mlx);
 }
 

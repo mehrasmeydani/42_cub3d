@@ -3,36 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   get_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:38:56 by eprottun          #+#    #+#             */
-/*   Updated: 2026/01/04 16:38:17 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/04 20:41:26 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../b_header/parser.h"
+#include "../b_header/cubed.h"
 #include <stddef.h>
 
 int	extract_path(char *line, int dir, t_parser *data)
 {
 	size_t	i;
 	size_t	count;
+	char	**in;
 
-	i = 2;
+	i = -1;
 	count = 0;
-	while (count < 4)
-	{
-		i += count_spaces(&line[i]);
-		if (!line[i])
-			return (ft_putendl_fd("Error\nElement format wrong", 2), -1);
-		data->textures[dir][count++] = ft_strdup(&line[i]);
-		if (!data->textures[dir])
-			return (ft_putendl_fd("Error\nMalloc failed", 2), -1);
-		while (line[i] && !count_spaces(&line[i]))
-			i++;
-	}
-	if (line[i + count_spaces(&line[i])])
-		return (ft_putendl_fd("Error\nElement format wrong", 2), -1);
+	line += 3;
+	in = ft_split(line, ' ');
+	if (!in)
+		return (-1);
+	while (in[++i])
+		;
+	if (i != 4)
+		return (ft_free(in), -1);
+	i = -1;
+	while (++i < 4)
+		data->textures[dir][i] = in[i];
+	free(in);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_imgs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:13 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/04 16:29:26 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/04 21:10:04 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,18 @@ bool	init_game(t_cubed *cube, t_mlx *mlx)
 	return (1);
 }
 
-bool	init_text_2(t_cubed *cube, t_mlx *mlx, int i)
+bool	init_text_2(t_cubed *cube, t_mlx *mlx, int i, int j)
 {
 	t_img	*text;
 
-	text = &mlx->text[i];
+	text = &mlx->text[i][j];
 	text->border = 0;
 	text->height = 0;
 	text->width = 0;
-	text->img = mlx_xpm_file_to_image(mlx->mlx, cube->xpm[i],
+	//puts(cube->xpm[i][j]);
+	text->img = mlx_xpm_file_to_image(mlx->mlx, cube->xpm[i][j],
 			&text->width, &text->height);
+	//puts("hu");
 	if (!text->img)
 		return (0);
 	text->addr = mlx_get_data_addr(text->img, &text->bits_per_pixel,
@@ -52,14 +54,20 @@ bool	init_text_2(t_cubed *cube, t_mlx *mlx, int i)
 
 bool	init_text(t_cubed *cube, t_mlx *mlx)
 {
-	if (!init_text_2(cube, mlx, W))
-		return (0);
-	if (!init_text_2(cube, mlx, N))
-		return (0);
-	if (!init_text_2(cube, mlx, E))
-		return (0);
-	if (!init_text_2(cube, mlx, S))
-		return (0);
+	ssize_t	i;
+
+	i = -1;
+	while (++i < 4)
+	{
+		if (!init_text_2(cube, mlx, W, i))
+			return (0);
+		if (!init_text_2(cube, mlx, N, i))
+			return (0);
+		if (!init_text_2(cube, mlx, E, i))
+			return (0);
+		if (!init_text_2(cube, mlx, S, i))
+			return (0);
+	}
 	return (1);
 }
 

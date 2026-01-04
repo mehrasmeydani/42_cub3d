@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubed.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2026/01/04 16:50:34 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/04 20:43:44 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define MINISQ 64
 # define SCALE 4
 # ifndef MOVE
-#  define MOVE 5
+#  define MOVE 2
 # endif
 # define TURN 0.1
 # define RAY_ANGL 0.0174533
@@ -127,6 +127,7 @@ typedef struct s_mlx
 	t_img	text[4][4];
 	int		x_win;
 	int		y_win;
+	int			frame;
 }	t_mlx;
 
 typedef struct s_player
@@ -156,7 +157,6 @@ typedef struct s_cubed
 	bool		mini;
 	bool		ray;
 	bool		mouse;
-	int			frame;
 }	t_cubed;
 
 void		set_mini_img(t_cubed *cube, t_mlx *mlx);

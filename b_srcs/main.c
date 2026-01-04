@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2026/01/04 16:40:07 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/04 19:27:51 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	init_main(t_cubed *cube, t_parser *parser, t_player *player, t_mlx *mlx)
 
 void	set_parser_to_cube(t_cubed *cube, t_parser *pars)
 {
-	size_t	count;
+	ssize_t	count;
 
-	count = 0;
+	count = -1;
 	cube->map = pars->map;
 	pars->map = NULL;
 	cube->max_x = pars->max_x;
@@ -51,7 +51,7 @@ void	set_parser_to_cube(t_cubed *cube, t_parser *pars)
 	cube->head = get_color((float)pars->ceiling[0] / 255.0f,
 			(float)pars->ceiling[1] / 255.0f,
 			(float)pars->ceiling[2] / 255.0f);
-	while (count < 4)
+	while (++count < 4)
 	{
 		cube->xpm[W][count] = pars->textures[W][count];
 		cube->xpm[S][count] = pars->textures[S][count];
