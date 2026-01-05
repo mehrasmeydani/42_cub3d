@@ -16,11 +16,9 @@
 int	extract_path(char *line, int dir, t_parser *data)
 {
 	size_t	i;
-	size_t	count;
 	char	**in;
 
 	i = -1;
-	count = 0;
 	line += 3;
 	in = ft_split(line, ' ');
 	if (!in)

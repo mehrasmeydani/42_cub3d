@@ -14,9 +14,9 @@
 
 ssize_t	offset_cal(t_mlx *mlx, t_ray *ray, ssize_t offset, float line_len)
 {
-	return (roundf((float)mlx->text[ray->opt_face][(int)(mlx->frame / 5)].height
+	return (roundf((float)mlx->text[ray->opt_face][(int)(mlx->frame / 2)].height
 			* (float)offset / line_len
-			+ ((float)(mlx->text[ray->opt_face][(int)(mlx->frame / 5)].height) / 2.0f)));
+			+ ((float)(mlx->text[ray->opt_face][(int)(mlx->frame / 2)].height) / 2.0f)));
 }
 
 float	cal_line_len(t_ray *ray, t_cubed *cube, t_img *game)
@@ -51,19 +51,19 @@ ssize_t	put_ray_util(t_ray *ray, t_mlx *mlx)
 		frac_x = ray->r_y;
 	}
 	if (ray->opt_face == E || ray->opt_face == N)
-		return (mlx->text[ray->opt_face][(int)(mlx->frame / 5)].width - frac_x
-			* mlx->text[ray->opt_face][(int)(mlx->frame / 5)].width / MINISQ);
+		return (mlx->text[ray->opt_face][(int)(mlx->frame / 2)].width - frac_x
+			* mlx->text[ray->opt_face][(int)(mlx->frame / 2)].width / MINISQ);
 	else
-		return (frac_x * mlx->text[ray->opt_face][(int)(mlx->frame / 5)].width / MINISQ);
+		return (frac_x * mlx->text[ray->opt_face][(int)(mlx->frame / 2)].width / MINISQ);
 }
 
 void	put_ray_util2(t_mlx *mlx, t_putray *putray, t_ray *ray, t_img *game)
 {
 	my_pixel_put(game, game->width - ray->i - 1, putray->j - putray->offset,
-		get_color_xpm(&mlx->text[ray->opt_face][(int)(mlx->frame / 5)], putray->x,
+		get_color_xpm(&mlx->text[ray->opt_face][(int)(mlx->frame / 2)], putray->x,
 			offset_cal(mlx, ray, -putray->offset, putray->line_len)));
 	my_pixel_put(game, game->width - ray->i - 1, putray->j + putray->offset,
-		get_color_xpm(&mlx->text[ray->opt_face][(int)(mlx->frame / 5)], putray->x,
+		get_color_xpm(&mlx->text[ray->opt_face][(int)(mlx->frame / 2)], putray->x,
 			offset_cal(mlx, ray, putray->offset, putray->line_len)));
 }
 

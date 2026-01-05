@@ -40,7 +40,7 @@ int	game_loop(void *in)
 	if (next_frame())
 		return (0);
 	mlx->frame++;
-	if (mlx->frame >= 20)
+	if (mlx->frame >= 8)
 		mlx->frame = 0;
 	move(cube, &cube->moving);
 	put_image(cube, mlx);
