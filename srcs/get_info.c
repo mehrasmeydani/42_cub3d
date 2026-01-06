@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:38:56 by eprottun          #+#    #+#             */
-/*   Updated: 2025/12/18 19:32:42 by mehras           ###   ########.fr       */
+/*   Updated: 2026/01/06 15:55:24 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	extract_path(char *line, int dir, t_parser *data)
 		i++;
 	if (line[i + count_spaces(&line[i])])
 		return (ft_putendl_fd("Error\nElement format wrong", 2), -1);
-	data->textures[dir] = ft_strdup(&line[start]);
+	data->textures[dir] = ft_strtrim(&line[start], " ");
 	if (!data->textures[dir])
 		return (ft_putendl_fd("Error\nMalloc failed", 2), -1);
 	return (0);
