@@ -6,7 +6,7 @@
 /*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:13 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/04 21:10:04 by megardes         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:55:24 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ bool	init_text_2(t_cubed *cube, t_mlx *mlx, int i, int j)
 	text->border = 0;
 	text->height = 0;
 	text->width = 0;
-	//puts(cube->xpm[i][j]);
 	text->img = mlx_xpm_file_to_image(mlx->mlx, cube->xpm[i][j],
 			&text->width, &text->height);
-	//puts("hu");
 	if (!text->img)
 		return (0);
 	text->addr = mlx_get_data_addr(text->img, &text->bits_per_pixel,
