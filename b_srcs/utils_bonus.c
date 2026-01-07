@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:41:10 by eprottun          #+#    #+#             */
-/*   Updated: 2026/01/04 17:12:42 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/07 17:01:37 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	init_data(t_parser *data)
 void	free_map(t_parser *data)
 {
 	int	iter;
+	int	j;
 
 	if (data->full)
 		free(data->full);
@@ -87,8 +88,12 @@ void	free_map(t_parser *data)
 	}
 	iter = -1;
 	while (++iter < 4)
-		if (data->textures[iter])
-			free(data->textures[iter]);
+	{
+		j = -1;
+		while (++j < 4)
+			if (data->textures[iter][j])
+				free(data->textures[iter][j]);
+	}
 }
 
 int	is_valid_line(char *str, int i, int bitmap)
