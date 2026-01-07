@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:17 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/04 17:13:14 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/07 17:01:06 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,16 @@ int	game_loop(void *in)
 	t_mlx	*mlx;
 
 	cube = (t_cubed *)in;
+	mlx = cube->mlx;
 	if (next_frame())
 		return (0);
-	cube->frame++;
-	if (cube->frame >= 20)
-		cube->frame = 0;
+	mlx->frame++;
+	if (mlx->frame >= 8)
+		mlx->frame = 0;
 	move(cube, &cube->moving);
-	put_image(cube, cube->mlx);
-	mlx = cube->mlx;
-	mlx_mouse_move(mlx->mlx, mlx->win, mlx->game.width / 2,
+	put_image(cube, mlx);
+	if (cube->mouse)
+		mlx_mouse_move(mlx->mlx, mlx->win, mlx->game.width / 2,
 		mlx->game.height / 2);
 	return (1);
 }
