@@ -6,7 +6,7 @@
 #    By: megardes <megardes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 14:44:18 by codespace         #+#    #+#              #
-#    Updated: 2026/01/07 17:05:30 by megardes         ###   ########.fr        #
+#    Updated: 2026/01/07 17:37:16 by megardes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,9 @@ SRCS_BONUS		=	$(addprefix $(PRE_SRC_BONUS), $(SRC_BONUS))
 PRE_SRC_BONUS	=	b_srcs/
 HEAD_BONUS		=	b_header/
 HEAD			=	header/
-NAME			=	cubed
-NAME_BONUS		=	cubed_bonus
+BONUS			=	_bonus
+NAME			=	cub3d
+NAME_BONUS		=	$(addprefix $(NAME), $(BONUS))
 CFLAGS			=	-Wall -Wextra -Werror -g
 OBJ				=	$(SRC_BONUS:.c=.o)
 PRE_OBJ			=	obj/
