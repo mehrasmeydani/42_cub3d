@@ -6,7 +6,7 @@
 /*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:17 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/07 17:01:06 by megardes         ###   ########.fr       */
+/*   Updated: 2026/01/08 11:50:14 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	game_loop(void *in)
 	put_image(cube, mlx);
 	if (cube->mouse)
 		mlx_mouse_move(mlx->mlx, mlx->win, mlx->game.width / 2,
-		mlx->game.height / 2);
+			mlx->game.height / 2);
 	return (1);
 }
 

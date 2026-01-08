@@ -6,7 +6,7 @@
 /*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2026/01/07 17:00:05 by megardes         ###   ########.fr       */
+/*   Updated: 2026/01/08 11:49:32 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ typedef struct s_mlx
 	t_img	text[4][4];
 	int		x_win;
 	int		y_win;
-	int			frame;
+	int		frame;
 }	t_mlx;
 
 typedef struct s_player

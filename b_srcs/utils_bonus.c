@@ -6,11 +6,11 @@
 /*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:41:10 by eprottun          #+#    #+#             */
-/*   Updated: 2026/01/07 17:01:37 by megardes         ###   ########.fr       */
+/*   Updated: 2026/01/08 11:58:26 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../b_header/parser_bonus.h"
+#include "../b_header/cubed_bonus.h"
 #include <stddef.h>
 
 size_t	count_spaces(char *str)
@@ -73,12 +73,7 @@ void	free_map(t_parser *data)
 	if (data->full)
 		free(data->full);
 	if (data->file)
-	{
-		iter = -1;
-		while (data->file[++iter])
-			free(data->file[iter]);
-		free(data->file);
-	}
+		ft_free(data->file);
 	if (data->map)
 	{
 		iter = -1;

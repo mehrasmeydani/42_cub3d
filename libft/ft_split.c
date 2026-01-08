@@ -6,7 +6,7 @@
 /*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 17:30:48 by mehras            #+#    #+#             */
-/*   Updated: 2025/08/16 16:58:40 by megardes         ###   ########.fr       */
+/*   Updated: 2026/01/08 11:54:01 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	**ft_split(char const *s, char c)
 	i = -1;
 	if (!s)
 		return (NULL);
-	out = (char **)malloc((count(s, c) + 1) * sizeof(char *));
+	out = (char **)ft_calloc((count(s, c) + 1), sizeof(char *));
 	if (!out)
 		return (NULL);
 	tmp = (char *)s;
@@ -79,6 +79,5 @@ char	**ft_split(char const *s, char c)
 		while (*tmp && *tmp != c)
 			tmp++;
 	}
-	out[i] = NULL;
 	return (out);
 }

@@ -6,7 +6,7 @@
 /*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:39:31 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/07 17:00:10 by megardes         ###   ########.fr       */
+/*   Updated: 2026/01/08 11:50:01 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	free_cube(t_cubed *cube)
 	while (++i < 4)
 	{
 		j = -1;
-		while (++j < 4)		
+		while (++j < 4)
 			if (cube->xpm[i][j])
 				free(cube->xpm[i][j]);
 	}
