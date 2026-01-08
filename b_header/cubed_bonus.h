@@ -6,7 +6,7 @@
 /*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2026/01/08 11:49:32 by megardes         ###   ########.fr       */
+/*   Updated: 2026/01/08 12:05:46 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <mlx.h>
 # include <stdbool.h>
 # include <X11/keysym.h>
-# include <stdio.h> // testing
 # include <stdint.h>
 # include <math.h>
 # include <sys/time.h>

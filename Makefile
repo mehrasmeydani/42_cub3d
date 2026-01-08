@@ -6,7 +6,7 @@
 #    By: megardes <megardes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 14:44:18 by codespace         #+#    #+#              #
-#    Updated: 2026/01/08 11:55:49 by megardes         ###   ########.fr        #
+#    Updated: 2026/01/08 12:05:14 by megardes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,12 @@ SRCS			=	$(addprefix $(PRE_SRC), $(SRC))
 PRE_SRC			=	srcs/
 SRCS_BONUS		=	$(addprefix $(PRE_SRC_BONUS), $(SRC_BONUS))
 PRE_SRC_BONUS	=	b_srcs/
-HEAD_BONUS		=	b_header/
-HEAD			=	header/
+PRE_HEAD_BONUS	=	b_header/
+PRE_HEAD		=	header/
+HEAD			=	cubed.h libft.h parser.h
+HEAD_BONUS		=	cubed_bonus.h libft_bonus.h parser_bonus.h
+HEADS			=	$(addprefix $(PRE_HEAD), $(HEAD))
+HEADS_BONUS		=	$(addprefix $(PRE_HEAD_BONUS), $(HEAD_BONUS))
 BONUS			=	_bonus
 NAME			=	cub3d
 NAME_BONUS		=	$(addprefix $(NAME), $(BONUS))
@@ -41,13 +45,13 @@ MAKEFLAGS		+= --no-print-directory
 
 all:		$(NAME)
 
-$(PRE_OBJ)%.o:$(PRE_SRC)%.c
+$(PRE_OBJ)%.o:$(PRE_SRC)%.c $(HEADS)
 			(cd libft && make all)
 			mkdir -p $(PRE_OBJ)
-			$(CC) $(CFLAGS) -I $(HEAD) -o $@ -c $<
+			$(CC) $(CFLAGS) -I $(PRE_HEAD) -o $@ -c $<
 
 $(NAME):	$(OBJS)
-			cc $(CFLAGS) -I $(HEAD) $(OBJS) -o $(NAME) ./libft/libft.a  $(Lflags)
+			cc $(CFLAGS) -I $(PRE_HEAD) $(OBJS) -o $(NAME) ./libft/libft.a  $(Lflags)
 
 clean: 
 			(cd libft && make clean)
@@ -59,15 +63,15 @@ fclean: 	clean
 			$(RM) $(NAME) $(PRE_OBJ) $(NAME_BONUS)
 
 speed:		$(OBJS)
-			cc $(CFLAGS) -DMOVE=2 -I $(HEAD) $(SRCS) -o $(NAME) ./libft/libft.a  $(Lflags)
+			cc $(CFLAGS) -DMOVE=2 -I $(PRE_HEAD) $(SRCS) -o $(NAME) ./libft/libft.a  $(Lflags)
 
-$(PRE_OBJ_BONUS)%.o:$(PRE_SRC_BONUS)%.c
+$(PRE_OBJ_BONUS)%.o:$(PRE_SRC_BONUS)%.c $(HEADS_BONUS)
 			(cd libft && make all)
 			mkdir -p $(PRE_OBJ_BONUS)
-			$(CC) $(CFLAGS) -I $(HEAD) -o $@ -c $<
+			$(CC) $(CFLAGS) -I $(PRE_HEAD_BONUS) -o $@ -c $<
 
 $(NAME_BONUS): $(OBJS_BONUS)
-			cc $(CFLAGS) -DMOVE=2  -I $(HEAD) $(OBJS_BONUS) -o $(NAME_BONUS) ./libft/libft.a  $(Lflags)
+			cc $(CFLAGS) -DMOVE=2  -I $(PRE_HEAD_BONUS) $(OBJS_BONUS) -o $(NAME_BONUS) ./libft/libft.a  $(Lflags)
 
 bonus:		$(NAME_BONUS)
 
