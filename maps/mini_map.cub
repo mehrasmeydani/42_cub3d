@@ -1,0 +1,12 @@
+NO ./text/n.xpm
+SO ./text/s.xpm
+WE ./text/w.xpm
+EA ./text/e.xpm
+
+C 0, 0, 100
+F 0, 0, 0
+
+11111
+10001
+1S001
+11111

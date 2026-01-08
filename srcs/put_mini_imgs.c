@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_mini_imgs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 01:56:25 by mehras            #+#    #+#             */
-/*   Updated: 2025/12/19 02:09:30 by mehras           ###   ########.fr       */
+/*   Updated: 2026/01/08 14:34:13 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	mini_put_player(t_img *mini, t_player *player)
 
 	line.x = player->p_x / SCALE + mini->border;
 	line.y = player->p_y / SCALE + mini->border;
-	line.len = 25;
+	line.len = 15;
 	line.rot = player->rad;
 	put_line(mini, &line, get_color(1, 1, 1));
 	put_star(mini, player->p_x / SCALE + mini->border,
@@ -92,22 +92,26 @@ void	set_mini_img(t_cubed *cube, t_mlx *mlx)
 {
 	ssize_t	i;
 	ssize_t	j;
+	ssize_t	len1;
 	t_img	*mini;
 
-	i = -1;
+	i = 0;
 	(void)cube;
 	mini = &mlx->mini;
 	fill_map(mini);
-	while (cube->mini_map[++i])
+	len1 = -1;
+	while (cube->mini_map[++len1])
+		;
+	while (i < len1 && i / SCALE < mlx->game.height)
 	{
-		if (i % SCALE == 0)
+		j = 0;
+		while ((cube->mini_map[i][j] || cube->mini_map[i]
+			[j - 1]) && j / SCALE < mlx->game.width)
 		{
-			j = -1;
-			while (cube->mini_map[i][++j])
-				if (j % SCALE == 0)
-					mini_put_sq(mini, j / SCALE,
-						i / SCALE, cube->mini_map[i][j]);
+			mini_put_sq(mini, j / SCALE, i / SCALE, cube->mini_map[i][j]);
+			j += SCALE;
 		}
+		i += SCALE;
 	}
 	mini_put_player(mini, cube->player);
 }

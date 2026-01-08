@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_caster.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:11:17 by mehras            #+#    #+#             */
-/*   Updated: 2025/12/19 02:16:29 by mehras           ###   ########.fr       */
+/*   Updated: 2026/01/08 14:37:46 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,9 @@ void	ray_cal(t_cubed *cube, t_line *line, t_player *player)
 		ray_hor(&ray, player, cube);
 		set_opt(&ray);
 		set_line(line, &ray, mini);
-		put_ray(cube, cube->mlx, &ray);
+		if (!(cube->mini && mini->height >= game->height
+			&& game->width - ray.i < mini->width))
+			put_ray(cube, cube->mlx, &ray);
 		if (cube->mini && cube->ray)
 			put_line(mini, line, get_color(0.1, 0.3, 0.8));
 		ray.pa += (float)((0.0174533f * ANGLE * 2.0f) / (float)game->width);
