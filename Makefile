@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+         #
+#    By: megardes <megardes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 14:44:18 by codespace         #+#    #+#              #
-#    Updated: 2026/01/08 12:56:45 by eprottun         ###   ########.fr        #
+#    Updated: 2026/01/08 14:42:35 by megardes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ $(PRE_OBJ_BONUS)%.o:$(PRE_SRC_BONUS)%.c $(HEADS_BONUS)
 			$(CC) $(CFLAGS) -I $(PRE_HEAD_BONUS) -o $@ -c $<
 
 $(NAME_BONUS): $(OBJS_BONUS)
-			cc $(CFLAGS) -DMOVE=2  -I $(PRE_HEAD_BONUS) $(OBJS_BONUS) -o $(NAME_BONUS) ./libft/libft.a  $(Lflags)
+			cc $(CFLAGS) -DMOVE=1  -I $(PRE_HEAD_BONUS) $(OBJS_BONUS) -o $(NAME_BONUS) ./libft/libft.a  $(Lflags)
 
 bonus:		$(NAME_BONUS)
 
