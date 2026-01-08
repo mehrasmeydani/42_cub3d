@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: megardes <megardes@student.42.fr>          +#+  +:+       +#+         #
+#    By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 14:44:18 by codespace         #+#    #+#              #
-#    Updated: 2026/01/08 12:05:14 by megardes         ###   ########.fr        #
+#    Updated: 2026/01/08 12:56:45 by eprottun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC				=	main.c mini_map.c ft_free.c set_player.c put_ray.c get_file.c\
-					get_info.c get_map.c parser.c utils.c ray_caster.c move.c\
+					get_info.c get_map.c parser.c utils.c ray_caster.c move.c game_loop.c\
 					mouse_keys.c line.c init_mlx.c init_imgs.c frees_exit.c move_util.c\
 					ray_caster_utils.c get_color.c my_pixel_put.c put_img.c put_mini_imgs.c
 SRC_BONUS		=	main_bonus.c mini_map_bonus.c ft_free_bonus.c set_player_bonus.c put_ray_bonus.c get_file_bonus.c\

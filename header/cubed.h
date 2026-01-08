@@ -6,7 +6,7 @@
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2026/01/08 12:39:42 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/08 12:56:26 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,8 @@ typedef struct s_cubed
 	int			frame;
 }	t_cubed;
 
+int			game_loop(void *in);
+bool		next_frame(void);
 void		set_mini_img(t_cubed *cube, t_mlx *mlx);
 void		ft_free(char **in);
 ssize_t		is_in(char c, char *str);

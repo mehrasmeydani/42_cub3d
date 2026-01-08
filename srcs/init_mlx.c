@@ -6,7 +6,7 @@
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:17 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/08 12:40:10 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/08 12:55:13 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,6 @@ bool	next_frame(void)
 		time = time_now;
 		return (0);
 	}
-	return (1);
-}
-
-int	game_loop(void *in)
-{
-	t_cubed	*cube;
-	t_mlx	*mlx;
-
-	cube = (t_cubed *)in;
-	if (next_frame())
-		return (0);
-	cube->frame++;
-	if (cube->frame >= 20)
-		cube->frame = 0;
-	move(cube, &cube->moving);
-	put_image(cube, cube->mlx);
-	mlx = cube->mlx;
-	if (cube->mouse)
-		mlx_mouse_move(mlx->mlx, mlx->win, mlx->game.width / 2,
-			mlx->game.height / 2);
 	return (1);
 }
 
