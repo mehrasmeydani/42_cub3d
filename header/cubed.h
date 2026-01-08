@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubed.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:23:26 by megardes          #+#    #+#             */
-/*   Updated: 2026/01/08 12:06:02 by megardes         ###   ########.fr       */
+/*   Updated: 2026/01/08 12:39:42 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,6 @@ uint32_t	get_color_xpm(t_img *img, ssize_t x, ssize_t y);
 void		put_ray(t_cubed *cube, t_mlx *mlx, t_ray *ray);
 uint32_t	get_color(float r, float g, float b);
 int			parser(const char *filename, t_parser *data);
-void		free_and_exit(t_cubed *cube, int fd, char *str);
 int			mouse(int x, int y, void *in);
 int			mlx_exit(void *in);
 void		free_and_exit(t_cubed *cube, int fd, char *str);

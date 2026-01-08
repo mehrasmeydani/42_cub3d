@@ -6,7 +6,7 @@
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 14:45:29 by eprottun          #+#    #+#             */
-/*   Updated: 2026/01/04 17:12:42 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/01/08 12:33:55 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	read_loop(int fd, t_parser *data)
 
 	data->full = ft_strdup("");
 	if (!data->full)
-		return (ft_putendl_fd("Error\nMalloc fail", 2), -1);
+		return (ft_putendl_fd("Error\nMalloc failed", 2), -1);
 	while (1)
 	{
 		ret = read(fd, line, 100);
@@ -31,7 +31,7 @@ int	read_loop(int fd, t_parser *data)
 		line[ret] = 0;
 		tmp = ft_strjoin(data->full, line);
 		if (!tmp)
-			return (ft_putendl_fd("Error\nMalloc fail", 2), -1);
+			return (ft_putendl_fd("Error\nMalloc failed", 2), -1);
 		free(data->full);
 		data->full = tmp;
 	}
@@ -49,6 +49,6 @@ int	get_file(const char *filename, t_parser *data)
 		return (close(fd), -1);
 	data->file = ft_split(data->full, '\n');
 	if (!data->file)
-		return (ft_putendl_fd("Error\nMalloc fail", 2), close(fd), -1);
+		return (ft_putendl_fd("Error\nMalloc failed", 2), close(fd), -1);
 	return (close(fd), 0);
 }

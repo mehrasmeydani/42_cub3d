@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_info_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:38:56 by eprottun          #+#    #+#             */
-/*   Updated: 2026/01/07 17:00:50 by megardes         ###   ########.fr       */
+/*   Updated: 2026/01/08 12:33:55 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ int	extract_path(char *line, int dir, t_parser *data)
 	line += 3;
 	in = ft_split(line, ' ');
 	if (!in)
-		return (-1);
+		return (ft_putendl_fd("Error\nMalloc faileded", 2), -1);
 	while (in[++i])
 		;
 	if (i != 4)
-		return (ft_free(in), -1);
+		return (ft_free(in),
+			ft_putendl_fd("Error\nTexture format wrong", 2), -1);
 	i = -1;
 	while (++i < 4)
 		data->textures[dir][i] = in[i];
@@ -79,7 +80,7 @@ int	get_info(int info, t_parser *data)
 		if (info >= 4 && !ft_strncmp(data->file[iter], arr[info], 2))
 		{
 			if (extract_color(data->file[iter], info % 4, data) == -1)
-				return (ft_putendl_fd("Error\nElement format wrong", 2), -1);
+				return (ft_putendl_fd("Error\nColor format wrong", 2), -1);
 			return (0);
 		}
 		iter++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   frees_exit_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:39:31 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/08 11:50:01 by megardes         ###   ########.fr       */
+/*   Updated: 2026/01/08 12:33:29 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	free_cube(t_cubed *cube)
 void	free_and_exit(t_cubed *cube, int fd, char *str)
 {
 	free_cube(cube);
+	if (fd == 2)
+		ft_putendl_fd("Error", fd);
 	if (str)
 		ft_putendl_fd(str, fd);
 	exit (fd - 1);

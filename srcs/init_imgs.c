@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_imgs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:13 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/04 16:41:50 by megardes         ###   ########.fr       */
+/*   Updated: 2026/01/08 12:38:50 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ bool	init_mini_map(t_cubed *cube, t_mlx *mlx)
 void	init_imgs(t_cubed *cube, t_mlx *mlx)
 {
 	if (!init_mini_map(cube, mlx))
-		return (free_and_exit(cube, 2, "mini img failed"));
+		return (free_and_exit(cube, 2, "Mini img failed"));
 	if (!init_game(cube, mlx))
-		return (free_and_exit(cube, 2, "game img failed"));
+		return (free_and_exit(cube, 2, "Game img failed"));
 	if (!init_text(cube, mlx))
-		return (free_and_exit(cube, 2, "textures img failed"));
+		return (free_and_exit(cube, 2, "Textures img failed"));
 }

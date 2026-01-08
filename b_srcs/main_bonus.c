@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2026/01/07 17:01:26 by megardes         ###   ########.fr       */
+/*   Updated: 2026/01/08 12:28:53 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	main(int argc, char **argv)
 	t_parser	parsers;
 
 	if (argc != 2)
-		return (1);
+		return (ft_putendl_fd("Error\nExactly one argument required!", 2), 1);
 	init_main(&cube, &parsers, &player, &mlx);
 	if (parser(argv[1], &parsers) == -1)
 		return (1);

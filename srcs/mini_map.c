@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:25 by mehras            #+#    #+#             */
-/*   Updated: 2025/12/18 23:44:34 by mehras           ###   ########.fr       */
+/*   Updated: 2026/01/08 12:36:14 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ bool	mini_map(t_cubed *cube)
 	cube->mini_map = (char **)ft_calloc(cube->max_y * MINISQ + 1,
 			sizeof(char *));
 	if (!cube->mini_map)
-		return (free_and_exit(cube, 2, "malloc fail"), 0);
+		return (free_and_exit(cube, 2, "Malloc failed"), 0);
 	i = -1;
 	while (++i < cube->max_y)
 	{
@@ -95,7 +95,7 @@ bool	mini_map(t_cubed *cube)
 			cube->mini_map[i * MINISQ + k] = ft_calloc(cube->max_x
 					* MINISQ + 1, sizeof(char));
 			if (!cube->mini_map[i * MINISQ + k])
-				return (free_and_exit(cube, 2, "malloc fail"), 0);
+				return (free_and_exit(cube, 2, "Malloc failed"), 0);
 		}
 	}
 	set_mini_map(cube);

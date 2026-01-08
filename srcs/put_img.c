@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_img.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 02:11:02 by mehras            #+#    #+#             */
-/*   Updated: 2025/12/19 02:11:23 by mehras           ###   ########.fr       */
+/*   Updated: 2026/01/08 12:33:55 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	put_image(t_cubed *cube, t_mlx *mlx)
 	mlx_destroy_image(mlx->mlx, game->img);
 	ft_bzero(game, sizeof(*game));
 	if (!init_game(cube, mlx))
-		free_and_exit(cube, 2, "malloc fail");
+		free_and_exit(cube, 2, "Malloc failed");
 	if (cube->mini)
 		set_mini_img(cube, cube->mlx);
 	ray_cal(cube, &line, cube->player);

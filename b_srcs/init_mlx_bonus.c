@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:17 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/08 11:50:14 by megardes         ###   ########.fr       */
+/*   Updated: 2026/01/08 12:40:10 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ void	init_mlx(t_cubed *cube, t_mlx *mlx)
 	ft_bzero(&line, sizeof(line));
 	mlx->mlx = mlx_init();
 	if (!mlx->mlx)
-		return (free_and_exit(cube, 2, "mlx failed"));
+		return (free_and_exit(cube, 2, "Mlx failed"));
 	mlx_get_screen_size(mlx->mlx, &mlx->x_win, &mlx->y_win);
 	if ((float)(mlx->x_win) / (float)(mlx->y_win) > 16.0f / 9.0f)
 		mlx->x_win = (float)(mlx->y_win) * 16.0f / 9.0f;
 	mlx->win = mlx_new_window(mlx->mlx, mlx->x_win, mlx->y_win, "cub3d");
 	if (!mlx->win)
-		return (free_and_exit(cube, 2, "win failed"));
+		return (free_and_exit(cube, 2, "Win failed"));
 	init_imgs(cube, mlx);
 	hooks(cube, mlx);
 	ray_cal(cube, &line, cube->player);

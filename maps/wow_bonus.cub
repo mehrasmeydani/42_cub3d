@@ -4,7 +4,7 @@ WE ./texts_con/w0.xpm ./texts_con/w1.xpm ./texts_con/w2.xpm ./texts_con/w3.xpm
 EA ./texts_con/e0.xpm ./texts_con/e1.xpm ./texts_con/e2.xpm ./texts_con/e3.xpm
 
 C 0, 0, 100
-F 0, 0, 0
+F 0, 0, 255
 
 
         11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
