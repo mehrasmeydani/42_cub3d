@@ -6,7 +6,7 @@
 /*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:11:17 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/08 14:37:46 by megardes         ###   ########.fr       */
+/*   Updated: 2026/01/14 11:42:32 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	ray_cal(t_cubed *cube, t_line *line, t_player *player)
 		set_opt(&ray);
 		set_line(line, &ray, mini);
 		if (!(cube->mini && mini->height >= game->height
-			&& game->width - ray.i < mini->width))
+				&& game->width - ray.i < mini->width))
 			put_ray(cube, cube->mlx, &ray);
 		if (cube->mini && cube->ray)
 			put_line(mini, line, get_color(0.1, 0.3, 0.8));
