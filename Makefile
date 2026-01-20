@@ -6,7 +6,7 @@
 #    By: megardes <megardes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 14:44:18 by codespace         #+#    #+#              #
-#    Updated: 2026/01/08 14:42:35 by megardes         ###   ########.fr        #
+#    Updated: 2026/01/14 20:28:43 by megardes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ HEAD_BONUS		=	cubed_bonus.h libft_bonus.h parser_bonus.h
 HEADS			=	$(addprefix $(PRE_HEAD), $(HEAD))
 HEADS_BONUS		=	$(addprefix $(PRE_HEAD_BONUS), $(HEAD_BONUS))
 BONUS			=	_bonus
-NAME			=	cub3d
+NAME			=	cub3D
 NAME_BONUS		=	$(addprefix $(NAME), $(BONUS))
 CFLAGS			=	-Wall -Wextra -Werror -g
 OBJ				=	$(SRC:.c=.o)
