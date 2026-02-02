@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../header/parser.h"
+#include <stdlib.h>
 
 int	extract_path(char *line, int dir, t_parser *data)
 {
@@ -63,24 +64,26 @@ int	extract_color(char *line, int spec, t_parser *data)
 int	get_info(int info, t_parser *data)
 {
 	const char	*arr[6] = {"NO ", "EA ", "SO ", "WE ", "F ", "C "};
-	size_t		iter;
-
-	iter = 0;
-	while (data->file[iter])
+	size_t		line;
+	size_t      iter;
+	
+	line = 0;
+	while (data->file[line])
 	{
+        iter = count_spaces(data->file[line]);
 		if (info < 4 && !ft_strncmp(data->file[iter], arr[info], 3))
 		{
-			if (extract_path(data->file[iter], info, data) == -1)
+			if (extract_path(data->file[line], info, data) == -1)
 				return (-1);
 			return (0);
 		}
 		if (info >= 4 && !ft_strncmp(data->file[iter], arr[info], 2))
 		{
-			if (extract_color(data->file[iter], info % 4, data) == -1)
+			if (extract_color(data->file[line], info % 4, data) == -1)
 				return (ft_putendl_fd("Error\nColor format wrong", 2), -1);
 			return (0);
 		}
-		iter++;
+		line++;
 	}
 	return (0);
 }
