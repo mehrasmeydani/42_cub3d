@@ -40,20 +40,22 @@ PRE_OBJ_BONUS	=	b_obj/
 OBJS_BONUS		= 	$(addprefix $(PRE_OBJ_BONUS), $(OBJ_BONUS))
 RM				=	rm -fr
 CC				= 	cc
-Lflags			=	-Lmlx -lmlx -lX11 -lXext  -lm 
+Lflags			=	-Lmlx -lmlx -lX11 -lXext  -lm
 MAKEFLAGS		+= --no-print-directory
 
 all:		$(NAME)
 
 $(PRE_OBJ)%.o:$(PRE_SRC)%.c $(HEADS)
-			(cd libft && make all)
 			mkdir -p $(PRE_OBJ)
 			$(CC) $(CFLAGS) -I $(PRE_HEAD) -o $@ -c $<
 
-$(NAME):	$(OBJS)
+libft/libft.a:
+			$(MAKE) -C libft all
+
+$(NAME):	$(OBJS) libft/libft.a
 			cc $(CFLAGS) -I $(PRE_HEAD) $(OBJS) -o $(NAME) ./libft/libft.a  $(Lflags)
 
-clean: 
+clean:
 			(cd libft && make clean)
 			$(RM) $(OBJS) $(PRE_OBJ)
 			$(RM) $(OBJS_BONUS) $(PRE_OBJ_BONUS)
@@ -66,16 +68,15 @@ speed:		$(OBJS)
 			cc $(CFLAGS) -DMOVE=2 -I $(PRE_HEAD) $(SRCS) -o $(NAME) ./libft/libft.a  $(Lflags)
 
 $(PRE_OBJ_BONUS)%.o:$(PRE_SRC_BONUS)%.c $(HEADS_BONUS)
-			(cd libft && make all)
 			mkdir -p $(PRE_OBJ_BONUS)
 			$(CC) $(CFLAGS) -I $(PRE_HEAD_BONUS) -o $@ -c $<
 
-$(NAME_BONUS): $(OBJS_BONUS)
+$(NAME_BONUS): $(OBJS_BONUS) libft/libft.a
 			cc $(CFLAGS) -DMOVE=1  -I $(PRE_HEAD_BONUS) $(OBJS_BONUS) -o $(NAME_BONUS) ./libft/libft.a  $(Lflags)
 
 bonus:		$(NAME_BONUS)
 
 re:			fclean all
-			
+
 
 .PHONY:		all clean fclean re
