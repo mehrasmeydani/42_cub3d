@@ -6,7 +6,7 @@
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:38:56 by eprottun          #+#    #+#             */
-/*   Updated: 2026/01/08 12:33:55 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/02/02 14:38:22 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ int	get_info(int info, t_parser *data)
 	while (data->file[line])
 	{
         iter = count_spaces(data->file[line]);
-		if (info < 4 && !ft_strncmp(data->file[iter], arr[info], 3))
+		if (info < 4 && !ft_strncmp(&data->file[line][iter], arr[info], 3))
 		{
 			if (extract_path(data->file[line], info, data) == -1)
 				return (-1);
 			return (0);
 		}
-		if (info >= 4 && !ft_strncmp(data->file[iter], arr[info], 2))
+		if (info >= 4 && !ft_strncmp(&data->file[line][iter], arr[info], 2))
 		{
 			if (extract_color(data->file[line], info % 4, data) == -1)
 				return (ft_putendl_fd("Error\nColor format wrong", 2), -1);
