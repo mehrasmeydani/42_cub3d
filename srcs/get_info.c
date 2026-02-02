@@ -28,7 +28,7 @@ int	extract_path(char *line, int dir, t_parser *data)
 		return (ft_putendl_fd("Error\nTexture format wrong", 2), -1);
 	data->textures[dir] = ft_strtrim(&line[start], " ");
 	if (!data->textures[dir])
-		return (ft_putendl_fd("Error\nMalloc faileded", 2), -1);
+		return (ft_putendl_fd("Error\nMalloc failed", 2), -1);
 	return (0);
 }
 
