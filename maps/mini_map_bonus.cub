@@ -1,0 +1,12 @@
+NO ./texts_con/n0.xpm ./texts_con/n1.xpm ./texts_con/n2.xpm ./texts_con/n3.xpm
+SO ./texts_con/s0.xpm ./texts_con/s1.xpm ./texts_con/s2.xpm ./texts_con/s3.xpm
+WE ./texts_con/w0.xpm ./texts_con/w1.xpm ./texts_con/w2.xpm ./texts_con/w3.xpm
+EA ./texts_con/e0.xpm ./texts_con/e1.xpm ./texts_con/e2.xpm ./texts_con/e3.xpm
+
+C 0, 0, 100
+F 0, 0, 255
+
+11111
+10001
+1S001
+11111

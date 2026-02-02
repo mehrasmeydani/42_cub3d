@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 13:21:56 by megardes          #+#    #+#             */
-/*   Updated: 2026/01/08 12:28:53 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/02/02 17:43:02 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	set_parser_to_cube(t_cubed *cube, t_parser *pars)
 			(float)pars->ceiling[2] / 255.0f);
 	while (++count < 4)
 	{
-		cube->xpm[W][count] = pars->textures[W][count];
-		cube->xpm[S][count] = pars->textures[S][count];
-		cube->xpm[N][count] = pars->textures[N][count];
-		cube->xpm[E][count] = pars->textures[E][count];
+		cube->xpm[N][count] = pars->textures[0][count];
+		cube->xpm[W][count] = pars->textures[3][count];
+		cube->xpm[S][count] = pars->textures[2][count];
+		cube->xpm[E][count] = pars->textures[1][count];
 		pars->textures[W][count] = NULL;
 		pars->textures[S][count] = NULL;
 		pars->textures[N][count] = NULL;
