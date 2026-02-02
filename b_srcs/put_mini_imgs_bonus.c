@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_mini_imgs_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 01:56:25 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/04 17:13:14 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/02/02 17:38:33 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	mini_put_player(t_img *mini, t_player *player)
 
 	line.x = player->p_x / SCALE + mini->border;
 	line.y = player->p_y / SCALE + mini->border;
-	line.len = 25;
+	line.len = 15;
 	line.rot = player->rad;
 	put_line(mini, &line, get_color(1, 1, 1));
 	put_star(mini, player->p_x / SCALE + mini->border,
