@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_imgs_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 23:40:13 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/08 12:38:50 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/02/02 17:36:25 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ bool	init_mini_map(t_cubed *cube, t_mlx *mlx)
 	mini->border = (MINISQ / SCALE) / 4;
 	mini->height = cube->max_y * MINISQ / SCALE + 2 * mini->border;
 	mini->width = cube->max_x * MINISQ / SCALE + 2 * mini->border;
+	if (mini->width > cube->mlx->x_win)
+		mini->width = cube->mlx->x_win;
+	if (mini->height > cube->mlx->y_win)
+		mini->height = cube->mlx->y_win;
 	mini->img = mlx_new_image(mlx->mlx, mini->width, mini->height);
 	if (!mini->img)
 		return (0);

@@ -6,18 +6,34 @@
 #    By: megardes <megardes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 14:44:18 by codespace         #+#    #+#              #
-#    Updated: 2026/01/14 20:28:43 by megardes         ###   ########.fr        #
+#    Updated: 2026/02/02 17:35:43 by megardes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+
 
 SRC				=	main.c mini_map.c ft_free.c set_player.c put_ray.c get_file.c\
 					get_info.c get_map.c parser.c utils.c ray_caster.c move.c game_loop.c\
 					mouse_keys.c line.c init_mlx.c init_imgs.c frees_exit.c move_util.c\
-					ray_caster_utils.c get_color.c my_pixel_put.c put_img.c put_mini_imgs.c
+					ray_caster_utils.c get_color.c my_pixel_put.c put_img.c put_mini_imgs.c\
+					ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c\
+					ft_strlen.c ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c ft_strlcpy.c\
+					ft_strlcat.c ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c\
+					ft_strncmp.c ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c ft_calloc.c\
+					ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c\
+					ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c\
+					ft_putnbr_fd.c ft_strcmp.c ft_sort_string_tab.c ft_iswhitespace.c ft_atol.c
 SRC_BONUS		=	main_bonus.c mini_map_bonus.c ft_free_bonus.c set_player_bonus.c put_ray_bonus.c get_file_bonus.c\
 					get_info_bonus.c get_map_bonus.c parser_bonus.c utils_bonus.c ray_caster_bonus.c move_bonus.c\
 					mouse_keys_bonus.c line_bonus.c init_mlx_bonus.c init_imgs_bonus.c frees_exit_bonus.c move_util_bonus.c\
-					ray_caster_utils_bonus.c get_color_bonus.c my_pixel_put_bonus.c put_img_bonus.c put_mini_imgs_bonus.c
+					ray_caster_utils_bonus.c get_color_bonus.c my_pixel_put_bonus.c put_img_bonus.c put_mini_imgs_bonus.c\
+					ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c\
+					ft_strlen.c ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c ft_strlcpy.c\
+					ft_strlcat.c ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c\
+					ft_strncmp.c ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c ft_calloc.c\
+					ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c\
+					ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c\
+					ft_putnbr_fd.c ft_strcmp.c ft_sort_string_tab.c ft_iswhitespace.c ft_atol.c
 SRCS			=	$(addprefix $(PRE_SRC), $(SRC))
 PRE_SRC			=	srcs/
 SRCS_BONUS		=	$(addprefix $(PRE_SRC_BONUS), $(SRC_BONUS))
@@ -49,30 +65,25 @@ $(PRE_OBJ)%.o:$(PRE_SRC)%.c $(HEADS)
 			mkdir -p $(PRE_OBJ)
 			$(CC) $(CFLAGS) -I $(PRE_HEAD) -o $@ -c $<
 
-libft/libft.a:
-			$(MAKE) -C libft all
-
-$(NAME):	$(OBJS) libft/libft.a
-			cc $(CFLAGS) -I $(PRE_HEAD) $(OBJS) -o $(NAME) ./libft/libft.a  $(Lflags)
+$(NAME):	$(OBJS)
+			cc $(CFLAGS) -I $(PRE_HEAD) $(OBJS) -o $(NAME) $(Lflags)
 
 clean:
-			(cd libft && make clean)
 			$(RM) $(OBJS) $(PRE_OBJ)
 			$(RM) $(OBJS_BONUS) $(PRE_OBJ_BONUS)
 
 fclean: 	clean
-			(cd libft && make fclean)
 			$(RM) $(NAME) $(PRE_OBJ) $(NAME_BONUS)
 
 speed:		$(OBJS)
-			cc $(CFLAGS) -DMOVE=2 -I $(PRE_HEAD) $(SRCS) -o $(NAME) ./libft/libft.a  $(Lflags)
+			cc $(CFLAGS) -DMOVE=2 -I $(PRE_HEAD) $(SRCS) -o $(NAME) $(Lflags)
 
 $(PRE_OBJ_BONUS)%.o:$(PRE_SRC_BONUS)%.c $(HEADS_BONUS)
 			mkdir -p $(PRE_OBJ_BONUS)
 			$(CC) $(CFLAGS) -I $(PRE_HEAD_BONUS) -o $@ -c $<
 
-$(NAME_BONUS): $(OBJS_BONUS) libft/libft.a
-			cc $(CFLAGS) -DMOVE=1  -I $(PRE_HEAD_BONUS) $(OBJS_BONUS) -o $(NAME_BONUS) ./libft/libft.a  $(Lflags)
+$(NAME_BONUS): $(OBJS_BONUS)
+			cc $(CFLAGS) -DMOVE=1  -I $(PRE_HEAD_BONUS) $(OBJS_BONUS) -o $(NAME_BONUS) $(Lflags)
 
 bonus:		$(NAME_BONUS)
 
