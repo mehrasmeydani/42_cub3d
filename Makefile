@@ -49,10 +49,7 @@ $(PRE_OBJ)%.o:$(PRE_SRC)%.c $(HEADS)
 			mkdir -p $(PRE_OBJ)
 			$(CC) $(CFLAGS) -I $(PRE_HEAD) -o $@ -c $<
 
-libft/libft.a:
-			$(MAKE) -C libft all
-
-$(NAME):	$(OBJS) libft/libft.a
+$(NAME):	$(OBJS) libft
 			cc $(CFLAGS) -I $(PRE_HEAD) $(OBJS) -o $(NAME) ./libft/libft.a  $(Lflags)
 
 clean:
@@ -71,7 +68,7 @@ $(PRE_OBJ_BONUS)%.o:$(PRE_SRC_BONUS)%.c $(HEADS_BONUS)
 			mkdir -p $(PRE_OBJ_BONUS)
 			$(CC) $(CFLAGS) -I $(PRE_HEAD_BONUS) -o $@ -c $<
 
-$(NAME_BONUS): $(OBJS_BONUS) libft/libft.a
+$(NAME_BONUS): $(OBJS_BONUS) libft
 			cc $(CFLAGS) -DMOVE=1  -I $(PRE_HEAD_BONUS) $(OBJS_BONUS) -o $(NAME_BONUS) ./libft/libft.a  $(Lflags)
 
 bonus:		$(NAME_BONUS)
@@ -79,4 +76,7 @@ bonus:		$(NAME_BONUS)
 re:			fclean all
 
 
-.PHONY:		all clean fclean re
+libft:
+			$(MAKE) -C libft all
+
+.PHONY:		all clean fclean re libft

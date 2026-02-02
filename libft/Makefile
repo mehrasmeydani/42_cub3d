@@ -29,7 +29,7 @@ OBJS_B		= ${SRCS_B:.c=.o}
 PRE			= ./
 HEAD		= ../header/
 NAME		= libft.a
-LIBC		= ar rc
+LIBC		= ar rcs
 LIBR		= ranlib
 RM			= rm -f
 GCC			= cc
@@ -37,12 +37,12 @@ CFLAGS		= -Wall -Wextra -Werror
 
 all:			${NAME}
 
-.c.o:
-			@${GCC} ${CFLAGS} -c -I ${HEAD} $< -o ${<:.c=.o}
+%.o: %.c
+			@${GCC} ${CFLAGS} -c -I ${HEAD} $< -o $@
 
 ${NAME}:	${OBJS}
+			@${RM} ${NAME}
 			@${LIBC} ${NAME} ${OBJS}
-			@${LIBR} ${NAME}
 
 
 clean:
@@ -51,7 +51,7 @@ clean:
 
 fclean:		clean
 			@rm -f ${NAME}
-			
+
 re:			@fclean all
 
 bonus:		${OBJS} $(OBJS_B)
