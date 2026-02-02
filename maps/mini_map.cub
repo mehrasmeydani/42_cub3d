@@ -1,6 +1,6 @@
 NO ./text/n.xpm
 SO ./text/s.xpm
-WE ./text/w.xpm
+WE               ./text/w.xpm
 EA ./text/e.xpm
 
 C 0, 0, 100

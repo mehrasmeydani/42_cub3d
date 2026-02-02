@@ -6,7 +6,7 @@
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 14:38:56 by eprottun          #+#    #+#             */
-/*   Updated: 2026/01/08 12:33:55 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/02/02 14:59:32 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,17 @@ int	extract_path(char *line, int dir, t_parser *data)
 	char	**in;
 
 	i = -1;
-	line += 3;
 	in = ft_split(line, ' ');
 	if (!in)
-		return (ft_putendl_fd("Error\nMalloc faileded", 2), -1);
+		return (ft_putendl_fd("Error\nMalloc failed", 2), -1);
 	while (in[++i])
 		;
-	if (i != 4)
+	if (i != 5)
 		return (ft_free(in),
 			ft_putendl_fd("Error\nTexture format wrong", 2), -1);
 	i = -1;
 	while (++i < 4)
-		data->textures[dir][i] = in[i];
+		data->textures[dir][i] = in[i + 1];
 	free(in);
 	return (0);
 }
@@ -66,24 +65,26 @@ int	extract_color(char *line, int spec, t_parser *data)
 int	get_info(int info, t_parser *data)
 {
 	const char	*arr[6] = {"NO ", "EA ", "SO ", "WE ", "F ", "C "};
+	size_t		line;
 	size_t		iter;
 
-	iter = 0;
-	while (data->file[iter])
+	line = 0;
+	while (data->file[line])
 	{
-		if (info < 4 && !ft_strncmp(data->file[iter], arr[info], 3))
+		iter = count_spaces(data->file[line]);
+		if (info < 4 && !ft_strncmp(&data->file[line][iter], arr[info], 3))
 		{
-			if (extract_path(data->file[iter], info, data) == -1)
+			if (extract_path(&data->file[line][iter], info, data) == -1)
 				return (-1);
 			return (0);
 		}
-		if (info >= 4 && !ft_strncmp(data->file[iter], arr[info], 2))
+		if (info >= 4 && !ft_strncmp(&data->file[line][iter], arr[info], 2))
 		{
-			if (extract_color(data->file[iter], info % 4, data) == -1)
+			if (extract_color(&data->file[line][iter], info % 4, data) == -1)
 				return (ft_putendl_fd("Error\nColor format wrong", 2), -1);
 			return (0);
 		}
-		iter++;
+		line++;
 	}
 	return (0);
 }

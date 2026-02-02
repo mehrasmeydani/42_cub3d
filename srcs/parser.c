@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:18:59 by eprottun          #+#    #+#             */
-/*   Updated: 2025/12/18 19:47:43 by mehras           ###   ########.fr       */
+/*   Updated: 2026/02/02 14:44:21 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	element_found(char *str, int *bitmap)
 {
+	str += count_spaces(str);
 	if (!(*bitmap & (MAP | NO)) && !ft_strncmp("NO ", str, 3))
 		*bitmap |= NO;
 	else if (!(*bitmap & (MAP | EA)) && !ft_strncmp("EA ", str, 3))

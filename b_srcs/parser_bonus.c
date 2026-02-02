@@ -6,7 +6,7 @@
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:18:59 by eprottun          #+#    #+#             */
-/*   Updated: 2026/01/04 17:12:42 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/02/02 14:55:29 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	element_found(char *str, int *bitmap)
 {
+	str += count_spaces(str);
 	if (!(*bitmap & (MAP | NO)) && !ft_strncmp("NO ", str, 3))
 		*bitmap |= NO;
 	else if (!(*bitmap & (MAP | EA)) && !ft_strncmp("EA ", str, 3))
