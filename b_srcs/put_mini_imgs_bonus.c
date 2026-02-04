@@ -6,7 +6,7 @@
 /*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 01:56:25 by mehras            #+#    #+#             */
-/*   Updated: 2026/02/02 17:38:33 by megardes         ###   ########.fr       */
+/*   Updated: 2026/02/04 14:30:06 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,12 @@ void	set_mini_img(t_cubed *cube, t_mlx *mlx)
 	(void)cube;
 	mini = &mlx->mini;
 	fill_map(mini);
-	while (cube->mini_map[++i])
+	while (cube->mini_map[++i] && i / SCALE < mini->height)
 	{
 		if (i % SCALE == 0)
 		{
 			j = -1;
-			while (cube->mini_map[i][++j])
+			while (cube->mini_map[i][++j] && j / SCALE < mini->width)
 				if (j % SCALE == 0)
 					mini_put_sq(mini, j / SCALE,
 						i / SCALE, cube->mini_map[i][j]);
