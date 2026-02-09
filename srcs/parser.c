@@ -6,7 +6,7 @@
 /*   By: eprottun <eprottun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:18:59 by eprottun          #+#    #+#             */
-/*   Updated: 2026/02/02 14:44:21 by eprottun         ###   ########.fr       */
+/*   Updated: 2026/02/09 11:39:46 by eprottun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	parser(const char *filename, t_parser *data)
 	int	info;
 
 	init_data(data);
-	if (ft_strlen(filename) < 4
+	if (ft_strlen(filename) < 5
 		|| ft_strncmp(".cub", &filename[ft_strlen(filename) - 4], 4))
 		return (ft_putendl_fd("Error\nWrong filename", 2), -1);
 	if (get_file(filename, data) == -1)
