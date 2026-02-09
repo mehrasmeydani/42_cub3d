@@ -6,7 +6,7 @@
 /*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 01:56:25 by mehras            #+#    #+#             */
-/*   Updated: 2026/01/08 14:34:13 by megardes         ###   ########.fr       */
+/*   Updated: 2026/02/09 15:05:39 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,7 @@ void	set_mini_img(t_cubed *cube, t_mlx *mlx)
 	while (i < len1 && i / SCALE < mlx->game.height)
 	{
 		j = 0;
-		while ((cube->mini_map[i][j] || cube->mini_map[i]
-			[j - 1]) && j / SCALE < mlx->game.width)
+		while (cube->mini_map[i][j] && j / SCALE < mlx->game.width)
 		{
 			mini_put_sq(mini, j / SCALE, i / SCALE, cube->mini_map[i][j]);
 			j += SCALE;
