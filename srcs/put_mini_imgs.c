@@ -6,7 +6,7 @@
 /*   By: megardes <megardes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 01:56:25 by mehras            #+#    #+#             */
-/*   Updated: 2026/02/09 15:05:39 by megardes         ###   ########.fr       */
+/*   Updated: 2026/02/15 18:15:26 by megardes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ void	fill_map(t_img *img)
 	ssize_t	x;
 	ssize_t	y;
 
-	y = -1;
-	x = -1;
 	i = -1;
 	while (++i < img->border)
 	{
