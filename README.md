@@ -1,3 +1,5 @@
+# cub3D — Raycasting Maze
+
 *This project has been created as part of the 42 curriculum by megardes, eprottun.*
 
 ## Description
@@ -33,8 +35,8 @@ cub3D is a graphics project that creates a realistic 3D representation of a maze
 
 ```bash
 # Clone the repository
-git clone https://github.com//mehrasmeydani/42_cub3d.git
-cd cub3D
+git clone https://github.com/mehrasmeydani/42_cub3d.git
+cd 42_cub3d
 
 # Compile mandatory version
 make
